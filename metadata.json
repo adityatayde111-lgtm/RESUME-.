@@ -1,0 +1,6 @@
+{
+  "name": "Aditya Portfolio",
+  "description": "Interactive portfolio and resume app for Aditya Santosh Tyade showcasing skills, projects, education, and interactive work samples with responsive grid layout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

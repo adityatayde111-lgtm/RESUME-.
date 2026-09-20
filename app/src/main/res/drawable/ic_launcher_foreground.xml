@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer hexagonal badge -->
+    <path
+        android:pathData="M54,26 L76,38 L76,70 L54,82 L32,70 L32,38 Z"
+        android:strokeWidth="2.5"
+        android:strokeColor="#6FFFE9"
+        android:fillColor="#220B132B" />
+
+    <!-- Left angle bracket < -->
+    <path
+        android:pathData="M43,44 L36,54 L43,64"
+        android:strokeWidth="3.2"
+        android:strokeColor="#5BC0BE"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- Right angle bracket > -->
+    <path
+        android:pathData="M65,44 L72,54 L65,64"
+        android:strokeWidth="3.2"
+        android:strokeColor="#5BC0BE"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000" />
+
+    <!-- Central A monogram & slash -->
+    <path
+        android:pathData="M54,41 L47,67 L51,67 L52.5,61 L55.5,61 L57,67 L61,67 Z M54,47.5 L55,57.5 L53,57.5 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Cyan spark dot -->
+    <path
+        android:pathData="M54,36m-2,0a2,2 0 1,1 4,0a2,2 0 1,1 -4,0"
+        android:fillColor="#6FFFE9" />
+</vector>
