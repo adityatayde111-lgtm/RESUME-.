@@ -1,7 +1,11 @@
 package com.example.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -10,6 +14,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -64,11 +69,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.data.PortfolioRepository
 import com.example.data.ProjectItem
 import com.example.ui.components.AchievementsCard
@@ -99,6 +106,15 @@ fun PortfolioScreen(modifier: Modifier = Modifier) {
 
   var selectedTab by remember { mutableStateOf(PortfolioTab.OVERVIEW) }
   var activeProjectSample by remember { mutableStateOf<ProjectItem?>(null) }
+  var avatarUri by remember { mutableStateOf<Uri?>(null) }
+
+  val topBarPhotoPickerLauncher = rememberLauncherForActivityResult(
+    contract = ActivityResultContracts.PickVisualMedia()
+  ) { uri: Uri? ->
+    if (uri != null) {
+      avatarUri = uri
+    }
+  }
 
   fun sharePortfolio() {
     try {
@@ -144,15 +160,31 @@ fun PortfolioScreen(modifier: Modifier = Modifier) {
                   Brush.linearGradient(
                     colors = listOf(Color(0xFF0284C7), Color(0xFF6366F1))
                   )
-                ),
+                )
+                .clickable {
+                  topBarPhotoPickerLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                  )
+                },
               contentAlignment = Alignment.Center
             ) {
-              Text(
-                text = "AT",
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Black
-              )
+              if (avatarUri != null) {
+                AsyncImage(
+                  model = avatarUri,
+                  contentDescription = "Profile Photo",
+                  modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape),
+                  contentScale = ContentScale.Crop
+                )
+              } else {
+                Text(
+                  text = "AT",
+                  color = Color.White,
+                  fontSize = 14.sp,
+                  fontWeight = FontWeight.Black
+                )
+              }
             }
             Spacer(modifier = Modifier.width(10.dp))
             Column {
@@ -261,10 +293,13 @@ fun PortfolioScreen(modifier: Modifier = Modifier) {
                       onViewWorkSamples = { selectedTab = PortfolioTab.WORK_SAMPLES },
                       onOpenContact = { selectedTab = PortfolioTab.EDUCATION_CONNECT },
                       onShareProfile = { sharePortfolio() },
-                      modifier = Modifier.weight(1.2f)
+                      modifier = Modifier.weight(1.2f),
+                      avatarUri = avatarUri,
+                      onAvatarSelected = { avatarUri = it }
                     )
                     InteractiveBadge3D(
-                      modifier = Modifier.weight(1f)
+                      modifier = Modifier.weight(1f),
+                      avatarUri = avatarUri
                     )
                   }
                 } else {
@@ -272,9 +307,13 @@ fun PortfolioScreen(modifier: Modifier = Modifier) {
                     HeroHeader(
                       onViewWorkSamples = { selectedTab = PortfolioTab.WORK_SAMPLES },
                       onOpenContact = { selectedTab = PortfolioTab.EDUCATION_CONNECT },
-                      onShareProfile = { sharePortfolio() }
+                      onShareProfile = { sharePortfolio() },
+                      avatarUri = avatarUri,
+                      onAvatarSelected = { avatarUri = it }
                     )
-                    InteractiveBadge3D()
+                    InteractiveBadge3D(
+                      avatarUri = avatarUri
+                    )
                   }
                 }
               }

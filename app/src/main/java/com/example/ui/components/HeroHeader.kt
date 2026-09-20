@@ -1,5 +1,9 @@
 package com.example.ui.components
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -8,6 +12,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +20,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,10 +29,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Share
@@ -42,17 +51,22 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.data.PortfolioRepository
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -61,8 +75,18 @@ fun HeroHeader(
   onViewWorkSamples: () -> Unit,
   onOpenContact: () -> Unit,
   onShareProfile: () -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  avatarUri: Uri? = null,
+  onAvatarSelected: (Uri?) -> Unit = {}
 ) {
+  val photoPickerLauncher = rememberLauncherForActivityResult(
+    contract = ActivityResultContracts.PickVisualMedia()
+  ) { uri: Uri? ->
+    if (uri != null) {
+      onAvatarSelected(uri)
+    }
+  }
+
   val infiniteTransition = rememberInfiniteTransition(label = "heroGlow")
   val pulseGlow by infiniteTransition.animateFloat(
     initialValue = 0.4f,
@@ -141,31 +165,82 @@ fun HeroHeader(
           }
         }
 
-        // Avatar with Glowing Accent Border
+        // Avatar with Glowing Accent Border and Photo Picker
         Box(
           modifier = Modifier
-            .size(96.dp)
-            .clip(CircleShape)
-            .background(
-              Brush.linearGradient(
-                colors = listOf(Color(0xFF06B6D4), Color(0xFF6366F1))
-              )
-            )
-            .padding(3.dp)
-            .clip(CircleShape)
-            .background(Color(0xFF0F172A)),
+            .size(100.dp)
+            .testTag("avatar_container"),
           contentAlignment = Alignment.Center
         ) {
-          Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+          Box(
+            modifier = Modifier
+              .size(96.dp)
+              .clip(CircleShape)
+              .background(
+                Brush.linearGradient(
+                  colors = listOf(Color(0xFF06B6D4), Color(0xFF6366F1))
+                )
+              )
+              .padding(3.dp)
+              .clip(CircleShape)
+              .background(Color(0xFF0F172A))
+              .clickable {
+                photoPickerLauncher.launch(
+                  PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+              },
+            contentAlignment = Alignment.Center
           ) {
-            Text(
-              text = "AT",
-              color = Color(0xFF38BDF8),
-              fontSize = 32.sp,
-              fontWeight = FontWeight.Black,
-              letterSpacing = 2.sp
+            if (avatarUri != null) {
+              AsyncImage(
+                model = avatarUri,
+                contentDescription = "Profile Photo of " + PortfolioRepository.profileName,
+                modifier = Modifier
+                  .fillMaxSize()
+                  .clip(CircleShape),
+                contentScale = ContentScale.Crop
+              )
+            } else {
+              Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+              ) {
+                Text(
+                  text = "AT",
+                  color = Color(0xFF38BDF8),
+                  fontSize = 32.sp,
+                  fontWeight = FontWeight.Black,
+                  letterSpacing = 2.sp
+                )
+              }
+            }
+          }
+
+          // Camera edit icon badge overlay
+          Box(
+            modifier = Modifier
+              .size(30.dp)
+              .align(Alignment.BottomEnd)
+              .clip(CircleShape)
+              .background(
+                Brush.linearGradient(
+                  colors = listOf(Color(0xFF0284C7), Color(0xFF6366F1))
+                )
+              )
+              .border(2.dp, Color(0xFF0F172A), CircleShape)
+              .clickable {
+                photoPickerLauncher.launch(
+                  PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+              }
+              .testTag("avatar_change_button"),
+            contentAlignment = Alignment.Center
+          ) {
+            Icon(
+              imageVector = Icons.Default.CameraAlt,
+              contentDescription = "Upload profile picture",
+              tint = Color.White,
+              modifier = Modifier.size(16.dp)
             )
           }
         }

@@ -1,5 +1,6 @@
 package com.example.ui.components
 
+import android.net.Uri
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,11 +43,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
 
 /**
@@ -59,7 +63,8 @@ fun InteractiveBadge3D(
   university: String = "SANJIVANI UNIVERSITY",
   program: String = "Integrated B.Tech CSE",
   cgpa: String = "8.0",
-  academicYear: String = "2024 - 2026"
+  academicYear: String = "2024 - 2026",
+  avatarUri: Uri? = null
 ) {
   val coroutineScope = rememberCoroutineScope()
   val density = LocalDensity.current
@@ -260,13 +265,24 @@ fun InteractiveBadge3D(
                 .border(2.dp, Color(0xFF38BDF8), RoundedCornerShape(16.dp)),
               contentAlignment = Alignment.Center
             ) {
-              Text(
-                text = "AT",
-                color = Color.White,
-                fontSize = 26.sp,
-                fontWeight = FontWeight.ExtraBold,
-                letterSpacing = 1.5.sp
-              )
+              if (avatarUri != null) {
+                AsyncImage(
+                  model = avatarUri,
+                  contentDescription = "ID Photo of $studentName",
+                  modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(16.dp)),
+                  contentScale = ContentScale.Crop
+                )
+              } else {
+                Text(
+                  text = "AT",
+                  color = Color.White,
+                  fontSize = 26.sp,
+                  fontWeight = FontWeight.ExtraBold,
+                  letterSpacing = 1.5.sp
+                )
+              }
             }
 
             Spacer(modifier = Modifier.width(14.dp))
