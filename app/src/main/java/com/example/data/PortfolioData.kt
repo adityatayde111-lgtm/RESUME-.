@@ -23,11 +23,19 @@ enum class WorkSampleType {
   CODE_INSPECTOR
 }
 
+enum class ProjectCategory(val displayName: String) {
+  ALL("All"),
+  AI_ML("AI/ML"),
+  SOFTWARE_DEV("Software Development"),
+  LEADERSHIP("Leadership")
+}
+
 data class ProjectItem(
   val id: String,
   val title: String,
   val role: String,
   val typeLabel: String,
+  val category: ProjectCategory = ProjectCategory.SOFTWARE_DEV,
   val description: String,
   val longDescription: String,
   val technologies: List<String>,
@@ -149,6 +157,7 @@ object PortfolioRepository {
       title = "AI Chat Assistant",
       role = "Lead Developer",
       typeLabel = "Project • AI / ML",
+      category = ProjectCategory.AI_ML,
       description = "Built a conversational AI assistant with interactive chat, contextual memory, and natural dialogue handling.",
       longDescription = "An intelligent conversational chatbot built to assist users with technical explanations, coding challenges, study schedules, and system queries. Features immediate interactive responses and clean multi-turn prompting.",
       technologies = listOf("Python", "AI/ML", "NLP", "API Integration", "Clean UI"),
@@ -165,6 +174,7 @@ object PortfolioRepository {
       title = "Student Management System",
       role = "Full-Stack Developer",
       typeLabel = "Project • Database & CRUD",
+      category = ProjectCategory.SOFTWARE_DEV,
       description = "Developed a comprehensive system for tracking, managing, and analyzing student academic data and records.",
       longDescription = "A robust academic records management application designed for universities. Features student enrollment, automated CGPA calculations, department filtering, attendance tracking, and grading metrics.",
       technologies = listOf("Python", "MySQL", "Relational Modeling", "CRUD", "Data Analytics"),
@@ -177,10 +187,28 @@ object PortfolioRepository {
       stats = "120+ active student records • Instant filter queries"
     ),
     ProjectItem(
+      id = "code_inspector",
+      title = "Algorithm & Code Analyzer",
+      role = "Systems & Algorithm Lead",
+      typeLabel = "Software Dev • Algorithms",
+      category = ProjectCategory.SOFTWARE_DEV,
+      description = "Engineered algorithmic benchmarking pipelines with Python & C++ analyzing sorting and graph complexity.",
+      longDescription = "A clean software engineering module inspecting runtime latency, time complexities, and algorithmic optimizations across multiple data structures.",
+      technologies = listOf("Python", "C++", "DSA", "Benchmarking", "Clean Architecture"),
+      highlights = listOf(
+        "Direct performance measurement for QuickSort and divide-and-conquer models",
+        "Contextual memory inspection with typed dictionary dispatching",
+        "Modular architecture designed for extensible algorithms evaluation"
+      ),
+      sampleType = WorkSampleType.CODE_INSPECTOR,
+      stats = "O(N log N) optimizations • Modular Clean Code"
+    ),
+    ProjectItem(
       id = "event_coordinator",
       title = "Event Coordinator & Social Media",
       role = "Department Handler",
       typeLabel = "Leadership & Operations",
+      category = ProjectCategory.LEADERSHIP,
       description = "Managed promotional campaigns, posters, reels, and technical and cultural events at Sanjivani University.",
       longDescription = "Orchestrated large-scale technical symposia, hackathons, and cultural festivals for the university. Led social media marketing campaigns, created viral posters and reels, and directed multi-member organizing committees.",
       technologies = listOf("Event Management", "Social Branding", "Leadership", "Media Strategy", "Team Coordination"),
