@@ -2045,6 +2045,256 @@ html, body {
   }
 }
 
+/* ==========================================================================
+   Aditya Tayde Profile Portrait & Cybernetic Avatar Components
+   ========================================================================== */
+
+/* Navigation Avatar */
+.nav-avatar-frame {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080c10;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.logo:hover .nav-avatar-frame {
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+}
+
+.logo-text-group {
+  display: flex;
+  align-items: center;
+}
+
+/* Hero Section Profile Header */
+.hero-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  margin-bottom: 1.3rem;
+}
+
+.hero-avatar-wrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 22px;
+  flex-shrink: 0;
+}
+
+.hero-avatar-glow {
+  position: absolute;
+  inset: -3px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, var(--accent-cyan), #38bdf8, #818cf8);
+  filter: blur(8px);
+  opacity: 0.65;
+  animation: pulse-avatar-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-avatar-glow {
+  0% { opacity: 0.5; filter: blur(6px); transform: scale(0.98); }
+  100% { opacity: 0.85; filter: blur(10px); transform: scale(1.02); }
+}
+
+.hero-avatar-photo {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 22px;
+  border: 2px solid rgba(56, 189, 248, 0.85);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  display: block;
+}
+
+.hero-avatar-wrapper:hover .hero-avatar-photo {
+  transform: scale(1.06);
+  border-color: #38bdf8;
+}
+
+.hero-avatar-online {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  background: #10b981;
+  border: 2.5px solid #080c10;
+  border-radius: 50%;
+  z-index: 3;
+  box-shadow: 0 0 10px #10b981;
+}
+
+.hero-identity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hero-identity-text .badge-row {
+  margin-bottom: 0;
+}
+
+.hero-location-pill {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hero-location-pill .loc-icon {
+  font-size: 0.85rem;
+}
+
+/* Resume Photo Box */
+.resume-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  text-align: left;
+}
+
+.resume-photo-box {
+  width: 88px;
+  height: 105px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #0284c7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+  background: #f1f5f9;
+}
+
+.resume-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.resume-header-info {
+  flex-grow: 1;
+}
+
+.resume-header-info .resume-contact-links {
+  justify-content: flex-start;
+}
+
+/* CTA Author Stamp (Section 5) */
+.cta-author-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 40px;
+  padding: 0.4rem 1.2rem 0.4rem 0.4rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.cta-author-stamp:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+  transform: translateY(-2px);
+}
+
+.cta-author-avatar-frame {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent-cyan);
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.cta-author-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.cta-author-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.cta-author-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+
+.cta-author-sub {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* AI Copilot Avatar Styles */
+.ai-avatar-badge.avatar-with-photo {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.ai-copilot-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.msg-avatar.avatar-with-img {
+  overflow: hidden;
+  border: 1.5px solid var(--accent-cyan);
+  background: #080c10;
+  padding: 0;
+}
+
+.msg-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
 /* Mobile & Tablet Responsiveness */
 @media (max-width: 900px) {
   .cinematic-nav {
@@ -2081,6 +2331,21 @@ html, body {
 }
 
 @media (max-width: 580px) {
+  .hero-profile-header {
+    gap: 1rem;
+  }
+  .hero-avatar-wrapper {
+    width: 76px;
+    height: 76px;
+  }
+  .resume-header-row {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  .resume-header-info .resume-contact-links {
+    justify-content: center;
+  }
   .glass-card h1, .glass-card h2 {
     font-size: 2.1rem;
   }

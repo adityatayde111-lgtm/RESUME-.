@@ -513,8 +513,11 @@
     if (!aiMessagesList) return;
     const msgDiv = document.createElement('div');
     msgDiv.className = `ai-msg ${role === 'user' ? 'user-msg' : 'assistant-msg'}`;
+    const avatarHtml = role === 'user' 
+      ? 'YOU' 
+      : '<img src="assets/aditya-tayde.jpg" alt="Aditya" class="msg-avatar-img">';
     msgDiv.innerHTML = `
-      <div class="msg-avatar">${role === 'user' ? 'YOU' : 'AI'}</div>
+      <div class="msg-avatar ${role === 'assistant' ? 'avatar-with-img' : ''}">${avatarHtml}</div>
       <div class="msg-bubble">${htmlContent}</div>
     `;
     aiMessagesList.appendChild(msgDiv);
@@ -527,7 +530,7 @@
     const indicator = document.createElement('div');
     indicator.className = 'ai-msg assistant-msg typing-indicator-item';
     indicator.innerHTML = `
-      <div class="msg-avatar">AI</div>
+      <div class="msg-avatar avatar-with-img"><img src="assets/aditya-tayde.jpg" alt="Aditya" class="msg-avatar-img"></div>
       <div class="msg-bubble">
         <span class="typing-dot"></span>
         <span class="typing-dot"></span>
