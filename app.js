@@ -258,6 +258,36 @@
     });
   }
 
+  // Interactive Project Category Filter Tabs
+  function setupProjectFilters() {
+    const filterTabsContainer = document.getElementById('project-filters');
+    if (!filterTabsContainer) return;
+
+    const filterBtns = filterTabsContainer.querySelectorAll('.filter-tab-btn');
+    const projectBoxes = document.querySelectorAll('.project-box');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        projectBoxes.forEach(box => {
+          if (filter === 'all') {
+            box.classList.remove('is-hidden');
+          } else {
+            const categories = (box.getAttribute('data-category') || '').split(' ');
+            if (categories.includes(filter)) {
+              box.classList.remove('is-hidden');
+            } else {
+              box.classList.add('is-hidden');
+            }
+          }
+        });
+      });
+    });
+  }
+
   // Render Mode Toggle: Canvas WebP vs HTML5 Video
   if (modeToggle) {
     modeToggle.addEventListener('click', () => {
@@ -563,10 +593,20 @@
       Reach out via email: <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>`;
     }
 
+    if (q.includes('linkedin') || q.includes('profile') || q.includes('connect')) {
+      return `<strong>💼 Connect with Aditya on LinkedIn:</strong>
+      <br><br>
+      You can connect directly with Aditya on his official LinkedIn profile:<br>
+      👉 <a href="https://linkedin.com/in/adityatayde" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: bold;">linkedin.com/in/adityatayde</a>
+      <br><br>
+      He is actively open for Full-Stack Engineering, AI Systems, and High-Impact Software Engineering opportunities!`;
+    }
+
     if (q.includes('contact') || q.includes('email') || q.includes('github') || q.includes('reach')) {
       return `<strong>📬 How to Connect with Aditya:</strong>
       <br><br>
       • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a><br>
+      • <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/adityatayde" target="_blank" style="color: #38bdf8; text-decoration: underline;">linkedin.com/in/adityatayde</a><br>
       • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">@adityatayde111-lgtm</a> (16+ Public Repos)<br>
       • <strong>Live Portfolio:</strong> <a href="https://resume-atm-f33c.vercel.app" target="_blank" style="color: #38bdf8; text-decoration: underline;">resume-atm-f33c.vercel.app</a><br>
       <br>
@@ -667,6 +707,7 @@
     preloadImages();
     updateScroll();
     setupNavigationJumps();
+    setupProjectFilters();
     fetchGitHubData();
     animate();
   }

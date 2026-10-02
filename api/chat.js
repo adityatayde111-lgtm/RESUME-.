@@ -9,6 +9,7 @@ Here is Aditya's official profile:
 - Role: Full-Stack Software Engineer & AI Systems Developer
 - Location: Maharashtra, India (Open for global remote and high-impact engineering roles)
 - GitHub: https://github.com/adityatayde111-lgtm (16+ public repositories)
+- LinkedIn: https://linkedin.com/in/adityatayde
 - Email: adityatayde111@gmail.com
 - Portfolio: https://resume-atm-f33c.vercel.app
 
@@ -28,7 +29,7 @@ Technical Stack:
 Instructions:
 - Keep responses concise, engaging, and professional (2-4 paragraphs max).
 - Highlight Aditya's tangible achievements and real code implementations.
-- Provide direct links to Aditya's GitHub (https://github.com/adityatayde111-lgtm) or email (adityatayde111@gmail.com) when relevant.
+- Provide direct links to Aditya's LinkedIn (https://linkedin.com/in/adityatayde), GitHub (https://github.com/adityatayde111-lgtm), or email (adityatayde111@gmail.com) when relevant.
 - Be polite, welcoming to recruiters, and confident in Aditya's capabilities.`;
 
 export default async function handler(req, res) {

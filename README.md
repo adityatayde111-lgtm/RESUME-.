@@ -3,6 +3,7 @@
 > High-performance Canvas & Video Scrubbing Architecture meets Modern Full-Stack & AI Engineering Portfolio.
 
 [![GitHub Profile](https://img.shields.io/badge/GitHub-adityatayde111--lgtm-blue?style=for-the-badge&logo=github)](https://github.com/adityatayde111-lgtm)
+[![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-Aditya_Tayde-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/adityatayde)
 [![Live Preview](https://img.shields.io/badge/Live_Portfolio-Vercel-success?style=for-the-badge&logo=vercel)](https://resume-atm-f33c.vercel.app)
 [![Tech Stack](https://img.shields.io/badge/Stack-TypeScript_%7C_React_%7C_Canvas_60FPS_%7C_WebAudio-informational?style=for-the-badge)](#technical-architecture)
 
@@ -55,5 +56,6 @@ Visit `http://localhost:3000` in your browser.
 ## 📬 Contact & Connect
 
 - **Author**: Aditya Tayde
+- **LinkedIn**: [linkedin.com/in/adityatayde](https://linkedin.com/in/adityatayde)
 - **GitHub**: [@adityatayde111-lgtm](https://github.com/adityatayde111-lgtm)
 - **Email**: [adityatayde111@gmail.com](mailto:adityatayde111@gmail.com)

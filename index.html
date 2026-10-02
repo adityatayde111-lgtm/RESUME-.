@@ -45,6 +45,14 @@
         <span class="badge-pill" id="nav-repo-count">16+</span>
       </a>
 
+      <!-- LinkedIn Connect Button -->
+      <a href="https://linkedin.com/in/adityatayde" target="_blank" rel="noopener noreferrer" class="linkedin-nav-btn" title="Connect with Aditya Tayde on LinkedIn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        <span>LinkedIn</span>
+      </a>
+
       <!-- Open Resume Modal Button -->
       <button id="open-resume-btn" class="control-btn resume-trigger-btn" title="View Full Interactive Resume">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
@@ -152,11 +160,17 @@
             </svg>
             View Interactive Resume
           </button>
+          <a href="https://linkedin.com/in/adityatayde" target="_blank" rel="noopener noreferrer" class="action-btn linkedin-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            Connect on LinkedIn
+          </a>
           <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="action-btn secondary-btn">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
             </svg>
-            GitHub Profile (@adityatayde111-lgtm)
+            GitHub (@adityatayde111-lgtm)
           </a>
         </div>
 
@@ -275,11 +289,19 @@
         
         <p>Production applications and open-source tools actively developed and published on GitHub.</p>
 
+        <!-- Interactive Project Category Filter Tabs -->
+        <div class="project-filter-tabs" id="project-filters">
+          <button class="filter-tab-btn active" data-filter="all">All Work (4)</button>
+          <button class="filter-tab-btn" data-filter="ai">AI &amp; Autonomous Agents</button>
+          <button class="filter-tab-btn" data-filter="fullstack">Full-Stack Platforms</button>
+          <button class="filter-tab-btn" data-filter="mobile">Mobile &amp; Android</button>
+        </div>
+
         <!-- Project Grid -->
         <div class="projects-grid">
 
           <!-- Project 1: Shetkari Raja -->
-          <div class="project-box featured">
+          <div class="project-box featured" data-category="fullstack mobile ai">
             <div class="project-top">
               <div class="project-title-row">
                 <span class="project-icon">🌾</span>
@@ -314,7 +336,7 @@
           </div>
 
           <!-- Project 2: Sanjivani AI Tool -->
-          <div class="project-box">
+          <div class="project-box" data-category="ai fullstack">
             <div class="project-top">
               <div class="project-title-row">
                 <span class="project-icon">🛡️</span>
@@ -348,7 +370,7 @@
           </div>
 
           <!-- Project 3: AI Assistant Agent -->
-          <div class="project-box">
+          <div class="project-box" data-category="ai">
             <div class="project-top">
               <div class="project-title-row">
                 <span class="project-icon">🧠</span>
@@ -381,7 +403,7 @@
           </div>
 
           <!-- Project 4: AgriSmart -->
-          <div class="project-box">
+          <div class="project-box" data-category="ai">
             <div class="project-top">
               <div class="project-title-row">
                 <span class="project-icon">🌱</span>
@@ -508,6 +530,13 @@
             </svg>
             <span>GitHub @adityatayde111-lgtm</span>
           </a>
+          <a href="https://linkedin.com/in/adityatayde" target="_blank" rel="noopener noreferrer" class="contact-pill linkedin-pill" title="Connect on LinkedIn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            <span>LinkedIn /adityatayde</span>
+            <span class="copy-hint" style="background:#0a66c2;color:#fff;">Connect &rarr;</span>
+          </a>
           <div class="contact-pill static">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -530,12 +559,20 @@
             Open Interactive Resume / ATS
           </button>
 
+          <!-- Direct LinkedIn Profile Link -->
+          <a href="https://linkedin.com/in/adityatayde" target="_blank" rel="noopener noreferrer" class="action-btn linkedin-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            Connect on LinkedIn
+          </a>
+
           <!-- Direct GitHub Profile Link -->
           <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="action-btn secondary-btn">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
             </svg>
-            Visit GitHub Profile
+            GitHub (@adityatayde111-lgtm)
           </a>
 
           <!-- Media Showcase Downloads -->
@@ -561,9 +598,9 @@
         <div class="footer-meta">
           <span>Aditya Tayde &bull; Full-Stack &amp; AI Systems Engineer</span>
           <span class="meta-separator">&bull;</span>
-          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer">github.com/adityatayde111-lgtm</a>
+          <a href="https://linkedin.com/in/adityatayde" target="_blank" rel="noopener noreferrer">linkedin.com/in/adityatayde</a>
           <span class="meta-separator">&bull;</span>
-          <span>60 FPS Canvas Architecture</span>
+          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer">github.com/adityatayde111-lgtm</a>
         </div>
       </div>
     </section>
@@ -602,6 +639,8 @@
           <div class="resume-title-sub">FULL-STACK SOFTWARE ENGINEER &amp; AI SYSTEMS DEVELOPER</div>
           <div class="resume-contact-links">
             <span>Email: <a href="mailto:adityatayde111@gmail.com">adityatayde111@gmail.com</a></span>
+            <span>&bull;</span>
+            <span>LinkedIn: <a href="https://linkedin.com/in/adityatayde" target="_blank" rel="noopener noreferrer">linkedin.com/in/adityatayde</a></span>
             <span>&bull;</span>
             <span>GitHub: <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer">github.com/adityatayde111-lgtm</a></span>
             <span>&bull;</span>
