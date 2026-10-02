@@ -128,7 +128,26 @@
       <div class="portal-info-box">
         <span class="portal-badge-tag">OFFICIAL PORTFOLIO &amp; SHOWREEL</span>
         <h1 class="portal-name">ADITYA TAYDE</h1>
-        <p class="portal-sub">Integrated B.Tech in CSE &bull; Sanjivani University &bull; Software Developer</p>
+        <p class="portal-sub">Integrated B.Tech in Computer Science &bull; Sanjivani University</p>
+
+        <div class="portal-credentials-grid">
+          <div class="portal-cred-item">
+            <span class="cred-icon">🎓</span>
+            <span class="cred-text"><strong>CGPA: 8.0</strong> &bull; Class X: 84%</span>
+          </div>
+          <div class="portal-cred-item">
+            <span class="cred-icon">💻</span>
+            <span class="cred-text">Software Dev &bull; AI / ML &bull; Python</span>
+          </div>
+          <div class="portal-cred-item">
+            <span class="cred-icon">📍</span>
+            <span class="cred-text">Maharashtra, India &bull; +91 9403206007</span>
+          </div>
+          <div class="portal-cred-item">
+            <span class="cred-icon">🚀</span>
+            <span class="cred-text">16+ Repos &bull; Open for Internships</span>
+          </div>
+        </div>
       </div>
 
       <!-- Loading State (shown while downloading frames) -->
@@ -143,28 +162,44 @@
 
       <!-- Enter Experience Buttons (revealed when ready) -->
       <div class="portal-enter-actions hidden" id="portal-enter-box">
-        <button id="btn-enter-sound" class="portal-enter-btn" title="Launch experience with cinematic soundtrack & video">
+        <button id="btn-enter-voice" class="portal-enter-btn portal-voice-btn" title="Launch experience with Aditya's identity song, voiceover intro & 60FPS video">
           <div class="btn-glow-pulse"></div>
           <div class="enter-btn-content">
-            <span class="enter-icon">🎬</span>
+            <span class="enter-icon">🎙️</span>
             <div class="enter-text-col">
-              <span class="enter-main-title">ENTER EXPERIENCE</span>
-              <span class="enter-sub-title">WITH SOUNDTRACK &amp; 60FPS VIDEO</span>
+              <span class="enter-main-title">ENTER WITH ADITYA'S SONG</span>
+              <span class="enter-sub-title">CUSTOM VOICEOVER &amp; 60FPS SHOWREEL</span>
             </div>
-            <span class="enter-music-icon">🎵</span>
+            <span class="enter-music-icon">🎬</span>
           </div>
         </button>
 
-        <button id="btn-enter-silent" class="portal-silent-btn" title="Enter without sound">
-          <span>Enter Silently (Muted) 🔇</span>
-        </button>
+        <div class="portal-alt-actions-row">
+          <button id="btn-enter-sound" class="portal-alt-btn" title="Launch with instrumental soundtrack only">
+            <span class="alt-btn-icon">🎵</span>
+            <span>Soundtrack Only</span>
+          </button>
+          <button id="btn-enter-silent" class="portal-silent-btn" title="Enter without sound">
+            <span>Enter Silently 🔇</span>
+          </button>
+        </div>
 
         <div class="portal-feature-badges">
+          <span class="portal-feature-pill">🎙️ Voiceover Identity Intro</span>
           <span class="portal-feature-pill">✨ Inspiring Cinematic Theme</span>
           <span class="portal-feature-pill">⚡ 240-Frame 60FPS Scrub</span>
-          <span class="portal-feature-pill">🤖 AI Copilot</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Holographic Voiceover Transcript HUD Ticker -->
+  <div id="hud-voice-ticker" class="hud-voice-ticker hidden" aria-live="polite">
+    <div class="hud-ticker-inner">
+      <span class="hud-rec-pulse"></span>
+      <span class="hud-badge">VOICEOVER INTRO</span>
+      <p id="hud-ticker-text" class="hud-text">&ldquo;Welcome. You are entering the official portfolio and showreel of Aditya Tayde &bull; Sanjivani University...&rdquo;</p>
+      <button id="hud-close-btn" class="hud-close-btn" title="Dismiss subtitle">&times;</button>
     </div>
   </div>
 
@@ -1223,7 +1258,11 @@
       <div class="audio-tracks-box">
         <span class="audio-tracks-label">Select Song / Soundtrack:</span>
         <div class="audio-track-pills">
-          <button class="track-select-pill active" data-track="cinematic" title="Inspiring Cinematic Theme by Rafael Krux">
+          <button class="track-select-pill active" data-track="aditya" title="Official Identity Song with Voiceover &amp; Cinematic Score">
+            <span class="pill-icon">🎙️</span>
+            <span class="pill-text">Aditya's Song (Voice + Music)</span>
+          </button>
+          <button class="track-select-pill" data-track="cinematic" title="Inspiring Cinematic Theme by Rafael Krux">
             <span class="pill-icon">✨</span>
             <span class="pill-text">Inspiring Cinematic</span>
           </button>
@@ -1267,7 +1306,7 @@
     </div>
 
     <!-- Background HTML5 Audio Element -->
-    <audio id="bg-soundtrack-player" src="assets/cinematic_theme.mp3" preload="metadata" loop></audio>
+    <audio id="bg-soundtrack-player" src="assets/aditya_identity_song.m4a" preload="metadata" loop></audio>
   </div>
 
   <!-- Interactive GitHub Project Library Modal -->

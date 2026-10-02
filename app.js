@@ -34,9 +34,12 @@
   // Launch Portal DOM Elements
   const portalLoadingBox = document.getElementById('portal-loading-box');
   const portalEnterBox = document.getElementById('portal-enter-box');
+  const btnEnterVoice = document.getElementById('btn-enter-voice');
   const btnEnterSound = document.getElementById('btn-enter-sound');
   const btnEnterSilent = document.getElementById('btn-enter-silent');
   const heroPlayShowreelBtn = document.getElementById('hero-play-showreel-btn');
+  const hudVoiceTicker = document.getElementById('hud-voice-ticker');
+  const hudCloseBtn = document.getElementById('hud-close-btn');
 
   // Modal & Copy Elements
   const resumeModal = document.getElementById('resume-modal');
@@ -421,24 +424,33 @@
   const trackButtons = document.querySelectorAll('.track-select-pill');
 
   const TRACKS = {
+    aditya: {
+      name: "Aditya's Identity Song & Intro",
+      src: 'assets/aditya_identity_song.m4a',
+      type: 'audio',
+      hasVoice: true
+    },
     cinematic: {
       name: 'Inspiring Cinematic Theme',
       src: 'assets/cinematic_theme.mp3',
-      type: 'audio'
+      type: 'audio',
+      hasVoice: false
     },
     impact: {
       name: 'Impact Moderato Beat',
       src: 'assets/impact_theme.ogg',
-      type: 'audio'
+      type: 'audio',
+      hasVoice: false
     },
     drone: {
       name: 'Ambient Synthesizer Drone',
       src: null,
-      type: 'synth'
+      type: 'synth',
+      hasVoice: false
     }
   };
 
-  let currentTrackKey = 'cinematic';
+  let currentTrackKey = 'aditya';
   let isMuted = false;
   let previousVolume = 0.75;
   let isSeeking = false;
@@ -764,36 +776,76 @@
     });
   }
 
+  // Holographic Voiceover Transcript HUD Ticker
+  let hudTimeout = null;
+
+  function showHudVoiceTicker(durationMs = 18000) {
+    if (!hudVoiceTicker) return;
+    if (hudTimeout) clearTimeout(hudTimeout);
+    hudVoiceTicker.classList.remove('hidden');
+
+    hudTimeout = setTimeout(() => {
+      if (hudVoiceTicker) hudVoiceTicker.classList.add('hidden');
+    }, durationMs);
+  }
+
+  function hideHudVoiceTicker() {
+    if (hudTimeout) clearTimeout(hudTimeout);
+    if (hudVoiceTicker) hudVoiceTicker.classList.add('hidden');
+  }
+
+  if (hudCloseBtn) {
+    hudCloseBtn.addEventListener('click', hideHudVoiceTicker);
+  }
+
   // Cinematic Launch Portal Enter Handlers & Showreel Trigger
-  function enterExperience(withSound = true) {
+  function enterExperience(mode = 'voice') {
     if (preloader) {
       preloader.classList.add('loaded');
     }
 
-    if (withSound) {
-      // User gesture directly starts audio without autoplay restriction block
+    if (mode === 'voice') {
+      // Play Aditya's official identity song with voiceover and cinematic score
+      switchTrack('aditya');
       playCurrentTrack(true);
-      // Start cinematic 60FPS intro showreel sweep
       playCinematicIntroAnimation();
+      showHudVoiceTicker();
+    } else if (mode === 'soundtrack') {
+      // Play instrumental cinematic soundtrack only
+      switchTrack('cinematic');
+      playCurrentTrack(true);
+      playCinematicIntroAnimation();
+      hideHudVoiceTicker();
+    } else {
+      // Enter silently (muted)
+      hideHudVoiceTicker();
     }
+  }
+
+  if (btnEnterVoice) {
+    btnEnterVoice.addEventListener('click', () => {
+      enterExperience('voice');
+    });
   }
 
   if (btnEnterSound) {
     btnEnterSound.addEventListener('click', () => {
-      enterExperience(true);
+      enterExperience('soundtrack');
     });
   }
 
   if (btnEnterSilent) {
     btnEnterSilent.addEventListener('click', () => {
-      enterExperience(false);
+      enterExperience('silent');
     });
   }
 
   if (heroPlayShowreelBtn) {
     heroPlayShowreelBtn.addEventListener('click', () => {
+      switchTrack('aditya');
       playCurrentTrack(true);
       playCinematicIntroAnimation();
+      showHudVoiceTicker();
       if (window.scrollY > 150) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
