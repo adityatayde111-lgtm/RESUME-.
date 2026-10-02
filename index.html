@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aditya Tayde | Full-Stack & AI Systems Engineer Portfolio</title>
+  <meta name="description" content="Portfolio of Aditya Tayde - Full-Stack Software Engineer, AI Systems Developer, and Creative Web Technologist with 16+ GitHub repositories.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+
+  <!-- Top Progress Bar -->
+  <div id="progress-bar-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="cinematic-nav">
+    <div class="nav-left">
+      <a href="#section-1" class="logo" data-nav="0">
+        <span class="logo-accent">A</span>DITYA <span class="logo-sub">TAYDE</span>
+        <span class="logo-role">/ FULL-STACK & AI ENGINEER</span>
+      </a>
+    </div>
+
+    <!-- Quick Story Navigation Links -->
+    <nav class="nav-links">
+      <button class="nav-link active" data-nav="0">About</button>
+      <button class="nav-link" data-nav="0.28">Skills</button>
+      <button class="nav-link" data-nav="0.50">Projects & GitHub</button>
+      <button class="nav-link" data-nav="0.72">Experience</button>
+      <button class="nav-link" data-nav="0.94">Contact</button>
+    </nav>
+
+    <div class="nav-controls">
+      <!-- Live GitHub Profile Quick Link -->
+      <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="github-nav-btn" title="View GitHub Profile: @adityatayde111-lgtm">
+        <svg class="icon-github" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        <span>GitHub</span>
+        <span class="badge-pill" id="nav-repo-count">16+</span>
+      </a>
+
+      <!-- Open Resume Modal Button -->
+      <button id="open-resume-btn" class="control-btn resume-trigger-btn" title="View Full Interactive Resume">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <span>Resume</span>
+      </button>
+
+      <div class="frame-indicator">
+        <span class="rec-dot"></span>
+        <span id="frame-counter">FRAME 001 / 240</span>
+      </div>
+
+      <button id="sound-toggle" class="control-btn icon-only-mobile" title="Toggle Ambient Audio">
+        <svg class="icon-speaker" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <span class="btn-label">AUDIO: OFF</span>
+      </button>
+
+      <button id="mode-toggle" class="control-btn icon-only-mobile" title="Toggle Render Mode">
+        <span id="render-mode-label">CANVAS 60FPS</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Preloader Screen -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-title">CALIBRATING HIGH-PERFORMANCE WORKSPACE</div>
+      <div class="loader-subtitle">Loading 240-Frame Interactive Storyboard & GitHub Data...</div>
+      <div class="loader-bar-bg">
+        <div id="loader-bar"></div>
+      </div>
+      <div id="loader-percent">0%</div>
+    </div>
+  </div>
+
+  <!-- Viewport Canvas / Video Container (Pinned Fullscreen) -->
+  <div class="sticky-viewport">
+    <canvas id="cinema-canvas"></canvas>
+    
+    <!-- Video fallback / video mode element -->
+    <video id="cinema-video" preload="auto" muted playsinline style="display: none;">
+      <source src="cinematic_scrub_optimized.mp4" type="video/mp4">
+    </video>
+
+    <div class="cinematic-overlay-vignette"></div>
+    <div class="cinematic-grain-overlay"></div>
+  </div>
+
+  <!-- Scroll-Triggered Narrative Storyboard (5 Spaced Stages) -->
+  <main class="scroll-container">
+
+    <!-- Section 1: Hero Intro (0% - 20%) -->
+    <section class="story-section" id="section-1">
+      <div class="glass-card hero-card" data-speed="0.8">
+        <div class="badge-row">
+          <span class="badge">FULL-STACK ENGINEER &amp; AI ARCHITECT</span>
+          <span class="status-badge"><span class="status-pulse"></span> AVAILABLE FOR IMPACT ROLES</span>
+        </div>
+        <h1 class="hero-title">ADITYA<br><span class="gradient-text">TAYDE</span></h1>
+        <p class="hero-tagline">
+          Crafting scalable cloud architectures, autonomous AI agents, and fluid 60FPS web experiences. Creator of <strong>Shetkari Raja</strong>, <strong>Sanjivani AI</strong>, and 16+ open-source GitHub projects.
+        </p>
+
+        <!-- Quick Stats Banner -->
+        <div class="hero-stats-banner">
+          <div class="hero-stat">
+            <span class="hero-stat-val" id="hero-repo-val">16+</span>
+            <span class="hero-stat-lbl">GitHub Repos</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">358+</span>
+            <span class="hero-stat-lbl">AI Providers Unified</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">60 FPS</span>
+            <span class="hero-stat-lbl">Scrub Engine</span>
+          </div>
+        </div>
+
+        <!-- Primary Action Group -->
+        <div class="hero-actions">
+          <button class="action-btn primary-btn" id="hero-open-resume">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            View Interactive Resume
+          </button>
+          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="action-btn secondary-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub Profile (@adityatayde111-lgtm)
+          </a>
+        </div>
+
+        <div class="scroll-cue">
+          <div class="mouse-icon">
+            <div class="mouse-wheel"></div>
+          </div>
+          <span>SCROLL OR USE NAV TO EXPLORE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Technical Skills Matrix & Disciplines (20% - 40%) -->
+    <section class="story-section" id="section-2">
+      <div class="glass-card skills-card" data-speed="1.1">
+        <div class="badge">TECHNICAL ARSENAL</div>
+        <h2>ENGINEERED WITH<br><span class="gradient-text">PRECISION & DEPTH</span></h2>
+        <p>A comprehensive toolkit covering robust full-stack software development, native mobile applications, and intelligent AI models.</p>
+
+        <div class="skills-grid">
+          <!-- Category 1 -->
+          <div class="skill-category">
+            <div class="category-header">
+              <span class="cat-icon">⚡</span>
+              <h3>Frontend & Interactive Web</h3>
+            </div>
+            <div class="chip-container">
+              <span class="tech-chip">React 18</span>
+              <span class="tech-chip">TypeScript</span>
+              <span class="tech-chip">Tailwind CSS</span>
+              <span class="tech-chip">HTML5 Canvas</span>
+              <span class="tech-chip">WebGL Scrubbing</span>
+              <span class="tech-chip">Vite</span>
+              <span class="tech-chip">Responsive UI</span>
+            </div>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="skill-category">
+            <div class="category-header">
+              <span class="cat-icon">🛠️</span>
+              <h3>Backend, Cloud & Databases</h3>
+            </div>
+            <div class="chip-container">
+              <span class="tech-chip">Node.js</span>
+              <span class="tech-chip">Supabase</span>
+              <span class="tech-chip">PostgreSQL</span>
+              <span class="tech-chip">Firebase</span>
+              <span class="tech-chip">REST APIs</span>
+              <span class="tech-chip">Auth & Security</span>
+              <span class="tech-chip">Vercel Deployment</span>
+            </div>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="skill-category">
+            <div class="category-header">
+              <span class="cat-icon">📱</span>
+              <h3>Mobile & Cross-Platform</h3>
+            </div>
+            <div class="chip-container">
+              <span class="tech-chip">Capacitor Android</span>
+              <span class="tech-chip">Camera & Gallery Plugins</span>
+              <span class="tech-chip">Gradle / Android Studio</span>
+              <span class="tech-chip">Mobile APK Pipelines</span>
+              <span class="tech-chip">Offline Sync</span>
+            </div>
+          </div>
+
+          <!-- Category 4 -->
+          <div class="skill-category">
+            <div class="category-header">
+              <span class="cat-icon">🤖</span>
+              <h3>AI Systems & Automation</h3>
+            </div>
+            <div class="chip-container">
+              <span class="tech-chip">Multi-Provider AI Gateways</span>
+              <span class="tech-chip">Autonomous Agents</span>
+              <span class="tech-chip">Computer Vision Grading</span>
+              <span class="tech-chip">LLM Orchestration</span>
+              <span class="tech-chip">Automated Fallback</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-number">60+</span>
+            <span class="stat-label">FPS Render Target</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Type-Safe TypeScript</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">0ms</span>
+            <span class="stat-label">Frame Scrub Latency</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Live GitHub Showcase & Projects (40% - 62%) -->
+    <section class="story-section" id="section-3">
+      <div class="glass-card projects-card" data-speed="1.0">
+        <div class="card-header-flex">
+          <div>
+            <div class="badge">GITHUB LIVE SHOWCASE</div>
+            <h2>FEATURED WORK &<br><span class="gradient-text">FLAGSHIP REPOSITORIES</span></h2>
+          </div>
+          <div class="github-sync-status" id="github-sync-status">
+            <span class="pulse-indicator"></span>
+            <span id="sync-text">LIVE GITHUB CONNECTED</span>
+          </div>
+        </div>
+        
+        <p>Production applications and open-source tools actively developed and published on GitHub.</p>
+
+        <!-- Project Grid -->
+        <div class="projects-grid">
+
+          <!-- Project 1: Shetkari Raja -->
+          <div class="project-box featured">
+            <div class="project-top">
+              <div class="project-title-row">
+                <span class="project-icon">🌾</span>
+                <div>
+                  <h3 class="project-name">Shetkari Raja</h3>
+                  <span class="project-type">Agricultural Platform & Mobile App</span>
+                </div>
+              </div>
+              <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" rel="noopener noreferrer" class="repo-link-icon" title="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="project-desc">
+              Comprehensive farmer empowerment platform featuring AI-driven grain grading with native camera capture, live procurement queue position tracking, and DBT/PFMS direct benefit payment status verification.
+            </p>
+            <div class="project-tags">
+              <span>React</span>
+              <span>TypeScript</span>
+              <span>Capacitor</span>
+              <span>Supabase</span>
+              <span>Tailwind</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>View Repository</span>
+                <span class="arrow">&rarr;</span>
+              </a>
+              <span class="repo-badge">Production Ready</span>
+            </div>
+          </div>
+
+          <!-- Project 2: Sanjivani AI Tool -->
+          <div class="project-box">
+            <div class="project-top">
+              <div class="project-title-row">
+                <span class="project-icon">🛡️</span>
+                <div>
+                  <h3 class="project-name">Sanjivani AI Tool</h3>
+                  <span class="project-type">Unified AI Gateway Architecture</span>
+                </div>
+              </div>
+              <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" rel="noopener noreferrer" class="repo-link-icon" title="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="project-desc">
+              High-availability AI Gateway unifying 358 providers with automatic intelligent failover routing, latency load balancing, and a trained security prompt firewall.
+            </p>
+            <div class="project-tags">
+              <span>TypeScript</span>
+              <span>API Gateway</span>
+              <span>AI Security</span>
+              <span>Fault Tolerance</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>View Repository</span>
+                <span class="arrow">&rarr;</span>
+              </a>
+              <span class="repo-badge">358 Providers</span>
+            </div>
+          </div>
+
+          <!-- Project 3: AI Assistant Agent -->
+          <div class="project-box">
+            <div class="project-top">
+              <div class="project-title-row">
+                <span class="project-icon">🧠</span>
+                <div>
+                  <h3 class="project-name">AI Assistant Agent</h3>
+                  <span class="project-type">Autonomous Agentic Workflows</span>
+                </div>
+              </div>
+              <a href="https://github.com/adityatayde111-lgtm/ai-assistant-agent" target="_blank" rel="noopener noreferrer" class="repo-link-icon" title="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="project-desc">
+              Context-aware autonomous agent architecture with dynamic tool dispatch, long-term memory synthesis, and multi-turn conversational intelligence.
+            </p>
+            <div class="project-tags">
+              <span>TypeScript</span>
+              <span>LLM Orchestration</span>
+              <span>Agents</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/adityatayde111-lgtm/ai-assistant-agent" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>View Repository</span>
+                <span class="arrow">&rarr;</span>
+              </a>
+              <span class="repo-badge">Agentic AI</span>
+            </div>
+          </div>
+
+          <!-- Project 4: AgriSmart -->
+          <div class="project-box">
+            <div class="project-top">
+              <div class="project-title-row">
+                <span class="project-icon">🌱</span>
+                <div>
+                  <h3 class="project-name">AgriSmart AI</h3>
+                  <span class="project-type">Predictive Agriculture & Decision Engine</span>
+                </div>
+              </div>
+              <a href="https://github.com/adityatayde111-lgtm/AgriSmart-Helping-Farmers-Make-Better-Decisions-with-AI" target="_blank" rel="noopener noreferrer" class="repo-link-icon" title="View on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="project-desc">
+              Data-driven farming intelligence platform analyzing soil parameters, weather conditions, and market prices to optimize agronomic returns.
+            </p>
+            <div class="project-tags">
+              <span>TypeScript</span>
+              <span>Predictive ML</span>
+              <span>Analytics</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/adityatayde111-lgtm/AgriSmart-Helping-Farmers-Make-Better-Decisions-with-AI" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>View Repository</span>
+                <span class="arrow">&rarr;</span>
+              </a>
+              <span class="repo-badge">Agritech AI</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- All Repos Banner -->
+        <div class="all-repos-banner">
+          <div class="banner-info">
+            <span class="pulse-icon">📂</span>
+            <span>Explore all <strong>16+ open-source repositories</strong> on GitHub</span>
+          </div>
+          <a href="https://github.com/adityatayde111-lgtm?tab=repositories" target="_blank" rel="noopener noreferrer" class="action-btn small-btn">
+            View All on GitHub &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Experience & Education Timeline (62% - 82%) -->
+    <section class="story-section" id="section-4">
+      <div class="glass-card timeline-card" data-speed="1.0">
+        <div class="badge">TRACK RECORD &amp; MILESTONES</div>
+        <h2>EXPERIENCE &amp;<br><span class="gradient-text">ACADEMIC JOURNEY</span></h2>
+        <p>A proven record of designing, building, and deploying real-world software solutions from scratch.</p>
+
+        <div class="timeline-container">
+          <!-- Timeline Item 1 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">2024 - PRESENT</div>
+              <h3 class="timeline-role">Lead Full-Stack &amp; AI Systems Engineer</h3>
+              <div class="timeline-org">Flagship Projects &amp; Open Source • Shetkari Raja / Sanjivani AI</div>
+              <ul class="timeline-bullets">
+                <li>Architected full-stack agricultural platform with <strong>React 18</strong>, <strong>TypeScript</strong>, and <strong>Supabase</strong>, supporting real-time grain auctions and queue positioning.</li>
+                <li>Built native mobile camera integration with <strong>Capacitor</strong> for AI computer vision quality grading of grain specimens.</li>
+                <li>Engineered <strong>Sanjivani AI Gateway</strong> unifying 358 providers with instant fallback and custom security firewall.</li>
+                <li>Designed custom 240-frame 60FPS canvas scrubbing engine and Web Audio ambient synthesis for creative portfolios.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Timeline Item 2 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">2023 - 2024</div>
+              <h3 class="timeline-role">Open-Source Developer &amp; Systems Enthusiast</h3>
+              <div class="timeline-org">GitHub Community • @adityatayde111-lgtm</div>
+              <ul class="timeline-bullets">
+                <li>Authored and published <strong>16+ public repositories</strong> demonstrating expertise in TypeScript, mobile engineering, and AI pipelines.</li>
+                <li>Built automated CI/CD and deployment workflows using Vercel, Vite, and GitHub Actions.</li>
+                <li>Maintained high code quality standards, zero-regression builds, and modular software design patterns.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Timeline Item 3 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">ACADEMIC FOUNDATION</div>
+              <h3 class="timeline-role">Computer Engineering / Technology Studies</h3>
+              <div class="timeline-org">Engineering &amp; Technology</div>
+              <ul class="timeline-bullets">
+                <li>Specialized in Data Structures &amp; Algorithms, Object-Oriented Architecture, Database Management Systems, and Web Engineering.</li>
+                <li>Continuous hands-on practical implementation of production software stacks and mobile frameworks.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 5: Call To Action & Deliverables (82% - 100%) -->
+    <section class="story-section" id="section-5">
+      <div class="glass-card cta-card" data-speed="1.0">
+        <div class="badge">LET’S COLLABORATE</div>
+        <h2>LET’S BUILD SOMETHING<br><span class="gradient-text">EXTRAORDINARY</span></h2>
+        <p>Available for high-impact Full-Stack Engineering, AI Systems Development, and Creative Web Architecture roles.</p>
+        
+        <!-- Contact Badges Strip -->
+        <div class="contact-badges-strip">
+          <div class="contact-pill" id="copy-email-btn" title="Click to copy email">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span id="email-text">adityatayde111@gmail.com</span>
+            <span class="copy-hint">Copy</span>
+          </div>
+          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="contact-pill">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span>GitHub @adityatayde111-lgtm</span>
+          </a>
+          <div class="contact-pill static">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>India • Global Remote Friendly</span>
+          </div>
+        </div>
+
+        <!-- Action Deliverables -->
+        <div class="actions-group">
+          <!-- Interactive Resume Trigger -->
+          <button class="action-btn primary-btn" id="cta-open-resume">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            Open Interactive Resume / ATS
+          </button>
+
+          <!-- Direct GitHub Profile Link -->
+          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="action-btn secondary-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Visit GitHub Profile
+          </a>
+
+          <!-- Media Showcase Downloads -->
+          <a href="cinematic_widescreen_1080p.mp4" download class="action-btn secondary-btn" title="Download 1080p Widescreen Showreel">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Showreel 1080p
+          </a>
+
+          <a href="cinematic_portrait.mp4" download class="action-btn secondary-btn" title="Download Mobile Portrait Showreel">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Portrait Reel
+          </a>
+        </div>
+
+        <div class="footer-meta">
+          <span>Aditya Tayde &bull; Full-Stack &amp; AI Systems Engineer</span>
+          <span class="meta-separator">&bull;</span>
+          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer">github.com/adityatayde111-lgtm</a>
+          <span class="meta-separator">&bull;</span>
+          <span>60 FPS Canvas Architecture</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive ATS Resume Modal (Screen & Print Optimized) -->
+  <div id="resume-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-container">
+      <div class="modal-toolbar no-print">
+        <div class="toolbar-title">
+          <span class="badge">ATS-OPTIMIZED RESUME</span>
+          <span>Aditya Tayde</span>
+        </div>
+        <div class="toolbar-actions">
+          <button id="print-resume-btn" class="modal-btn print-btn" title="Print or Save as PDF">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>Print / Save PDF</span>
+          </button>
+          <button id="close-resume-btn" class="modal-btn close-btn" title="Close Resume Modal">
+            &times;
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Resume Document Body -->
+      <div class="resume-paper" id="resume-document">
+        
+        <!-- Document Header -->
+        <header class="resume-doc-header">
+          <h1 class="resume-name">ADITYA TAYDE</h1>
+          <div class="resume-title-sub">FULL-STACK SOFTWARE ENGINEER &amp; AI SYSTEMS DEVELOPER</div>
+          <div class="resume-contact-links">
+            <span>Email: <a href="mailto:adityatayde111@gmail.com">adityatayde111@gmail.com</a></span>
+            <span>&bull;</span>
+            <span>GitHub: <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer">github.com/adityatayde111-lgtm</a></span>
+            <span>&bull;</span>
+            <span>Location: Maharashtra, India</span>
+          </div>
+        </header>
+
+        <!-- Summary -->
+        <section class="resume-doc-section">
+          <h2 class="doc-sec-title">PROFESSIONAL SUMMARY</h2>
+          <p class="doc-summary-p">
+            Innovative and performance-driven Full-Stack Software Engineer with proven expertise in building high-scale web platforms, native mobile applications with Capacitor, and intelligent multi-provider AI gateways. Creator of 16+ open-source GitHub repositories including Shetkari Raja and Sanjivani AI. Passionate about 60FPS fluid UI rendering, clean modular architectures, and scalable cloud systems.
+          </p>
+        </section>
+
+        <!-- Skills -->
+        <section class="resume-doc-section">
+          <h2 class="doc-sec-title">TECHNICAL SKILLS</h2>
+          <div class="doc-skills-list">
+            <div class="doc-skill-row">
+              <strong>Frontend &amp; Creative:</strong>
+              <span>React 18, TypeScript, JavaScript (ES6+), Tailwind CSS, HTML5 Canvas 60FPS, WebGL, Vite, Responsive Web Design</span>
+            </div>
+            <div class="doc-skill-row">
+              <strong>Backend &amp; Databases:</strong>
+              <span>Node.js, Supabase, PostgreSQL, Firebase, RESTful APIs, JSON Web Tokens (JWT), Database Normalization</span>
+            </div>
+            <div class="doc-skill-row">
+              <strong>Mobile &amp; Platforms:</strong>
+              <span>Capacitor Android, Native Camera &amp; File Plugins, Gradle, Android Studio, Cross-Platform Architecture</span>
+            </div>
+            <div class="doc-skill-row">
+              <strong>AI &amp; Developer Tools:</strong>
+              <span>Multi-Provider AI Gateways (358+ Models), Autonomous Agents, Computer Vision Integration, Git, GitHub Actions, Vercel</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Projects -->
+        <section class="resume-doc-section">
+          <h2 class="doc-sec-title">KEY ENGINEERING PROJECTS</h2>
+
+          <div class="doc-project-item">
+            <div class="doc-item-header">
+              <span class="doc-item-title">Shetkari Raja — Digital Agricultural Management &amp; Mobile Platform</span>
+              <span class="doc-item-date">2024 - Present</span>
+            </div>
+            <div class="doc-item-sub">Tech: React, TypeScript, Capacitor, Supabase, Tailwind CSS, Android SDK</div>
+            <ul class="doc-bullets">
+              <li>Architected a complete agritech platform enabling farmers to monitor procurement queues in real-time and verify DBT/PFMS direct benefit transfers.</li>
+              <li>Integrated native camera and gallery plugins using Capacitor for AI-driven grain specimen quality analysis on mobile devices.</li>
+              <li>Engineered zero-regression build configurations supporting Android Gradle 9 / AGP 9 and responsive web deployments.</li>
+            </ul>
+          </div>
+
+          <div class="doc-project-item">
+            <div class="doc-item-header">
+              <span class="doc-item-title">Sanjivani AI Tool — Unified High-Availability AI Gateway</span>
+              <span class="doc-item-date">2024</span>
+            </div>
+            <div class="doc-item-sub">Tech: TypeScript, API Routing, Security Firewalls, Fault Tolerant Systems</div>
+            <ul class="doc-bullets">
+              <li>Engineered a unified AI gateway bridging 358 providers with automatic failover and latency-based routing.</li>
+              <li>Implemented a prompt security firewall to detect and neutralize adversarial inputs before model execution.</li>
+            </ul>
+          </div>
+
+          <div class="doc-project-item">
+            <div class="doc-item-header">
+              <span class="doc-item-title">AI Assistant Agent &amp; AgriSmart AI</span>
+              <span class="doc-item-date">2024</span>
+            </div>
+            <div class="doc-item-sub">Tech: TypeScript, Machine Learning Models, Autonomous Agentic Pipelines</div>
+            <ul class="doc-bullets">
+              <li>Developed context-aware autonomous agent workflows capable of executing multi-step tool calls and state persistence.</li>
+              <li>Implemented predictive machine learning decision tools for agronomic yield improvement.</li>
+            </ul>
+          </div>
+
+          <div class="doc-project-item">
+            <div class="doc-item-header">
+              <span class="doc-item-title">Cinematic 60FPS Canvas Scrubbing &amp; Audio Engine</span>
+              <span class="doc-item-date">2026</span>
+            </div>
+            <div class="doc-item-sub">Tech: HTML5 Canvas, Web Audio API Synthesizer, JavaScript Lerp Math</div>
+            <ul class="doc-bullets">
+              <li>Engineered a 240-frame buttery-smooth canvas scrubbing visualizer with dynamic aspect ratio preservation and zero frame seek lag.</li>
+              <li>Built an ambient generative 4-voice audio synthesizer utilizing the native Web Audio API oscillators and bi-quad filters.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="resume-doc-section">
+          <h2 class="doc-sec-title">EXPERIENCE</h2>
+
+          <div class="doc-project-item">
+            <div class="doc-item-header">
+              <span class="doc-item-title">Full-Stack &amp; AI Systems Developer</span>
+              <span class="doc-item-date">2023 - Present</span>
+            </div>
+            <div class="doc-item-sub">Open Source &amp; Independent Software Development</div>
+            <ul class="doc-bullets">
+              <li>Published 16+ public repositories on GitHub (@adityatayde111-lgtm) covering TypeScript, React, mobile systems, and AI.</li>
+              <li>Configured continuous integration pipelines, automated Vercel deployments, and Android APK compilation scripts.</li>
+              <li>Collaborated on real-world farmer-centric tooling, procurement trackers, and intelligent automated workflows.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Education -->
+        <section class="resume-doc-section">
+          <h2 class="doc-sec-title">EDUCATION</h2>
+          <div class="doc-project-item">
+            <div class="doc-item-header">
+              <span class="doc-item-title">Studies in Computer Engineering &amp; Technology</span>
+              <span class="doc-item-date">Maharashtra, India</span>
+            </div>
+            <div class="doc-item-sub">Core focus: Software Engineering, Data Structures, Database Systems, Cloud Computing</div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast for Copy actions -->
+  <div id="toast" class="toast-notification">Email copied to clipboard!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
