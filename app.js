@@ -31,6 +31,13 @@
   const syncStatus = document.getElementById('github-sync-status');
   const syncText = document.getElementById('sync-text');
 
+  // Launch Portal DOM Elements
+  const portalLoadingBox = document.getElementById('portal-loading-box');
+  const portalEnterBox = document.getElementById('portal-enter-box');
+  const btnEnterSound = document.getElementById('btn-enter-sound');
+  const btnEnterSilent = document.getElementById('btn-enter-silent');
+  const heroPlayShowreelBtn = document.getElementById('hero-play-showreel-btn');
+
   // Modal & Copy Elements
   const resumeModal = document.getElementById('resume-modal');
   const openResumeBtn = document.getElementById('open-resume-btn');
@@ -51,6 +58,9 @@
   let isAudioPlaying = false;
   let audioCtx = null;
   let droneOscillators = [];
+  let portalReady = false;
+  let isIntroAnimating = false;
+  let startProgressSnapshot = 0;
 
   // Storyboard Section Mapping (5 Stages)
   const sections = [
@@ -77,10 +87,29 @@
 
   window.addEventListener('resize', resizeCanvas);
 
+  // Portal Ready State Switch
+  function showPortalEnterActions() {
+    if (portalReady) return;
+    portalReady = true;
+    renderFrame(0);
+
+    if (portalLoadingBox) {
+      portalLoadingBox.style.display = 'none';
+    }
+    if (portalEnterBox) {
+      portalEnterBox.classList.remove('hidden');
+      portalEnterBox.style.display = 'flex';
+    }
+  }
+
   // Preload Image Sequence
   function preloadImages() {
-    let initialBatchLoaded = 0;
-    const initialBatchSize = 25;
+    const initialBatchSize = 18;
+
+    // Safety fallback: reveal enter buttons after 2.5s even if network is slow
+    setTimeout(() => {
+      showPortalEnterActions();
+    }, 2500);
 
     for (let i = 0; i < TOTAL_FRAMES; i++) {
       const img = new Image();
@@ -92,27 +121,83 @@
         if (loaderBar) loaderBar.style.width = `${percent}%`;
         if (loaderPercent) loaderPercent.textContent = `${percent}%`;
 
-        // Once initial batch is ready, reveal website smoothly
-        if (loadedCount >= initialBatchSize && initialBatchLoaded === 0) {
-          initialBatchLoaded = 1;
-          renderFrame(0);
-          setTimeout(() => {
-            if (preloader) preloader.classList.add('loaded');
-          }, 300);
+        // Once initial batch is ready, reveal the Enter Experience buttons
+        if (loadedCount >= initialBatchSize) {
+          showPortalEnterActions();
         }
       };
 
       img.onerror = () => {
         loadedCount++;
-        if (loadedCount >= initialBatchSize && initialBatchLoaded === 0) {
-          initialBatchLoaded = 1;
-          renderFrame(0);
-          if (preloader) preloader.classList.add('loaded');
+        if (loadedCount >= initialBatchSize) {
+          showPortalEnterActions();
         }
       };
 
       images.push(img);
     }
+  }
+
+  // Cinematic 60FPS Video/Canvas Intro Showreel Sweep
+  function playCinematicIntroAnimation() {
+    if (isIntroAnimating) return;
+    isIntroAnimating = true;
+    startProgressSnapshot = currentProgress;
+
+    if (isVideoMode && video) {
+      try {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+        setTimeout(() => {
+          if (isVideoMode) {
+            video.pause();
+            isIntroAnimating = false;
+          }
+        }, 3000);
+      } catch (e) {
+        isIntroAnimating = false;
+      }
+      return;
+    }
+
+    const startTime = performance.now();
+    const duration = 2800; // 2.8s smooth camera sweep
+    const sweepRange = Math.min(48, TOTAL_FRAMES - 1);
+
+    function introStep(now) {
+      if (!isIntroAnimating) return;
+
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+
+      // Smooth sine arc: sweeps forward then gently returns to baseline
+      const arc = Math.sin(t * Math.PI);
+      const sweepFrame = Math.round(arc * sweepRange);
+
+      currentFrameIndex = sweepFrame;
+      renderFrame(currentFrameIndex);
+
+      const displayIndex = String(currentFrameIndex + 1).padStart(3, '0');
+      if (frameCounter) {
+        frameCounter.textContent = `FRAME ${displayIndex} / ${TOTAL_FRAMES}`;
+      }
+
+      if (t < 1) {
+        requestAnimationFrame(introStep);
+      } else {
+        isIntroAnimating = false;
+        // Restore to current scroll progress frame
+        const restoreFrame = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
+        currentFrameIndex = restoreFrame;
+        renderFrame(currentFrameIndex);
+        if (frameCounter) {
+          const idx = String(currentFrameIndex + 1).padStart(3, '0');
+          frameCounter.textContent = `FRAME ${idx} / ${TOTAL_FRAMES}`;
+        }
+      }
+    }
+
+    requestAnimationFrame(introStep);
   }
 
   // Draw frame to canvas with aspect ratio preserved ('cover' style)
@@ -174,23 +259,30 @@
       progressBar.style.width = `${(currentProgress * 100).toFixed(1)}%`;
     }
 
+    // Cancel intro animation if user actively scrolls
+    if (isIntroAnimating && Math.abs(targetProgress - startProgressSnapshot) > 0.04) {
+      isIntroAnimating = false;
+    }
+
     // Target Frame
     const nextFrameIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
 
-    if (nextFrameIndex !== currentFrameIndex) {
-      currentFrameIndex = nextFrameIndex;
-      const displayIndex = String(currentFrameIndex + 1).padStart(3, '0');
-      if (frameCounter) {
-        frameCounter.textContent = `FRAME ${displayIndex} / ${TOTAL_FRAMES}`;
-      }
+    if (!isIntroAnimating) {
+      if (nextFrameIndex !== currentFrameIndex) {
+        currentFrameIndex = nextFrameIndex;
+        const displayIndex = String(currentFrameIndex + 1).padStart(3, '0');
+        if (frameCounter) {
+          frameCounter.textContent = `FRAME ${displayIndex} / ${TOTAL_FRAMES}`;
+        }
 
-      if (!isVideoMode) {
-        renderFrame(currentFrameIndex);
+        if (!isVideoMode) {
+          renderFrame(currentFrameIndex);
+        }
       }
     }
 
     // Video mode scrubbing sync
-    if (isVideoMode && video.duration) {
+    if (isVideoMode && video.duration && !isIntroAnimating) {
       const targetTime = currentProgress * video.duration;
       if (Math.abs(video.currentTime - targetTime) > 0.03) {
         video.currentTime = targetTime;
@@ -433,7 +525,26 @@
     }
   }
 
-  async function playCurrentTrack() {
+  // Smooth Volume Fade In (Studio Luxury Swell)
+  function fadeInAudio(targetVol = 0.75, durationMs = 1200) {
+    if (!bgAudio) return;
+    bgAudio.volume = 0.05;
+    const startTime = performance.now();
+    function step(now) {
+      if (isMuted) return;
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      bgAudio.volume = 0.05 + progress * (targetVol - 0.05);
+      if (progress < 1 && isAudioPlaying) {
+        requestAnimationFrame(step);
+      } else if (isAudioPlaying) {
+        bgAudio.volume = targetVol;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  async function playCurrentTrack(fadeIn = false) {
     const track = TRACKS[currentTrackKey];
     if (!track) return;
 
@@ -451,8 +562,19 @@
     if (!bgAudio) return;
 
     try {
+      if (!bgAudio.src || bgAudio.src === '' || bgAudio.src.endsWith(window.location.pathname)) {
+        bgAudio.src = track.src;
+      }
+      if (fadeIn && !isMuted) {
+        bgAudio.volume = 0.05;
+      } else {
+        bgAudio.volume = isMuted ? 0 : (previousVolume || 0.75);
+      }
       await bgAudio.play();
       setAudioPlaybackState(true);
+      if (fadeIn && !isMuted) {
+        fadeInAudio(previousVolume || 0.75, 1200);
+      }
     } catch (err) {
       console.warn('Audio play requires user interaction or autoplay blocked:', err);
       setAudioPlaybackState(false);
@@ -639,6 +761,42 @@
 
       showToast(`Loaded personal song: ${songTitle}`);
       playCurrentTrack();
+    });
+  }
+
+  // Cinematic Launch Portal Enter Handlers & Showreel Trigger
+  function enterExperience(withSound = true) {
+    if (preloader) {
+      preloader.classList.add('loaded');
+    }
+
+    if (withSound) {
+      // User gesture directly starts audio without autoplay restriction block
+      playCurrentTrack(true);
+      // Start cinematic 60FPS intro showreel sweep
+      playCinematicIntroAnimation();
+    }
+  }
+
+  if (btnEnterSound) {
+    btnEnterSound.addEventListener('click', () => {
+      enterExperience(true);
+    });
+  }
+
+  if (btnEnterSilent) {
+    btnEnterSilent.addEventListener('click', () => {
+      enterExperience(false);
+    });
+  }
+
+  if (heroPlayShowreelBtn) {
+    heroPlayShowreelBtn.addEventListener('click', () => {
+      playCurrentTrack(true);
+      playCinematicIntroAnimation();
+      if (window.scrollY > 150) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
   }
 

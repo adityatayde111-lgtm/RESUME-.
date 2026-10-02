@@ -108,16 +108,63 @@
     </div>
   </header>
 
-  <!-- Preloader Screen -->
-  <div id="preloader">
-    <div class="loader-content">
-      <div class="loader-spinner"></div>
-      <div class="loader-title">CALIBRATING HIGH-PERFORMANCE WORKSPACE</div>
-      <div class="loader-subtitle">Loading 240-Frame Interactive Storyboard & GitHub Data...</div>
-      <div class="loader-bar-bg">
-        <div id="loader-bar"></div>
+  <!-- Cinematic Launch Portal & Enter Experience Overlay -->
+  <div id="preloader" class="cinematic-portal">
+    <div class="portal-grid-bg"></div>
+    <div class="portal-ambient-glow"></div>
+
+    <div class="portal-card">
+      <!-- Aditya Tayde Hero Identity Reveal -->
+      <div class="portal-avatar-frame">
+        <div class="portal-halo-ring"></div>
+        <div class="portal-halo-ring outer"></div>
+        <img src="assets/aditya-tayde.jpg" alt="Aditya Tayde" class="portal-avatar-img">
+        <div class="portal-badge-online">
+          <span class="online-pulse"></span>
+          <span>ONLINE</span>
+        </div>
       </div>
-      <div id="loader-percent">0%</div>
+
+      <div class="portal-info-box">
+        <span class="portal-badge-tag">OFFICIAL PORTFOLIO &amp; SHOWREEL</span>
+        <h1 class="portal-name">ADITYA TAYDE</h1>
+        <p class="portal-sub">Integrated B.Tech in CSE &bull; Sanjivani University &bull; Software Developer</p>
+      </div>
+
+      <!-- Loading State (shown while downloading frames) -->
+      <div class="portal-loading-state" id="portal-loading-box">
+        <div class="loader-spinner"></div>
+        <div class="loader-subtitle" id="loader-status-text">Calibrating 60FPS Storyboard &amp; Cinematic Audio...</div>
+        <div class="loader-bar-bg">
+          <div id="loader-bar"></div>
+        </div>
+        <div id="loader-percent">0%</div>
+      </div>
+
+      <!-- Enter Experience Buttons (revealed when ready) -->
+      <div class="portal-enter-actions hidden" id="portal-enter-box">
+        <button id="btn-enter-sound" class="portal-enter-btn" title="Launch experience with cinematic soundtrack & video">
+          <div class="btn-glow-pulse"></div>
+          <div class="enter-btn-content">
+            <span class="enter-icon">🎬</span>
+            <div class="enter-text-col">
+              <span class="enter-main-title">ENTER EXPERIENCE</span>
+              <span class="enter-sub-title">WITH SOUNDTRACK &amp; 60FPS VIDEO</span>
+            </div>
+            <span class="enter-music-icon">🎵</span>
+          </div>
+        </button>
+
+        <button id="btn-enter-silent" class="portal-silent-btn" title="Enter without sound">
+          <span>Enter Silently (Muted) 🔇</span>
+        </button>
+
+        <div class="portal-feature-badges">
+          <span class="portal-feature-pill">✨ Inspiring Cinematic Theme</span>
+          <span class="portal-feature-pill">⚡ 240-Frame 60FPS Scrub</span>
+          <span class="portal-feature-pill">🤖 AI Copilot</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -191,6 +238,12 @@
               <line x1="16" y1="17" x2="8" y2="17"></line>
             </svg>
             View Interactive Resume
+          </button>
+          <button class="action-btn play-showreel-btn" id="hero-play-showreel-btn" title="Experience 60FPS Video Showreel with Soundtrack">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Play Showreel &amp; Music 🎬
           </button>
           <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" rel="noopener noreferrer" class="action-btn linkedin-btn">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
