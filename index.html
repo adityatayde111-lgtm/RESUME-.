@@ -57,6 +57,12 @@
         <span>Resume</span>
       </button>
 
+      <!-- Open AI Copilot Button -->
+      <button id="nav-ai-btn" class="control-btn ai-nav-btn" title="Chat with Aditya's AI Copilot">
+        <span class="ai-sparkle">✨</span>
+        <span>Ask AI</span>
+      </button>
+
       <div class="frame-indicator">
         <span class="rec-dot"></span>
         <span id="frame-counter">FRAME 001 / 240</span>
@@ -719,6 +725,91 @@
         </section>
 
       </div>
+    </div>
+  </div>
+
+  <!-- Floating AI Assistant Copilot Widget -->
+  <div id="ai-copilot-widget" class="ai-widget-wrapper">
+    <!-- Floating Trigger Button -->
+    <button id="ai-widget-trigger" class="ai-floating-btn" title="Chat with Aditya's AI Copilot" aria-label="Open AI Assistant">
+      <div class="ai-btn-glow"></div>
+      <div class="ai-btn-avatar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+          <rect x="3" y="8" width="18" height="12" rx="4"></rect>
+          <circle cx="8" cy="13" r="1.5" fill="currentColor"></circle>
+          <circle cx="16" cy="13" r="1.5" fill="currentColor"></circle>
+          <line x1="9" y1="17" x2="15" y2="17"></line>
+        </svg>
+      </div>
+      <div class="ai-btn-text">
+        <span class="ai-label">ASK ADITYA AI</span>
+        <span class="ai-status-pulse">ONLINE</span>
+      </div>
+    </button>
+
+    <!-- Floating Chat Window (Glassmorphic Drawer) -->
+    <div id="ai-chat-drawer" class="ai-chat-window" aria-hidden="true">
+      <div class="ai-chat-header">
+        <div class="ai-header-info">
+          <div class="ai-avatar-badge">
+            <span class="ai-sparkle">✨</span>
+          </div>
+          <div>
+            <h4 class="ai-header-title">Aditya AI Copilot</h4>
+            <span class="ai-header-sub">GPT-4o-mini &amp; Portfolio Intelligence</span>
+          </div>
+        </div>
+        <div class="ai-header-actions">
+          <button id="ai-clear-btn" class="ai-icon-btn" title="Clear Conversation">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+          <button id="ai-close-btn" class="ai-icon-btn close" title="Close AI Assistant">
+            &times;
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Prompt Chips -->
+      <div class="ai-suggestions" id="ai-suggestions">
+        <span class="suggestion-chip" data-prompt="What are Aditya's core technical skills?">⚡ Core Stack</span>
+        <span class="suggestion-chip" data-prompt="Tell me about the Shetkari Raja flagship project.">🌾 Shetkari Raja</span>
+        <span class="suggestion-chip" data-prompt="How does Sanjivani AI Gateway work?">🛡️ Sanjivani AI</span>
+        <span class="suggestion-chip" data-prompt="Is Aditya available for engineering roles?">💼 Hire Aditya</span>
+        <span class="suggestion-chip" data-prompt="How can I contact Aditya Tayde?">📬 Contact</span>
+      </div>
+
+      <!-- Chat Messages Thread -->
+      <div class="ai-messages-container" id="ai-messages-list">
+        <div class="ai-msg assistant-msg">
+          <div class="msg-avatar">AI</div>
+          <div class="msg-bubble">
+            Hello! I am <strong>Aditya's AI Copilot</strong>, connected with OpenAI GPT-4o-mini and trained on Aditya's full engineering portfolio.
+            <br><br>
+            Ask me anything about his full-stack systems, <strong>Shetkari Raja</strong>, <strong>Sanjivani AI Gateway</strong>, or his 16+ GitHub projects!
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input Form -->
+      <form id="ai-chat-form" class="ai-chat-input-area">
+        <input 
+          type="text" 
+          id="ai-chat-input" 
+          placeholder="Ask anything about Aditya..." 
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="ai-send-btn" class="ai-send-button" title="Send message">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </form>
     </div>
   </div>
 

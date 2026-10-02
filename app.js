@@ -418,6 +418,249 @@
     });
   }
 
+  // AI Copilot Elements
+  const navAiBtn = document.getElementById('nav-ai-btn');
+  const aiWidgetTrigger = document.getElementById('ai-widget-trigger');
+  const aiChatDrawer = document.getElementById('ai-chat-drawer');
+  const aiCloseBtn = document.getElementById('ai-close-btn');
+  const aiClearBtn = document.getElementById('ai-clear-btn');
+  const aiChatForm = document.getElementById('ai-chat-form');
+  const aiChatInput = document.getElementById('ai-chat-input');
+  const aiMessagesList = document.getElementById('ai-messages-list');
+  const aiSuggestions = document.getElementById('ai-suggestions');
+
+  let chatHistory = [];
+
+  // Toggle AI Drawer
+  function openAiChat() {
+    if (!aiChatDrawer) return;
+    aiChatDrawer.classList.add('open');
+    aiChatDrawer.setAttribute('aria-hidden', 'false');
+    if (aiChatInput) setTimeout(() => aiChatInput.focus(), 200);
+  }
+
+  function closeAiChat() {
+    if (!aiChatDrawer) return;
+    aiChatDrawer.classList.remove('open');
+    aiChatDrawer.setAttribute('aria-hidden', 'true');
+  }
+
+  if (navAiBtn) navAiBtn.addEventListener('click', openAiChat);
+  if (aiWidgetTrigger) aiWidgetTrigger.addEventListener('click', openAiChat);
+  if (aiCloseBtn) aiCloseBtn.addEventListener('click', closeAiChat);
+
+  if (aiClearBtn) {
+    aiClearBtn.addEventListener('click', () => {
+      chatHistory = [];
+      if (aiMessagesList) {
+        aiMessagesList.innerHTML = `
+          <div class="ai-msg assistant-msg">
+            <div class="msg-avatar">AI</div>
+            <div class="msg-bubble">
+              Conversation cleared! How else can I assist you with Aditya's portfolio and projects?
+            </div>
+          </div>
+        `;
+      }
+    });
+  }
+
+  // Suggestion Chips
+  if (aiSuggestions) {
+    aiSuggestions.addEventListener('click', (e) => {
+      const chip = e.target.closest('.suggestion-chip');
+      if (chip) {
+        const prompt = chip.getAttribute('data-prompt');
+        if (prompt) {
+          sendUserMessage(prompt);
+        }
+      }
+    });
+  }
+
+  // Append Chat Message
+  function appendChatMessage(role, htmlContent) {
+    if (!aiMessagesList) return;
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `ai-msg ${role === 'user' ? 'user-msg' : 'assistant-msg'}`;
+    msgDiv.innerHTML = `
+      <div class="msg-avatar">${role === 'user' ? 'YOU' : 'AI'}</div>
+      <div class="msg-bubble">${htmlContent}</div>
+    `;
+    aiMessagesList.appendChild(msgDiv);
+    aiMessagesList.scrollTop = aiMessagesList.scrollHeight;
+  }
+
+  // Show Typing Indicator
+  function showTypingIndicator() {
+    if (!aiMessagesList) return null;
+    const indicator = document.createElement('div');
+    indicator.className = 'ai-msg assistant-msg typing-indicator-item';
+    indicator.innerHTML = `
+      <div class="msg-avatar">AI</div>
+      <div class="msg-bubble">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    `;
+    aiMessagesList.appendChild(indicator);
+    aiMessagesList.scrollTop = aiMessagesList.scrollHeight;
+    return indicator;
+  }
+
+  // Local Knowledge Base Fallback Engine
+  function generateLocalKnowledgeReply(prompt) {
+    const q = prompt.toLowerCase();
+
+    if (q.includes('skill') || q.includes('stack') || q.includes('tech') || q.includes('language')) {
+      return `<strong>Aditya's Core Technical Arsenal:</strong>
+      <br><br>
+      • <strong>Frontend:</strong> React 18, TypeScript, Tailwind CSS, HTML5 Canvas 60FPS Engine, WebGL, Vite<br>
+      • <strong>Backend &amp; DB:</strong> Node.js, Supabase, PostgreSQL, Firebase, RESTful APIs, JWT Auth<br>
+      • <strong>Mobile:</strong> Capacitor Android, Native Camera &amp; Gallery Plugins, Gradle Pipelines<br>
+      • <strong>AI Systems:</strong> Multi-Provider LLM Gateways (358+ models), Autonomous Agents, Computer Vision<br>
+      <br>
+      Explore all 16+ repositories on his <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">GitHub Profile</a>!`;
+    }
+
+    if (q.includes('shetkari') || q.includes('raja') || q.includes('farm') || q.includes('grain')) {
+      return `<strong>🌾 Shetkari Raja (Flagship Agritech Platform)</strong>
+      <br><br>
+      Shetkari Raja is a digital agricultural platform engineered by Aditya with <strong>React</strong>, <strong>TypeScript</strong>, <strong>Capacitor Android</strong>, and <strong>Supabase</strong>.
+      <br><br>
+      <strong>Key Features:</strong><br>
+      • <strong>AI Grain Grading:</strong> Uses native device camera capture to analyze grain specimen quality.<br>
+      • <strong>Live Queue Tracker:</strong> Real-time queue position monitoring for grain procurement centers.<br>
+      • <strong>DBT/PFMS Payment Tracking:</strong> Direct benefit transfer status verification for farmers.<br>
+      <br>
+      Check the repository: <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/shetkari-raja</a>`;
+    }
+
+    if (q.includes('sanjivani') || q.includes('gateway') || q.includes('358') || q.includes('firewall')) {
+      return `<strong>🛡️ Sanjivani AI Tool (Unified AI Gateway)</strong>
+      <br><br>
+      A high-availability AI Gateway built in TypeScript that unifies <strong>358 AI model providers</strong> under a single resilient endpoint.
+      <br><br>
+      <strong>Highlights:</strong><br>
+      • Intelligent automatic failover routing across providers.<br>
+      • Zero-latency load balancing and latency routing.<br>
+      • Trained prompt security firewall that neutralizes adversarial inputs before execution.<br>
+      <br>
+      Check the repository: <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/sanjivani-ai-tool</a>`;
+    }
+
+    if (q.includes('hire') || q.includes('available') || q.includes('job') || q.includes('opportunity') || q.includes('work')) {
+      return `<strong>💼 Availability &amp; Roles</strong>
+      <br><br>
+      Yes! Aditya is currently open for high-impact opportunities:
+      <br><br>
+      • <strong>Full-Stack Software Engineer</strong> (React, TypeScript, Node.js, Supabase)<br>
+      • <strong>AI Systems &amp; Agentic Developer</strong> (LLM Orchestration, Gateways, Computer Vision)<br>
+      • <strong>Creative Web Technologist</strong> (High-performance 60FPS Canvas, UI Systems)<br>
+      <br>
+      Location: Maharashtra, India • Open for Global Remote Roles.<br>
+      Reach out via email: <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>`;
+    }
+
+    if (q.includes('contact') || q.includes('email') || q.includes('github') || q.includes('reach')) {
+      return `<strong>📬 How to Connect with Aditya:</strong>
+      <br><br>
+      • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a><br>
+      • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">@adityatayde111-lgtm</a> (16+ Public Repos)<br>
+      • <strong>Live Portfolio:</strong> <a href="https://resume-atm-f33c.vercel.app" target="_blank" style="color: #38bdf8; text-decoration: underline;">resume-atm-f33c.vercel.app</a><br>
+      <br>
+      You can also click <em>Resume</em> in the header to view or print his ATS resume!`;
+    }
+
+    if (q.includes('education') || q.includes('college') || q.includes('degree') || q.includes('study')) {
+      return `<strong>🎓 Academic Background:</strong>
+      <br><br>
+      Aditya has a rigorous foundation in <strong>Computer Engineering &amp; Technology Studies</strong>, with practical specialization in:
+      <br><br>
+      • Data Structures &amp; Algorithms<br>
+      • Distributed Systems &amp; Database Optimization (PostgreSQL, Supabase)<br>
+      • Modern Web &amp; Mobile Architectures (React, Capacitor, Android)`;
+    }
+
+    // Default intelligent overview
+    return `Aditya Tayde is a <strong>Full-Stack Software Engineer &amp; AI Systems Developer</strong> with 16+ open-source GitHub repositories.
+    <br><br>
+    Notable achievements include architecting <strong>Shetkari Raja</strong> (an agricultural platform with AI grain grading), <strong>Sanjivani AI</strong> (a 358-provider unified gateway), and this <strong>60FPS Canvas scrub engine</strong> with native Web Audio synthesis.
+    <br><br>
+    Feel free to ask about his specific projects, tech stack, or email him at <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>!`;
+  }
+
+  // Handle User Message Submission
+  async function sendUserMessage(text) {
+    const cleanText = text.trim();
+    if (!cleanText) return;
+
+    if (aiChatInput) aiChatInput.value = '';
+    appendChatMessage('user', escapeHtml(cleanText));
+    chatHistory.push({ role: 'user', content: cleanText });
+
+    const typingEl = showTypingIndicator();
+
+    try {
+      // First attempt: call serverless endpoint /api/chat
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: cleanText,
+          history: chatHistory
+        })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.reply) {
+          if (typingEl) typingEl.remove();
+          appendChatMessage('assistant', formatMarkdown(data.reply));
+          chatHistory.push({ role: 'assistant', content: data.reply });
+          return;
+        }
+      }
+
+      // If server returns fallback or insufficient quota, use local knowledge engine
+      throw new Error('Using local knowledge fallback');
+    } catch (err) {
+      if (typingEl) typingEl.remove();
+      const localReply = generateLocalKnowledgeReply(cleanText);
+      appendChatMessage('assistant', localReply);
+      chatHistory.push({ role: 'assistant', content: localReply });
+    }
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  function formatMarkdown(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" style="color: #38bdf8; text-decoration: underline;">$1</a>');
+  }
+
+  if (aiChatForm) {
+    aiChatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (aiChatInput && aiChatInput.value) {
+        sendUserMessage(aiChatInput.value);
+      }
+    });
+  }
+
   // Initialization
   function init() {
     resizeCanvas();
