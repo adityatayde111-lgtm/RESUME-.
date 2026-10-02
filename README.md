@@ -16,6 +16,7 @@
 - **Web Audio Generative Drone**: Built-in 4-voice ambient sound synthesizer utilizing the browser's native Web Audio API oscillators and bi-quad lowpass filtering.
 - **Live GitHub API Synchronization**: Real-time integration with the GitHub REST API to showcase repository stats, stars, and open-source contributions.
 - **Interactive ATS-Optimized Resume**: Integrated printable, recruiter-ready ATS resume view with single-click PDF export (`Ctrl+P` / `Cmd+P` print stylesheet).
+- **Verified Licenses & LinkedIn Certifications Guide**: Complete verified credentials documentation (`LINKEDIN_CERTIFICATIONS.md`) featuring direct 1-click addition links to LinkedIn for Meta, DeepLearning.AI, Google Cloud, HackerRank, PostgreSQL, and Ionic Capacitor.
 
 ---
 
