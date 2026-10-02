@@ -701,6 +701,165 @@
     });
   }
 
+  // Global Remote Collaboration & Timezone Explorer (Powered by REST Countries API v5)
+  function setupGlobalCollabExplorer() {
+    const pillsRow = document.getElementById('country-pills');
+    if (!pillsRow) return;
+
+    const intelBox = document.getElementById('country-intel-box');
+    const flagEl = document.getElementById('intel-flag');
+    const nameEl = document.getElementById('intel-name');
+    const regionEl = document.getElementById('intel-region');
+    const overlapEl = document.getElementById('intel-overlap');
+    const currencyEl = document.getElementById('intel-currency');
+    const timezonesEl = document.getElementById('intel-timezones');
+    const hireLink = document.getElementById('intel-hire-link');
+
+    // Resilient offline/instant cache
+    const countryDataCache = {
+      canada: {
+        name: 'Canada',
+        capital: 'Ottawa',
+        region: 'Americas',
+        flagEmoji: '🇨🇦',
+        currency: 'CAD ($)',
+        timezones: 'UTC-08:00 to UTC-03:30',
+        overlap: '4-6 Hours Sync with IST'
+      },
+      'united states': {
+        name: 'United States',
+        capital: 'Washington, D.C.',
+        region: 'Americas',
+        flagEmoji: '🇺🇸',
+        currency: 'USD ($)',
+        timezones: 'UTC-12:00 to UTC+12:00 (EST/PST)',
+        overlap: '4-5 Hours Sync with IST (EST overlap)'
+      },
+      'united kingdom': {
+        name: 'United Kingdom',
+        capital: 'London',
+        region: 'Europe',
+        flagEmoji: '🇬🇧',
+        currency: 'GBP (£)',
+        timezones: 'UTC+00:00 (GMT/BST)',
+        overlap: '6-8 Hours Prime Overlap with IST'
+      },
+      germany: {
+        name: 'Germany',
+        capital: 'Berlin',
+        region: 'Europe',
+        flagEmoji: '🇩🇪',
+        currency: 'EUR (€)',
+        timezones: 'UTC+01:00 (CET)',
+        overlap: '6-7 Hours Prime Overlap with IST'
+      },
+      singapore: {
+        name: 'Singapore',
+        capital: 'Singapore',
+        region: 'Asia',
+        flagEmoji: '🇸🇬',
+        currency: 'SGD ($)',
+        timezones: 'UTC+08:00 (SGT)',
+        overlap: '7-8 Hours Direct Daytime Overlap'
+      },
+      'united arab emirates': {
+        name: 'United Arab Emirates',
+        capital: 'Abu Dhabi',
+        region: 'Asia',
+        flagEmoji: '🇦🇪',
+        currency: 'AED (د.إ)',
+        timezones: 'UTC+04:00 (GST)',
+        overlap: '7+ Hours Direct Sync with IST'
+      },
+      australia: {
+        name: 'Australia',
+        capital: 'Canberra',
+        region: 'Oceania',
+        flagEmoji: '🇦🇺',
+        currency: 'AUD ($)',
+        timezones: 'UTC+08:00 to UTC+10:30 (AEST)',
+        overlap: '5-7 Hours Morning/Afternoon Sync'
+      },
+      india: {
+        name: 'India',
+        capital: 'New Delhi',
+        region: 'Asia',
+        flagEmoji: '🇮🇳',
+        currency: 'INR (₹)',
+        timezones: 'UTC+05:30 (IST)',
+        overlap: 'Native Base (100% Core Working Hours)'
+      }
+    };
+
+    function renderCountry(info) {
+      if (!info) return;
+      if (flagEl) flagEl.textContent = info.flagEmoji || '🌐';
+      if (nameEl) nameEl.textContent = info.name || 'Global';
+      if (regionEl) regionEl.textContent = `${info.region || 'World'} • ${info.capital || 'Capital'}`;
+      if (overlapEl) overlapEl.textContent = info.overlapSummary || info.overlap || 'Flexible Global Overlap';
+      if (currencyEl) currencyEl.textContent = info.currencies || info.currency || 'USD ($)';
+      if (timezonesEl) {
+        if (Array.isArray(info.timezones)) {
+          timezonesEl.textContent = info.timezones.length > 2
+            ? `${info.timezones[0]} to ${info.timezones[info.timezones.length - 1]}`
+            : info.timezones.join(', ');
+        } else {
+          timezonesEl.textContent = info.timezones || 'UTC Sync';
+        }
+      }
+      if (hireLink) {
+        hireLink.href = `mailto:adityatayde111@gmail.com?subject=Opportunity%20from%20${encodeURIComponent(info.name || 'Global')}`;
+        const labelSpan = hireLink.querySelector('span');
+        if (labelSpan) {
+          labelSpan.textContent = `Hire / Contact Aditya from ${info.name || 'your region'}`;
+        }
+      }
+    }
+
+    async function loadCountry(query) {
+      const q = query.toLowerCase().trim();
+
+      // Immediately render from fallback cache if present for instant UX
+      if (countryDataCache[q]) {
+        renderCountry(countryDataCache[q]);
+      }
+
+      // Smooth visual feedback
+      if (intelBox) {
+        intelBox.style.opacity = '0.7';
+      }
+
+      try {
+        const res = await fetch(`/api/country?q=${encodeURIComponent(q)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && (data.name || data.found)) {
+            countryDataCache[q] = data;
+            renderCountry(data);
+          }
+        }
+      } catch (e) {
+        // Fallback already rendered, gracefully ignore network issues
+      } finally {
+        if (intelBox) {
+          intelBox.style.opacity = '1';
+        }
+      }
+    }
+
+    pillsRow.addEventListener('click', (e) => {
+      const btn = e.target.closest('.country-pill');
+      if (!btn) return;
+      const country = btn.getAttribute('data-country');
+      if (!country) return;
+
+      pillsRow.querySelectorAll('.country-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      loadCountry(country);
+    });
+  }
+
   // Initialization
   function init() {
     resizeCanvas();
@@ -708,6 +867,7 @@
     updateScroll();
     setupNavigationJumps();
     setupProjectFilters();
+    setupGlobalCollabExplorer();
     fetchGitHubData();
     animate();
   }
