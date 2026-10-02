@@ -305,20 +305,80 @@
     });
   }
 
-  // Ambient Synthesizer (Web Audio API)
-  function initAudioDrone() {
+  // ==========================================================================
+  // Cinematic Audio & Song Player Engine (Inspiring Theme, Impact Beat, Drone & Custom)
+  // ==========================================================================
+  const bgAudio = document.getElementById('bg-soundtrack-player');
+  const audioWidget = document.getElementById('audio-player-widget');
+  const audioPlayBtn = document.getElementById('audio-play-pause-btn');
+  const audioPlayIcon = document.getElementById('audio-play-icon');
+  const audioPauseIcon = document.getElementById('audio-pause-icon');
+  const audioExpandToggle = document.getElementById('audio-expand-toggle');
+  const audioChevronBtn = document.getElementById('audio-chevron-btn');
+  const audioDrawerCloseBtn = document.getElementById('audio-drawer-close-btn');
+  const audioCurrentTimeEl = document.getElementById('audio-current-time');
+  const audioTotalTimeEl = document.getElementById('audio-total-time');
+  const audioTimeDisplay = document.getElementById('audio-time-display');
+  const audioSeekSlider = document.getElementById('audio-seek-slider');
+  const audioVolumeSlider = document.getElementById('audio-volume-slider');
+  const audioMuteBtn = document.getElementById('audio-mute-btn');
+  const volIcon = document.getElementById('vol-icon');
+  const volMutedIcon = document.getElementById('vol-muted-icon');
+  const currentTrackNameEl = document.getElementById('current-track-name');
+  const customSongInput = document.getElementById('custom-song-input');
+  const trackButtons = document.querySelectorAll('.track-select-pill');
+
+  const TRACKS = {
+    cinematic: {
+      name: 'Inspiring Cinematic Theme',
+      src: 'assets/cinematic_theme.mp3',
+      type: 'audio'
+    },
+    impact: {
+      name: 'Impact Moderato Beat',
+      src: 'assets/impact_theme.ogg',
+      type: 'audio'
+    },
+    drone: {
+      name: 'Ambient Synthesizer Drone',
+      src: null,
+      type: 'synth'
+    }
+  };
+
+  let currentTrackKey = 'cinematic';
+  let isMuted = false;
+  let previousVolume = 0.75;
+  let isSeeking = false;
+
+  function formatTime(seconds) {
+    if (!seconds || isNaN(seconds) || !isFinite(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+
+  // Web Audio Synth Drone fallback implementation
+  function startSynthDrone() {
     try {
-      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioCtxClass();
+      if (!audioCtx) {
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioCtxClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      stopSynthDrone();
 
       const masterGain = audioCtx.createGain();
-      masterGain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      const currentVol = bgAudio ? bgAudio.volume : 0.75;
+      masterGain.gain.setValueAtTime(0.12 * currentVol, audioCtx.currentTime);
 
       const filter = audioCtx.createBiquadFilter();
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(260, audioCtx.currentTime);
 
-      // Cinematic Chord: C2 (65.41Hz), G2 (98.0Hz), D3 (146.8Hz), G3 (196.0Hz)
       const frequencies = [65.41, 98.0, 146.83, 196.0];
       droneOscillators = frequencies.map((freq, idx) => {
         const osc = audioCtx.createOscillator();
@@ -336,33 +396,249 @@
       filter.connect(masterGain);
       masterGain.connect(audioCtx.destination);
     } catch (e) {
-      console.warn('Web Audio not supported or blocked:', e);
+      console.warn('Web Audio drone error:', e);
     }
   }
 
-  if (soundToggle) {
-    soundToggle.addEventListener('click', () => {
-      if (!audioCtx) {
-        initAudioDrone();
-        isAudioPlaying = true;
-        const label = soundToggle.querySelector('.btn-label');
-        if (label) label.textContent = 'AUDIO: ON';
-        soundToggle.classList.add('active');
+  function stopSynthDrone() {
+    if (droneOscillators && droneOscillators.length) {
+      droneOscillators.forEach(osc => {
+        try { osc.stop(); osc.disconnect(); } catch (e) {}
+      });
+      droneOscillators = [];
+    }
+  }
+
+  function setAudioPlaybackState(playing) {
+    isAudioPlaying = playing;
+
+    if (soundToggle) {
+      const label = soundToggle.querySelector('.btn-label');
+      if (label) label.textContent = playing ? 'AUDIO: ON' : 'AUDIO: OFF';
+      soundToggle.classList.toggle('active', playing);
+    }
+
+    if (audioWidget) {
+      audioWidget.classList.toggle('playing', playing);
+    }
+
+    if (audioPlayIcon && audioPauseIcon) {
+      if (playing) {
+        audioPlayIcon.classList.add('hidden');
+        audioPauseIcon.classList.remove('hidden');
       } else {
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-          isAudioPlaying = true;
-          const label = soundToggle.querySelector('.btn-label');
-          if (label) label.textContent = 'AUDIO: ON';
-          soundToggle.classList.add('active');
-        } else if (audioCtx.state === 'running') {
-          audioCtx.suspend();
-          isAudioPlaying = false;
-          const label = soundToggle.querySelector('.btn-label');
-          if (label) label.textContent = 'AUDIO: OFF';
-          soundToggle.classList.remove('active');
-        }
+        audioPlayIcon.classList.remove('hidden');
+        audioPauseIcon.classList.add('hidden');
       }
+    }
+  }
+
+  async function playCurrentTrack() {
+    const track = TRACKS[currentTrackKey];
+    if (!track) return;
+
+    if (track.type === 'synth') {
+      if (bgAudio) bgAudio.pause();
+      startSynthDrone();
+      setAudioPlaybackState(true);
+      if (currentTrackNameEl) currentTrackNameEl.textContent = track.name;
+      if (audioTimeDisplay) audioTimeDisplay.textContent = 'Live Synth';
+      if (audioTotalTimeEl) audioTotalTimeEl.textContent = 'Live';
+      return;
+    }
+
+    stopSynthDrone();
+    if (!bgAudio) return;
+
+    try {
+      await bgAudio.play();
+      setAudioPlaybackState(true);
+    } catch (err) {
+      console.warn('Audio play requires user interaction or autoplay blocked:', err);
+      setAudioPlaybackState(false);
+    }
+  }
+
+  function pauseCurrentTrack() {
+    if (bgAudio) bgAudio.pause();
+    stopSynthDrone();
+    if (audioCtx && audioCtx.state === 'running') {
+      audioCtx.suspend();
+    }
+    setAudioPlaybackState(false);
+  }
+
+  function toggleAudioPlayback() {
+    if (isAudioPlaying) {
+      pauseCurrentTrack();
+    } else {
+      playCurrentTrack();
+    }
+  }
+
+  function switchTrack(trackKey, customName = null, customSrc = null) {
+    if (customSrc) {
+      TRACKS['custom'] = {
+        name: customName || 'Custom Song',
+        src: customSrc,
+        type: 'audio'
+      };
+      currentTrackKey = 'custom';
+    } else if (TRACKS[trackKey]) {
+      currentTrackKey = trackKey;
+    }
+
+    const track = TRACKS[currentTrackKey];
+    if (currentTrackNameEl) currentTrackNameEl.textContent = track.name;
+
+    trackButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-track') === currentTrackKey);
+    });
+
+    if (track.type === 'audio') {
+      if (bgAudio) {
+        bgAudio.src = track.src;
+        bgAudio.currentTime = 0;
+      }
+    }
+
+    if (isAudioPlaying) {
+      playCurrentTrack();
+    }
+  }
+
+  // Top nav sound toggle button
+  if (soundToggle) {
+    soundToggle.addEventListener('click', toggleAudioPlayback);
+  }
+
+  // Floating player play/pause button
+  if (audioPlayBtn) {
+    audioPlayBtn.addEventListener('click', toggleAudioPlayback);
+  }
+
+  // Toggle expanded controls drawer
+  if (audioExpandToggle) {
+    audioExpandToggle.addEventListener('click', (e) => {
+      if (e.target.closest('#audio-chevron-btn')) return;
+      if (audioWidget) audioWidget.classList.toggle('expanded');
+    });
+  }
+
+  if (audioChevronBtn) {
+    audioChevronBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (audioWidget) audioWidget.classList.toggle('expanded');
+    });
+  }
+
+  if (audioDrawerCloseBtn) {
+    audioDrawerCloseBtn.addEventListener('click', () => {
+      if (audioWidget) audioWidget.classList.remove('expanded');
+    });
+  }
+
+  // Track select buttons
+  trackButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const trackKey = btn.getAttribute('data-track');
+      switchTrack(trackKey);
+    });
+  });
+
+  // Native audio time update & seekbar sync
+  if (bgAudio) {
+    bgAudio.volume = 0.75;
+
+    bgAudio.addEventListener('timeupdate', () => {
+      if (isSeeking || TRACKS[currentTrackKey]?.type === 'synth') return;
+      const current = bgAudio.currentTime;
+      const duration = bgAudio.duration || 1;
+      const pct = (current / duration) * 100;
+
+      if (audioSeekSlider) audioSeekSlider.value = pct;
+      if (audioCurrentTimeEl) audioCurrentTimeEl.textContent = formatTime(current);
+      if (audioTimeDisplay) audioTimeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+    });
+
+    bgAudio.addEventListener('loadedmetadata', () => {
+      const duration = bgAudio.duration;
+      if (audioTotalTimeEl) audioTotalTimeEl.textContent = formatTime(duration);
+      if (audioTimeDisplay) audioTimeDisplay.textContent = `${formatTime(bgAudio.currentTime)} / ${formatTime(duration)}`;
+    });
+
+    bgAudio.addEventListener('ended', () => {
+      bgAudio.currentTime = 0;
+      bgAudio.play();
+    });
+  }
+
+  // Seek bar input & change
+  if (audioSeekSlider && bgAudio) {
+    audioSeekSlider.addEventListener('input', () => {
+      isSeeking = true;
+      const pct = parseFloat(audioSeekSlider.value);
+      const targetTime = (pct / 100) * (bgAudio.duration || 1);
+      if (audioCurrentTimeEl) audioCurrentTimeEl.textContent = formatTime(targetTime);
+    });
+
+    audioSeekSlider.addEventListener('change', () => {
+      const pct = parseFloat(audioSeekSlider.value);
+      bgAudio.currentTime = (pct / 100) * (bgAudio.duration || 1);
+      isSeeking = false;
+    });
+  }
+
+  // Volume slider
+  function updateMuteIcons(muted) {
+    if (volIcon && volMutedIcon) {
+      if (muted) {
+        volIcon.classList.add('hidden');
+        volMutedIcon.classList.remove('hidden');
+      } else {
+        volIcon.classList.remove('hidden');
+        volMutedIcon.classList.add('hidden');
+      }
+    }
+  }
+
+  if (audioVolumeSlider && bgAudio) {
+    audioVolumeSlider.addEventListener('input', () => {
+      const vol = parseFloat(audioVolumeSlider.value);
+      bgAudio.volume = vol;
+      isMuted = vol === 0;
+      updateMuteIcons(isMuted);
+    });
+  }
+
+  if (audioMuteBtn && bgAudio) {
+    audioMuteBtn.addEventListener('click', () => {
+      if (isMuted) {
+        bgAudio.volume = previousVolume > 0 ? previousVolume : 0.75;
+        if (audioVolumeSlider) audioVolumeSlider.value = bgAudio.volume;
+        isMuted = false;
+      } else {
+        previousVolume = bgAudio.volume;
+        bgAudio.volume = 0;
+        if (audioVolumeSlider) audioVolumeSlider.value = 0;
+        isMuted = true;
+      }
+      updateMuteIcons(isMuted);
+    });
+  }
+
+  // Custom Song Upload input
+  if (customSongInput) {
+    customSongInput.addEventListener('change', () => {
+      const file = customSongInput.files[0];
+      if (!file) return;
+
+      const songUrl = URL.createObjectURL(file);
+      const songTitle = file.name.replace(/\.[^/.]+$/, "");
+      switchTrack('custom', songTitle, songUrl);
+
+      showToast(`Loaded personal song: ${songTitle}`);
+      playCurrentTrack();
     });
   }
 
@@ -569,6 +845,19 @@
       • <strong>Soft Skills:</strong> Leadership, Communication, Problem Solving, Teamwork, Creativity, Event Management<br>
       <br>
       Explore his repositories on <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">GitHub (@adityatayde111-lgtm)</a>!`;
+    }
+
+    if (q.includes('song') || q.includes('music') || q.includes('audio') || q.includes('sound') || q.includes('track')) {
+      return `<strong>🎵 Cinematic Soundtrack &amp; Music Player:</strong>
+      <br><br>
+      Aditya's portfolio features an integrated multi-track <strong>Cinematic Soundtrack Player</strong>:
+      <br><br>
+      • <strong>Track 1:</strong> <em>Inspiring Cinematic Theme</em> (Orchestral tech teaser)<br>
+      • <strong>Track 2:</strong> <em>Impact Moderato Beat</em> (Epic electronic percussion)<br>
+      • <strong>Track 3:</strong> <em>Ambient Synth Drone</em> (Generative 4-voice Web Audio oscillator)<br>
+      • <strong>Load Your Own Song:</strong> Click <em>"Load My Song"</em> in the bottom-left music dock to play any personal MP3/WAV/OGG song from your device!<br>
+      <br>
+      You can toggle playback anytime using <strong>AUDIO: ON/OFF</strong> in the top navigation bar or the floating player dock at the bottom-left corner!`;
     }
 
     if (q.includes('cert') || q.includes('license') || q.includes('credential')) {

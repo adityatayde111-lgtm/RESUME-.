@@ -89,7 +89,12 @@
         <span id="frame-counter">FRAME 001 / 240</span>
       </div>
 
-      <button id="sound-toggle" class="control-btn icon-only-mobile" title="Toggle Ambient Audio">
+      <button id="sound-toggle" class="control-btn icon-only-mobile" title="Toggle Cinematic Audio / Soundtrack">
+        <div class="sound-eq-mini" id="nav-sound-eq" aria-hidden="true">
+          <span class="eq-mini-bar"></span>
+          <span class="eq-mini-bar"></span>
+          <span class="eq-mini-bar"></span>
+        </div>
         <svg class="icon-speaker" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
           <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -1107,6 +1112,109 @@
         </button>
       </form>
     </div>
+  </div>
+
+  <!-- Floating Cinematic Audio / Music Player Widget -->
+  <div id="audio-player-widget" class="audio-widget-wrapper">
+    <!-- Compact Audio Pill Bar -->
+    <div class="audio-pill-bar" id="audio-pill-bar">
+      <button id="audio-play-pause-btn" class="audio-play-btn" title="Play / Pause Soundtrack" aria-label="Play or Pause Song">
+        <svg id="audio-play-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+          <polygon points="6 4 20 12 6 20 6 4"></polygon>
+        </svg>
+        <svg id="audio-pause-icon" class="hidden" viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+
+      <div class="audio-info-clickable" id="audio-expand-toggle" title="Click to open soundtrack settings & track selector">
+        <div class="audio-equalizer-wave" id="audio-eq-wave" aria-hidden="true">
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+        </div>
+        <div class="audio-track-details">
+          <span class="audio-track-name" id="current-track-name">Inspiring Cinematic Theme</span>
+          <span class="audio-track-duration" id="audio-time-display">0:00 / 2:08</span>
+        </div>
+        <button class="audio-chevron-btn" id="audio-chevron-btn" title="Toggle audio panel" aria-label="Toggle audio panel">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Expanded Soundtrack Controls Drawer -->
+    <div class="audio-expanded-drawer" id="audio-expanded-drawer" aria-hidden="true">
+      <div class="audio-drawer-header">
+        <div class="drawer-header-left">
+          <span class="audio-badge">🎵 CINEMATIC SOUNDTRACK</span>
+          <span class="audio-badge-sub">High-Quality Audio</span>
+        </div>
+        <button id="audio-drawer-close-btn" class="audio-drawer-close" title="Minimize player">&times;</button>
+      </div>
+
+      <!-- Scrubber Seek Bar -->
+      <div class="audio-scrub-container">
+        <input type="range" id="audio-seek-slider" min="0" max="100" value="0" step="0.1" class="audio-seek-bar" title="Seek song position">
+        <div class="audio-scrub-times">
+          <span id="audio-current-time">0:00</span>
+          <span id="audio-total-time">2:08</span>
+        </div>
+      </div>
+
+      <!-- Track Switcher -->
+      <div class="audio-tracks-box">
+        <span class="audio-tracks-label">Select Song / Soundtrack:</span>
+        <div class="audio-track-pills">
+          <button class="track-select-pill active" data-track="cinematic" title="Inspiring Cinematic Theme by Rafael Krux">
+            <span class="pill-icon">✨</span>
+            <span class="pill-text">Inspiring Cinematic</span>
+          </button>
+          <button class="track-select-pill" data-track="impact" title="Epic Impact Moderato Beat by Kevin MacLeod">
+            <span class="pill-icon">⚡</span>
+            <span class="pill-text">Impact Moderato Beat</span>
+          </button>
+          <button class="track-select-pill" data-track="drone" title="Generative Ambient Synthesizer Drone">
+            <span class="pill-icon">🎛️</span>
+            <span class="pill-text">Ambient Synth Drone</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Volume & Custom Upload Toolbar -->
+      <div class="audio-drawer-footer">
+        <div class="audio-volume-control">
+          <button id="audio-mute-btn" class="audio-mute-toggle" title="Mute / Unmute">
+            <svg id="vol-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg id="vol-muted-icon" class="hidden" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            </svg>
+          </button>
+          <input type="range" id="audio-volume-slider" min="0" max="1" step="0.05" value="0.75" class="audio-vol-slider" title="Volume Slider">
+        </div>
+
+        <label class="audio-custom-upload-pill" title="Choose any personal song (MP3 / WAV / OGG) to play on the site">
+          <input type="file" id="custom-song-input" accept="audio/*" style="display:none;">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>Load My Song</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Background HTML5 Audio Element -->
+    <audio id="bg-soundtrack-player" src="assets/cinematic_theme.mp3" preload="metadata" loop></audio>
   </div>
 
   <!-- Interactive GitHub Project Library Modal -->

@@ -32,7 +32,7 @@ Key Projects:
 1. Shetkari Raja: Digital agricultural management platform with AI-driven grain grading via native camera capture (Capacitor), real-time procurement queue tracking, and DBT/PFMS direct benefit payment status verification.
 2. AI Chat Assistant: Conversational chat assistant with automated query handling, multi-turn dialogue, and real-time responses.
 3. Student Management System: Database-driven management software engineered to track student academic profiles, grades, course registrations, and reports.
-4. Portfolio Website & 60FPS Canvas Engine: Interactive 240-frame fluid canvas visualizer with Web Audio API synthesizer and AI copilot integration.
+4. Portfolio Website & 60FPS Canvas Engine: Interactive 240-frame fluid canvas visualizer with multi-track Cinematic Soundtrack Player (Inspiring Theme, Impact Moderato Beat, Ambient Synthesizer, and custom song loader) and AI copilot integration.
 5. Sanjivani AI Gateway: High-availability AI gateway uniting multiple model providers with intelligent failover.
 
 Leadership & Experience:
