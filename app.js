@@ -605,11 +605,21 @@
       He is actively open for Full-Stack Engineering, AI Systems, and High-Impact Software Engineering opportunities!`;
     }
 
-    if (q.includes('contact') || q.includes('email') || q.includes('github') || q.includes('reach')) {
+    if (q.includes('instagram') || q.includes('insta')) {
+      return `<strong>📸 Connect with Aditya on Instagram:</strong>
+      <br><br>
+      You can follow and connect with Aditya on his official Instagram account:<br>
+      👉 <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #f472b6; text-decoration: underline; font-weight: bold;">@aditya_tayde_96 on Instagram</a>
+      <br><br>
+      Feel free to reach out via direct message or follow his journey!`;
+    }
+
+    if (q.includes('contact') || q.includes('email') || q.includes('github') || q.includes('reach') || q.includes('social')) {
       return `<strong>📬 How to Connect with Aditya:</strong>
       <br><br>
       • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a><br>
       • <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/adityatayde" target="_blank" style="color: #38bdf8; text-decoration: underline;">linkedin.com/in/adityatayde</a><br>
+      • <strong>Instagram:</strong> <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #38bdf8; text-decoration: underline;">@aditya_tayde_96</a><br>
       • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">@adityatayde111-lgtm</a> (16+ Public Repos)<br>
       • <strong>Live Portfolio:</strong> <a href="https://resume-atm-f33c.vercel.app" target="_blank" style="color: #38bdf8; text-decoration: underline;">resume-atm-f33c.vercel.app</a><br>
       <br>

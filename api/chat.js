@@ -10,6 +10,7 @@ Here is Aditya's official profile:
 - Location: Maharashtra, India (Open for global remote and high-impact engineering roles)
 - GitHub: https://github.com/adityatayde111-lgtm (16+ public repositories)
 - LinkedIn: https://linkedin.com/in/adityatayde
+- Instagram: https://www.instagram.com/aditya_tayde_96 (@aditya_tayde_96)
 - Email: adityatayde111@gmail.com
 - Portfolio: https://resume-atm-f33c.vercel.app
 

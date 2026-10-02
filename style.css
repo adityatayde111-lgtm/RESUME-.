@@ -217,6 +217,31 @@ html, body {
   transform: translateY(-1px);
 }
 
+.instagram-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(225, 48, 108, 0.15);
+  border: 1px solid rgba(225, 48, 108, 0.4);
+  color: #f472b6;
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.instagram-nav-btn:hover {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #ffffff;
+  border-color: #fd1d1d;
+  box-shadow: 0 0 16px rgba(253, 29, 29, 0.5);
+  transform: translateY(-1px);
+}
+
 .badge-pill {
   background: var(--accent-cyan);
   color: #080c10;
@@ -1126,6 +1151,24 @@ html, body {
   background: rgba(10, 102, 194, 0.2) !important;
   border-color: #0a66c2 !important;
   box-shadow: 0 0 18px rgba(10, 102, 194, 0.5) !important;
+}
+
+.instagram-btn {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 25px rgba(225, 48, 108, 0.4) !important;
+}
+
+.instagram-btn:hover {
+  background: linear-gradient(135deg, #fd1d1d, #833ab4, #fcb045) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(225, 48, 108, 0.6) !important;
+}
+
+.contact-pill.instagram-pill:hover {
+  background: rgba(225, 48, 108, 0.2) !important;
+  border-color: #e1306c !important;
+  box-shadow: 0 0 18px rgba(225, 48, 108, 0.5) !important;
 }
 
 .secondary-btn {
