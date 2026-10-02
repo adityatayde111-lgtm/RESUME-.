@@ -3,9 +3,10 @@
 > High-performance Canvas & Video Scrubbing Architecture meets Modern Full-Stack & AI Engineering Portfolio.
 
 [![GitHub Profile](https://img.shields.io/badge/GitHub-adityatayde111--lgtm-blue?style=for-the-badge&logo=github)](https://github.com/adityatayde111-lgtm)
-[![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-Aditya_Tayde-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/adityatayde)
+[![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-Aditya_Tayde-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/aditya-tayde-02a030383)
+[![Instagram Profile](https://img.shields.io/badge/Instagram-@aditya__tayde__96-E4405F?style=for-the-badge&logo=instagram)](https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq)
 [![Live Preview](https://img.shields.io/badge/Live_Portfolio-Vercel-success?style=for-the-badge&logo=vercel)](https://resume-atm-f33c.vercel.app)
-[![Tech Stack](https://img.shields.io/badge/Stack-TypeScript_%7C_React_%7C_Canvas_60FPS_%7C_WebAudio-informational?style=for-the-badge)](#technical-architecture)
+[![Tech Stack](https://img.shields.io/badge/Stack-Python_%7C_C%2B%2B_%7C_React_%7C_Canvas_60FPS-informational?style=for-the-badge)](#technical-architecture)
 
 ---
 
@@ -15,17 +16,17 @@
 - **Dual Engine Render Modes**: Seamlessly switch between WebP Canvas rendering (60FPS) and hardware-accelerated HTML5 Video fallback (H.264).
 - **Web Audio Generative Drone**: Built-in 4-voice ambient sound synthesizer utilizing the browser's native Web Audio API oscillators and bi-quad lowpass filtering.
 - **Live GitHub API Synchronization**: Real-time integration with the GitHub REST API to showcase repository stats, stars, and open-source contributions.
-- **Interactive ATS-Optimized Resume**: Integrated printable, recruiter-ready ATS resume view with single-click PDF export (`Ctrl+P` / `Cmd+P` print stylesheet).
-- **Verified Licenses & LinkedIn Certifications Guide**: Complete verified credentials documentation (`LINKEDIN_CERTIFICATIONS.md`) featuring direct 1-click addition links to LinkedIn for Meta, DeepLearning.AI, Google Cloud, HackerRank, PostgreSQL, and Ionic Capacitor.
+- **Interactive ATS-Optimized Resume**: Integrated printable, recruiter-ready ATS resume view with single-click PDF export (`Ctrl+P` / `Cmd+P` print stylesheet) showcasing Sanjivani University academics (CGPA: 8.0, Class X: 84%).
+- **AI Copilot Assistance**: In-app intelligent conversational assistant answering recruiter inquiries in real-time.
 
 ---
 
 ## 🚀 Flagship Projects Featured
 
 1. **[Shetkari Raja](https://github.com/adityatayde111-lgtm/shetkari-raja)** — Smart Agricultural Platform & Android App with AI-driven grain grading via native camera capture, live procurement queue tracking, and DBT/PFMS payment monitoring.
-2. **[Sanjivani AI Tool](https://github.com/adityatayde111-lgtm/sanjivani-ai-tool)** — Unified High-Availability AI Gateway unifying 358 providers with automatic failover and security firewall.
-3. **[AI Assistant Agent](https://github.com/adityatayde111-lgtm/ai-assistant-agent)** — Context-aware autonomous agent architecture with dynamic tool dispatch and state persistence.
-4. **[AgriSmart AI](https://github.com/adityatayde111-lgtm/AgriSmart-Helping-Farmers-Make-Better-Decisions-with-AI)** — Predictive machine learning decision support for agronomic yield improvement.
+2. **AI Chat Assistant** — Conversational intelligent chat assistant with multi-turn intent understanding and automated query resolution.
+3. **Student Management System** — Structured relational database management system engineered to track academic profiles, enrollments, and grading metrics.
+4. **[Sanjivani AI Tool](https://github.com/adityatayde111-lgtm/sanjivani-ai-tool)** — Unified High-Availability AI Gateway unifying 358 providers with automatic failover and security firewall.
 
 ---
 
@@ -56,7 +57,10 @@ Visit `http://localhost:3000` in your browser.
 
 ## 📬 Contact & Connect
 
-- **Author**: Aditya Tayde
-- **LinkedIn**: [linkedin.com/in/adityatayde](https://linkedin.com/in/adityatayde)
-- **GitHub**: [@adityatayde111-lgtm](https://github.com/adityatayde111-lgtm)
+- **Author**: Aditya Tayde (Integrated B.Tech CSE, Sanjivani University)
+- **Phone**: [+91 9403206007](tel:9403206007)
 - **Email**: [adityatayde111@gmail.com](mailto:adityatayde111@gmail.com)
+- **LinkedIn**: [linkedin.com/in/aditya-tayde-02a030383](https://www.linkedin.com/in/aditya-tayde-02a030383)
+- **GitHub**: [@adityatayde111-lgtm](https://github.com/adityatayde111-lgtm)
+- **Instagram**: [@aditya_tayde_96](https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq)
+- **Live Portfolio**: [https://resume-atm-f33c.vercel.app](https://resume-atm-f33c.vercel.app)

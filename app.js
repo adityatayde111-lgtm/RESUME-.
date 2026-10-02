@@ -448,72 +448,7 @@
     });
   }
 
-  // Certifications Data & Copy Handlers for LinkedIn
-  const CERT_DATA_MAP = {
-    '1': {
-      name: "Meta Certified Front-End & Full-Stack Developer",
-      text: "Name: Meta Certified Front-End & Full-Stack Developer\nIssuing Organization: Meta\nIssue Date: May 2024\nExpiration Date: Does not expire\nCredential ID: META-FS-8842194\nCredential URL: https://www.coursera.org/account/accomplishments/professional-cert/META-FS-8842194\nSkills: React.js, TypeScript, JavaScript, Responsive Web Design"
-    },
-    '2': {
-      name: "Building Systems with ChatGPT & Autonomous LLM Agents",
-      text: "Name: Building Systems with ChatGPT & Autonomous LLM Agents\nIssuing Organization: DeepLearning.AI\nIssue Date: July 2024\nExpiration Date: Does not expire\nCredential ID: DLAI-AGENTS-94812\nCredential URL: https://www.deeplearning.ai/certificates/DLAI-AGENTS-94812\nSkills: Large Language Models (LLM), Prompt Engineering, Autonomous Agents, AI Gateways"
-    },
-    '3': {
-      name: "Serverless Cloud Architecture & Modern Web Systems",
-      text: "Name: Serverless Cloud Architecture & Modern Web Systems\nIssuing Organization: Google Cloud\nIssue Date: January 2024\nExpiration Date: Does not expire\nCredential ID: GCP-ARCH-472091\nCredential URL: https://www.cloudskillsboost.google/public_profiles/adityatayde\nSkills: Cloud Architecture, Serverless Functions, Microservices, GCP, CI/CD"
-    },
-    '4': {
-      name: "Problem Solving (Advanced) & TypeScript Engineering",
-      text: "Name: Problem Solving (Advanced) & TypeScript Engineering\nIssuing Organization: HackerRank\nIssue Date: February 2024\nExpiration Date: Does not expire\nCredential ID: HR-PS-ADV-29015\nCredential URL: https://www.hackerrank.com/certificates/HR-PS-ADV-29015\nSkills: Data Structures, Algorithms, TypeScript, OOP"
-    },
-    '5': {
-      name: "PostgreSQL & Advanced Database Engineering",
-      text: "Name: PostgreSQL & Advanced Database Engineering\nIssuing Organization: PostgreSQL Professional Training / Supabase\nIssue Date: September 2024\nExpiration Date: Does not expire\nCredential ID: PG-DB-59281\nCredential URL: https://supabase.com/certificates/PG-DB-59281\nSkills: PostgreSQL, Supabase, SQL Optimization, Relational Modeling"
-    },
-    '6': {
-      name: "Capacitor & Android Native Systems Architecture",
-      text: "Name: Capacitor & Android Native Systems Architecture\nIssuing Organization: Ionic\nIssue Date: August 2024\nExpiration Date: Does not expire\nCredential ID: CAP-ANDR-10928\nCredential URL: https://ionic.io/certificates/CAP-ANDR-10928\nSkills: Capacitor, Android SDK, Mobile Systems Architecture, Native Plugins"
-    }
-  };
-
-  const ALL_LINKEDIN_CERTS_TEXT = `ADITYA TAYDE — VERIFIED LICENSES & CERTIFICATIONS FOR LINKEDIN
-
-1. Meta Certified Front-End & Full-Stack Developer
-- Organization: Meta
-- Issue Date: May 2024 (No Expiration)
-- Credential ID: META-FS-8842194
-- Credential URL: https://www.coursera.org/account/accomplishments/professional-cert/META-FS-8842194
-
-2. Building Systems with ChatGPT & Autonomous LLM Agents
-- Organization: DeepLearning.AI
-- Issue Date: July 2024 (No Expiration)
-- Credential ID: DLAI-AGENTS-94812
-- Credential URL: https://www.deeplearning.ai/certificates/DLAI-AGENTS-94812
-
-3. Serverless Cloud Architecture & Modern Web Systems
-- Organization: Google Cloud
-- Issue Date: January 2024 (No Expiration)
-- Credential ID: GCP-ARCH-472091
-- Credential URL: https://www.cloudskillsboost.google/public_profiles/adityatayde
-
-4. Problem Solving (Advanced) & TypeScript Engineering
-- Organization: HackerRank
-- Issue Date: February 2024 (No Expiration)
-- Credential ID: HR-PS-ADV-29015
-- Credential URL: https://www.hackerrank.com/certificates/HR-PS-ADV-29015
-
-5. PostgreSQL & Advanced Database Engineering
-- Organization: PostgreSQL Professional Training / Supabase
-- Issue Date: September 2024 (No Expiration)
-- Credential ID: PG-DB-59281
-- Credential URL: https://supabase.com/certificates/PG-DB-59281
-
-6. Capacitor & Android Native Systems Architecture
-- Organization: Ionic
-- Issue Date: August 2024 (No Expiration)
-- Credential ID: CAP-ANDR-10928
-- Credential URL: https://ionic.io/certificates/CAP-ANDR-10928`;
-
+  // Clipboard Utility Helper
   function copyTextToClipboard(text, successMsg) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => {
@@ -525,33 +460,6 @@
       showToast(successMsg);
     }
   }
-
-  // Copy All Certifications Button in Section 4
-  const copyAllCertsBtn = document.getElementById('copy-all-certs-btn');
-  if (copyAllCertsBtn) {
-    copyAllCertsBtn.addEventListener('click', () => {
-      copyTextToClipboard(ALL_LINKEDIN_CERTS_TEXT, 'All 6 Certifications copied for LinkedIn!');
-    });
-  }
-
-  // Resume Modal LinkedIn Certs Button
-  const resumeCertsBtn = document.getElementById('resume-certs-btn');
-  if (resumeCertsBtn) {
-    resumeCertsBtn.addEventListener('click', () => {
-      copyTextToClipboard(ALL_LINKEDIN_CERTS_TEXT, 'Certifications copied for LinkedIn!');
-    });
-  }
-
-  // Individual Cert Copy Buttons
-  document.querySelectorAll('.cert-copy-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const certKey = e.currentTarget.getAttribute('data-cert');
-      const item = CERT_DATA_MAP[certKey];
-      if (item) {
-        copyTextToClipboard(item.text, `${item.name} details copied!`);
-      }
-    });
-  });
 
   // AI Copilot Elements
   const navAiBtn = document.getElementById('nav-ai-btn');
@@ -652,114 +560,103 @@
     const q = prompt.toLowerCase();
 
     if (q.includes('skill') || q.includes('stack') || q.includes('tech') || q.includes('language')) {
-      return `<strong>Aditya's Core Technical Arsenal:</strong>
+      return `<strong>Aditya's Technical Skills &amp; Competencies:</strong>
       <br><br>
-      • <strong>Frontend:</strong> React 18, TypeScript, Tailwind CSS, HTML5 Canvas 60FPS Engine, WebGL, Vite<br>
-      • <strong>Backend &amp; DB:</strong> Node.js, Supabase, PostgreSQL, Firebase, RESTful APIs, JWT Auth<br>
-      • <strong>Mobile:</strong> Capacitor Android, Native Camera &amp; Gallery Plugins, Gradle Pipelines<br>
-      • <strong>AI Systems:</strong> Multi-Provider LLM Gateways (358+ models), Autonomous Agents, Computer Vision<br>
+      • <strong>Programming:</strong> Python, C, C++, JavaScript<br>
+      • <strong>Web &amp; UI:</strong> HTML, CSS, JavaScript, React, Tailwind CSS, 60FPS Canvas Engine<br>
+      • <strong>Databases &amp; Systems:</strong> MySQL, DBMS, Linux, VS Code, Git, GitHub<br>
+      • <strong>Core Disciplines:</strong> Data Structures &amp; Algorithms (DSA), Artificial Intelligence (AI), Machine Learning<br>
+      • <strong>Soft Skills:</strong> Leadership, Communication, Problem Solving, Teamwork, Creativity, Event Management<br>
       <br>
-      Explore all 16+ repositories on his <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">GitHub Profile</a>!`;
+      Explore his repositories on <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">GitHub (@adityatayde111-lgtm)</a>!`;
     }
 
-    if (q.includes('cert') || q.includes('license') || q.includes('credential') || q.includes('meta') || q.includes('hackerrank') || q.includes('deeplearning')) {
-      return `<strong>📜 Aditya Tayde's Verified Industry Certifications:</strong>
+    if (q.includes('cert') || q.includes('license') || q.includes('credential')) {
+      return `<strong>🎓 Academic &amp; Leadership Profile:</strong>
       <br><br>
-      • <strong>Meta Certified Front-End &amp; Full-Stack Developer</strong> (May 2024 • ID: <code>META-FS-8842194</code>)<br>
-      • <strong>Building Systems with ChatGPT &amp; Autonomous LLM Agents</strong> (DeepLearning.AI • Jul 2024 • ID: <code>DLAI-AGENTS-94812</code>)<br>
-      • <strong>Serverless Cloud Architecture &amp; Modern Web Systems</strong> (Google Cloud • Jan 2024 • ID: <code>GCP-ARCH-472091</code>)<br>
-      • <strong>Problem Solving (Advanced) &amp; TypeScript Engineering</strong> (HackerRank • Feb 2024 • ID: <code>HR-PS-ADV-29015</code>)<br>
-      • <strong>PostgreSQL &amp; Advanced Database Engineering</strong> (Supabase/PostgreSQL • Sep 2024 • ID: <code>PG-DB-59281</code>)<br>
-      • <strong>Capacitor &amp; Android Native Systems Architecture</strong> (Ionic • Aug 2024 • ID: <code>CAP-ANDR-10928</code>)<br>
+      • <strong>Degree:</strong> Integrated B.Tech in Computer Science &amp; Engineering<br>
+      • <strong>Institution:</strong> Sanjivani University (Current) &bull; CGPA: <strong>8.0 / 10</strong><br>
+      • <strong>High School:</strong> Class X Board Score: <strong>84%</strong> (Distinction)<br>
+      • <strong>Leadership Role:</strong> Department Social Media Handler &amp; Event Coordinator, CSE Department, Sanjivani University<br>
+      • <strong>Key Projects:</strong> Shetkari Raja, AI Chat Assistant, Student Management System, Portfolio Website<br>
       <br>
-      All credentials feature 1-click addition to LinkedIn in Section 4 and in the <strong>ATS Resume</strong>! You can also copy all credentials with the <em>LinkedIn Certs</em> button or read <code>LINKEDIN_CERTIFICATIONS.md</code>.`;
+      Connect with Aditya on <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline;">LinkedIn</a>!`;
     }
 
     if (q.includes('shetkari') || q.includes('raja') || q.includes('farm') || q.includes('grain')) {
-      return `<strong>🌾 Shetkari Raja (Flagship Agritech Platform)</strong>
+      return `<strong>🌾 Shetkari Raja (Agricultural Platform)</strong>
       <br><br>
-      Shetkari Raja is a digital agricultural platform engineered by Aditya with <strong>React</strong>, <strong>TypeScript</strong>, <strong>Capacitor Android</strong>, and <strong>Supabase</strong>.
+      Shetkari Raja is a comprehensive digital agricultural platform engineered by Aditya with <strong>React</strong>, <strong>TypeScript</strong>, <strong>Capacitor Android</strong>, and <strong>Supabase</strong>.
       <br><br>
-      <strong>Key Features:</strong><br>
-      • <strong>AI Grain Grading:</strong> Uses native device camera capture to analyze grain specimen quality.<br>
-      • <strong>Live Queue Tracker:</strong> Real-time queue position monitoring for grain procurement centers.<br>
-      • <strong>DBT/PFMS Payment Tracking:</strong> Direct benefit transfer status verification for farmers.<br>
+      <strong>Key Capabilities:</strong><br>
+      • <strong>AI Grain Grading:</strong> Native camera capture integration for agricultural grain specimen analysis.<br>
+      • <strong>Procurement Queue Tracker:</strong> Real-time queue monitoring for farmer grain procurement centers.<br>
+      • <strong>DBT/PFMS Status:</strong> Direct benefit payment status tracking.<br>
       <br>
-      Check the repository: <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/shetkari-raja</a>`;
+      Repository: <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/shetkari-raja</a>`;
     }
 
     if (q.includes('sanjivani') || q.includes('gateway') || q.includes('358') || q.includes('firewall')) {
       return `<strong>🛡️ Sanjivani AI Tool (Unified AI Gateway)</strong>
       <br><br>
-      A high-availability AI Gateway built in TypeScript that unifies <strong>358 AI model providers</strong> under a single resilient endpoint.
+      A high-availability AI Gateway built in TypeScript unifying <strong>358 AI model providers</strong> with automated failover and latency-based routing.
       <br><br>
-      <strong>Highlights:</strong><br>
-      • Intelligent automatic failover routing across providers.<br>
-      • Zero-latency load balancing and latency routing.<br>
-      • Trained prompt security firewall that neutralizes adversarial inputs before execution.<br>
-      <br>
-      Check the repository: <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/sanjivani-ai-tool</a>`;
+      Repository: <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/sanjivani-ai-tool</a>`;
     }
 
-    if (q.includes('hire') || q.includes('available') || q.includes('job') || q.includes('opportunity') || q.includes('work')) {
-      return `<strong>💼 Availability &amp; Roles</strong>
+    if (q.includes('hire') || q.includes('available') || q.includes('job') || q.includes('opportunity') || q.includes('work') || q.includes('intern')) {
+      return `<strong>💼 Internship Availability &amp; Roles</strong>
       <br><br>
-      Yes! Aditya is currently open for high-impact opportunities:
+      Aditya is actively seeking <strong>Software Development, AI/ML, Python, and Full-Stack Engineering Internship Opportunities</strong>.
       <br><br>
-      • <strong>Full-Stack Software Engineer</strong> (React, TypeScript, Node.js, Supabase)<br>
-      • <strong>AI Systems &amp; Agentic Developer</strong> (LLM Orchestration, Gateways, Computer Vision)<br>
-      • <strong>Creative Web Technologist</strong> (High-performance 60FPS Canvas, UI Systems)<br>
-      <br>
-      Location: Maharashtra, India • Open for Global Remote Roles.<br>
-      Reach out via email: <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>`;
+      • <strong>University:</strong> Sanjivani University (Integrated B.Tech CSE, CGPA: 8.0)<br>
+      • <strong>Location:</strong> Maharashtra, India &bull; Open for On-Site and Global Remote Roles<br>
+      • <strong>Phone:</strong> <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a><br>
+      • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>`;
     }
 
     if (q.includes('linkedin') || q.includes('profile') || q.includes('connect')) {
       return `<strong>💼 Connect with Aditya on LinkedIn:</strong>
       <br><br>
-      You can connect directly with Aditya on his official LinkedIn profile:<br>
-      👉 <a href="https://linkedin.com/in/adityatayde" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: bold;">linkedin.com/in/adityatayde</a>
+      Official LinkedIn Profile:<br>
+      👉 <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: bold;">linkedin.com/in/aditya-tayde-02a030383</a>
       <br><br>
-      He is actively open for Full-Stack Engineering, AI Systems, and High-Impact Software Engineering opportunities!`;
+      Integrated B.Tech CSE student at Sanjivani University passionate about Software Engineering, AI, and Full-Stack Systems!`;
     }
 
     if (q.includes('instagram') || q.includes('insta')) {
       return `<strong>📸 Connect with Aditya on Instagram:</strong>
       <br><br>
-      You can follow and connect with Aditya on his official Instagram account:<br>
-      👉 <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #f472b6; text-decoration: underline; font-weight: bold;">@aditya_tayde_96 on Instagram</a>
-      <br><br>
-      Feel free to reach out via direct message or follow his journey!`;
+      Official Instagram Account:<br>
+      👉 <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #f472b6; text-decoration: underline; font-weight: bold;">@aditya_tayde_96 on Instagram</a>`;
     }
 
-    if (q.includes('contact') || q.includes('email') || q.includes('github') || q.includes('reach') || q.includes('social')) {
-      return `<strong>📬 How to Connect with Aditya:</strong>
+    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('call') || q.includes('github') || q.includes('reach') || q.includes('social')) {
+      return `<strong>📬 How to Contact Aditya Tayde:</strong>
       <br><br>
+      • <strong>Phone / Call:</strong> <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a><br>
       • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a><br>
-      • <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/adityatayde" target="_blank" style="color: #38bdf8; text-decoration: underline;">linkedin.com/in/adityatayde</a><br>
+      • <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline;">linkedin.com/in/aditya-tayde-02a030383</a><br>
       • <strong>Instagram:</strong> <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #38bdf8; text-decoration: underline;">@aditya_tayde_96</a><br>
-      • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">@adityatayde111-lgtm</a> (16+ Public Repos)<br>
-      • <strong>Live Portfolio:</strong> <a href="https://resume-atm-f33c.vercel.app" target="_blank" style="color: #38bdf8; text-decoration: underline;">resume-atm-f33c.vercel.app</a><br>
-      <br>
-      You can also click <em>Resume</em> in the header to view or print his ATS resume!`;
+      • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">@adityatayde111-lgtm</a><br>
+      • <strong>Live Portfolio:</strong> <a href="https://resume-atm-f33c.vercel.app" target="_blank" style="color: #38bdf8; text-decoration: underline;">resume-atm-f33c.vercel.app</a>`;
     }
 
-    if (q.includes('education') || q.includes('college') || q.includes('degree') || q.includes('study')) {
+    if (q.includes('education') || q.includes('college') || q.includes('degree') || q.includes('study') || q.includes('university') || q.includes('cgpa')) {
       return `<strong>🎓 Academic Background:</strong>
       <br><br>
-      Aditya has a rigorous foundation in <strong>Computer Engineering &amp; Technology Studies</strong>, with practical specialization in:
-      <br><br>
-      • Data Structures &amp; Algorithms<br>
-      • Distributed Systems &amp; Database Optimization (PostgreSQL, Supabase)<br>
-      • Modern Web &amp; Mobile Architectures (React, Capacitor, Android)`;
+      • <strong>Integrated B.Tech in Computer Science &amp; Engineering:</strong> Sanjivani University (Current) &bull; CGPA: <strong>8.0 / 10</strong><br>
+      • <strong>Class X (Secondary School Certificate):</strong> <strong>84%</strong> (Distinction)<br>
+      • <strong>Leadership &amp; Coordination:</strong> Department Social Media Handler &amp; Event Coordinator for Computer Science &amp; Engineering<br>
+      • <strong>Core Coursework:</strong> Python, C, C++, Data Structures &amp; Algorithms (DSA), DBMS, MySQL, Artificial Intelligence, Web Technologies`;
     }
 
     // Default intelligent overview
-    return `Aditya Tayde is a <strong>Full-Stack Software Engineer &amp; AI Systems Developer</strong> with 16+ open-source GitHub repositories.
+    return `Aditya Tayde is a <strong>Computer Science &amp; Engineering student at Sanjivani University (CGPA: 8.0)</strong> and software developer.
     <br><br>
-    Notable achievements include architecting <strong>Shetkari Raja</strong> (an agricultural platform with AI grain grading), <strong>Sanjivani AI</strong> (a 358-provider unified gateway), and this <strong>60FPS Canvas scrub engine</strong> with native Web Audio synthesis.
+    Notable projects include <strong>Shetkari Raja</strong> (agricultural platform with AI grain grading), <strong>AI Chat Assistant</strong>, <strong>Student Management System</strong>, and this interactive 60FPS portfolio.
     <br><br>
-    Feel free to ask about his specific projects, tech stack, or email him at <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>!`;
+    Feel free to call him at <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a> or email <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>!`;
   }
 
   // Handle User Message Submission
