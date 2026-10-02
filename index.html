@@ -324,7 +324,8 @@
 
         <!-- Interactive Project Category Filter Tabs -->
         <div class="project-filter-tabs" id="project-filters">
-          <button class="filter-tab-btn active" data-filter="all">All Work (4)</button>
+          <button class="filter-tab-btn active" data-filter="all">All Work (5)</button>
+          <button class="filter-tab-btn" data-filter="library">Libraries &amp; SDKs</button>
           <button class="filter-tab-btn" data-filter="ai">AI &amp; Autonomous Agents</button>
           <button class="filter-tab-btn" data-filter="fullstack">Full-Stack Platforms</button>
           <button class="filter-tab-btn" data-filter="mobile">Mobile &amp; Android</button>
@@ -468,17 +469,63 @@
             </div>
           </div>
 
+          <!-- Project 5: Sanjivani Core SDK (Open-Source Developer Library) -->
+          <div class="project-box featured" data-category="library ai fullstack">
+            <div class="project-top">
+              <div class="project-title-row">
+                <span class="project-icon">📦</span>
+                <div>
+                  <h3 class="project-name">Sanjivani Core SDK</h3>
+                  <span class="project-type">Open-Source Developer Library &amp; AI Routing Engine</span>
+                </div>
+              </div>
+              <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" rel="noopener noreferrer" class="repo-link-icon" title="View Library Repository on GitHub">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="project-desc">
+              High-performance, zero-dependency TypeScript library for resilient multi-provider AI model orchestration. Provides automated failover routing, latency load balancing, circuit breaking, and prompt injection defense for production systems.
+            </p>
+            <div class="library-install-strip">
+              <span class="lib-install-code">npm i @adityatayde/sanjivani-core</span>
+              <span class="lib-badge-tag">v1.2.0 &bull; MIT</span>
+            </div>
+            <div class="project-tags">
+              <span>TypeScript</span>
+              <span>Open Source Library</span>
+              <span>AI SDK</span>
+              <span>Zero-Dependency</span>
+              <span>npm</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span>View Library on GitHub</span>
+                <span class="arrow">&rarr;</span>
+              </a>
+              <span class="repo-badge library-badge">Open Source Library</span>
+            </div>
+          </div>
+
         </div>
 
-        <!-- All Repos Banner -->
+        <!-- All Repos Banner with Live GitHub Project Library Trigger -->
         <div class="all-repos-banner">
           <div class="banner-info">
-            <span class="pulse-icon">📂</span>
-            <span>Explore all <strong>16+ open-source repositories</strong> on GitHub</span>
+            <span class="pulse-icon">📚</span>
+            <div>
+              <span>Explore all <strong>16+ open-source repositories</strong> in Aditya’s GitHub Library</span>
+            </div>
           </div>
-          <a href="https://github.com/adityatayde111-lgtm?tab=repositories" target="_blank" rel="noopener noreferrer" class="action-btn small-btn">
-            View All on GitHub &rarr;
-          </a>
+          <div class="banner-actions-row">
+            <button class="action-btn small-btn primary-btn" id="open-github-library-btn">
+              <span>Open Project Library</span> &rarr;
+            </button>
+            <a href="https://github.com/adityatayde111-lgtm?tab=repositories" target="_blank" rel="noopener noreferrer" class="action-btn small-btn secondary-btn">
+              View on GitHub
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -984,6 +1031,54 @@
           </svg>
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- Interactive GitHub Project Library Modal -->
+  <div id="github-library-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-container library-modal-container">
+      <div class="modal-toolbar no-print">
+        <div class="toolbar-title">
+          <span class="badge">GITHUB PROJECT LIBRARY</span>
+          <span>Aditya Tayde (@adityatayde111-lgtm)</span>
+        </div>
+        <div class="toolbar-actions">
+          <a href="https://github.com/adityatayde111-lgtm?tab=repositories" target="_blank" rel="noopener noreferrer" class="action-btn small-btn primary-btn" title="View Full GitHub Profile">
+            <span>Open GitHub</span> &rarr;
+          </a>
+          <button id="close-library-modal-btn" class="modal-btn close-btn" title="Close Library Modal">
+            &times;
+          </button>
+        </div>
+      </div>
+
+      <div class="library-modal-body">
+        <div class="library-header-bar">
+          <div class="library-search-wrapper">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="library-search-input" placeholder="Search 16+ repositories by name, language, or keyword..." autocomplete="off">
+          </div>
+          <div class="library-stats-pill">
+            <span id="library-total-count">16 Repositories</span> &bull; <span>Live Sync</span>
+          </div>
+        </div>
+
+        <!-- Language Filter Pills -->
+        <div class="library-lang-pills" id="library-lang-filters">
+          <button class="lib-pill active" data-lang="all">All (16)</button>
+          <button class="lib-pill" data-lang="TypeScript">TypeScript</button>
+          <button class="lib-pill" data-lang="HTML">HTML / Web</button>
+          <button class="lib-pill" data-lang="Python">Python</button>
+        </div>
+
+        <!-- Repositories Grid Container -->
+        <div class="library-repos-grid" id="library-repos-container">
+          <!-- Populated dynamically via JS with fallback -->
+        </div>
+      </div>
     </div>
   </div>
 

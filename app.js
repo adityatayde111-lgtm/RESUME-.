@@ -873,6 +873,277 @@
     });
   }
 
+  // Interactive GitHub Project Library Modal Controller
+  function setupGitHubLibraryModal() {
+    const libraryModal = document.getElementById('github-library-modal');
+    const openLibraryBtn = document.getElementById('open-github-library-btn');
+    const closeLibraryBtn = document.getElementById('close-library-modal-btn');
+    const reposContainer = document.getElementById('library-repos-container');
+    const searchInput = document.getElementById('library-search-input');
+    const langFilters = document.getElementById('library-lang-filters');
+    const totalCountEl = document.getElementById('library-total-count');
+
+    if (!libraryModal || !reposContainer) return;
+
+    // Resilient offline base dataset for Aditya's 16 public repositories
+    const baseRepos = [
+      {
+        name: 'sanjivani-ai-tool',
+        description: 'Sanjivani Ai Tool — Unified AI Gateway with 358 providers, auto-fallback, and trained security firewall',
+        language: 'TypeScript',
+        stars: 1,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/sanjivani-ai-tool'
+      },
+      {
+        name: 'shetkari-raja',
+        description: 'Comprehensive agricultural platform & mobile app with AI grain grading, queue position tracking, and DBT verification',
+        language: 'TypeScript',
+        stars: 1,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/shetkari-raja'
+      },
+      {
+        name: 'ai-assistant-agent',
+        description: 'Context-aware autonomous agent architecture with dynamic tool dispatch, persistent memory, and multi-turn intelligence',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/ai-assistant-agent'
+      },
+      {
+        name: 'RESUME-.',
+        description: 'Cinematic 60FPS canvas scrub engine, Web Audio ambient synthesizer, and AI Copilot engineering portfolio',
+        language: 'HTML',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/RESUME-.'
+      },
+      {
+        name: 'AgriSmart-Helping-Farmers-Make-Better-Decisions-with-AI',
+        description: 'Predictive machine learning intelligence analyzing soil parameters, weather conditions, and crop prices',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/AgriSmart-Helping-Farmers-Make-Better-Decisions-with-AI'
+      },
+      {
+        name: 'Ai-samrt-',
+        description: 'Smart AI agricultural analytics algorithms and decision support models for farmers',
+        language: 'TypeScript',
+        stars: 1,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Ai-samrt-'
+      },
+      {
+        name: 'Agrismart',
+        description: 'Precision agritech monitoring system and telemetry dashboard',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Agrismart'
+      },
+      {
+        name: 'Ai-SMART',
+        description: 'Agricultural optimization platform with predictive ML decision models',
+        language: 'HTML',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Ai-SMART'
+      },
+      {
+        name: 'GIT-3-QUSTION',
+        description: 'Advanced Git workflows, multi-branching strategies, and version control architecture',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/GIT-3-QUSTION'
+      },
+      {
+        name: 'ADP-LAB-3-1030-',
+        description: 'Advanced Data Processing and algorithmic data structure implementations',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/ADP-LAB-3-1030-'
+      },
+      {
+        name: 'ADP-LAB.3-1030',
+        description: 'Algorithms, data structures, and computational optimization lab codebase',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/ADP-LAB.3-1030'
+      },
+      {
+        name: 'Dice-roller-20',
+        description: 'Python randomized statistical probability engine and distribution calculator',
+        language: 'Python',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Dice-roller-20'
+      },
+      {
+        name: 'Dice-roller-2',
+        description: 'Interactive dice randomization utility and probability distribution module',
+        language: 'HTML',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Dice-roller-2'
+      },
+      {
+        name: 'Aditya',
+        description: 'Python scripts, automation routines, and computational utilities repository',
+        language: 'Python',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Aditya'
+      },
+      {
+        name: 'Ai-tool',
+        description: 'Experimental AI tooling, prompt chaining, and interface prototyping',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/Ai-tool'
+      },
+      {
+        name: 'spk',
+        description: 'Core developer utilities and helper functions module',
+        language: 'TypeScript',
+        stars: 0,
+        forks: 0,
+        url: 'https://github.com/adityatayde111-lgtm/spk'
+      }
+    ];
+
+    let allRepos = [...baseRepos];
+    let currentFilterLang = 'all';
+    let currentSearchTerm = '';
+
+    function getLangDotClass(lang) {
+      if (!lang) return 'other';
+      const l = lang.toLowerCase();
+      if (l.includes('typescript')) return 'ts';
+      if (l.includes('python')) return 'py';
+      if (l.includes('html')) return 'html';
+      return 'other';
+    }
+
+    function renderRepos() {
+      const filtered = allRepos.filter(repo => {
+        const matchesLang = currentFilterLang === 'all' || 
+          (repo.language && repo.language.toLowerCase() === currentFilterLang.toLowerCase()) ||
+          (currentFilterLang === 'HTML' && (repo.language === 'HTML' || repo.language === 'JavaScript'));
+        
+        const matchesSearch = !currentSearchTerm ||
+          repo.name.toLowerCase().includes(currentSearchTerm) ||
+          (repo.description && repo.description.toLowerCase().includes(currentSearchTerm)) ||
+          (repo.language && repo.language.toLowerCase().includes(currentSearchTerm));
+
+        return matchesLang && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        reposContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-dim); font-size: 0.9rem;">
+            No repositories found matching "<strong>${escapeHtml(currentSearchTerm)}</strong>".
+          </div>
+        `;
+        return;
+      }
+
+      reposContainer.innerHTML = filtered.map(r => `
+        <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="lib-repo-card">
+          <div>
+            <div class="lib-repo-top">
+              <span class="lib-repo-title">${escapeHtml(r.name)}</span>
+              <span class="lib-stars-tag">★ ${r.stars || 0}</span>
+            </div>
+            <p class="lib-repo-desc">${escapeHtml(r.description || 'Open-source software project by Aditya Tayde')}</p>
+          </div>
+          <div class="lib-repo-meta">
+            <span class="lib-lang-tag">
+              <span class="lib-lang-dot ${getLangDotClass(r.language)}"></span>
+              <span>${escapeHtml(r.language || 'Code')}</span>
+            </span>
+            <span style="color: var(--accent-cyan); font-weight: 600;">View Repo &rarr;</span>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    async function syncLiveRepos() {
+      try {
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
+        if (res.ok) {
+          const remoteRepos = await res.json();
+          if (Array.isArray(remoteRepos) && remoteRepos.length > 0) {
+            allRepos = remoteRepos.map(r => ({
+              name: r.name,
+              description: r.description || 'Open-source repository on GitHub',
+              language: r.language || 'TypeScript',
+              stars: r.stargazers_count || 0,
+              forks: r.forks_count || 0,
+              url: r.html_url
+            }));
+            if (totalCountEl) totalCountEl.textContent = `${allRepos.length} Repositories`;
+            renderRepos();
+          }
+        }
+      } catch (err) {
+        // Fallback remains active
+      }
+    }
+
+    function openLibrary() {
+      libraryModal.classList.add('open');
+      libraryModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      renderRepos();
+      syncLiveRepos();
+    }
+
+    function closeLibrary() {
+      libraryModal.classList.remove('open');
+      libraryModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    if (openLibraryBtn) openLibraryBtn.addEventListener('click', openLibrary);
+    if (closeLibraryBtn) closeLibraryBtn.addEventListener('click', closeLibrary);
+
+    libraryModal.addEventListener('click', (e) => {
+      if (e.target === libraryModal) closeLibrary();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && libraryModal.classList.contains('open')) {
+        closeLibrary();
+      }
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentSearchTerm = e.target.value.toLowerCase().trim();
+        renderRepos();
+      });
+    }
+
+    if (langFilters) {
+      langFilters.addEventListener('click', (e) => {
+        const pill = e.target.closest('.lib-pill');
+        if (!pill) return;
+        langFilters.querySelectorAll('.lib-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentFilterLang = pill.getAttribute('data-lang') || 'all';
+        renderRepos();
+      });
+    }
+
+    renderRepos();
+  }
+
   // Initialization
   function init() {
     resizeCanvas();
@@ -881,6 +1152,7 @@
     setupNavigationJumps();
     setupProjectFilters();
     setupGlobalCollabExplorer();
+    setupGitHubLibraryModal();
     fetchGitHubData();
     animate();
   }
