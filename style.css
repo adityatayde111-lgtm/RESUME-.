@@ -331,7 +331,10 @@ html, body {
   justify-content: center;
   align-items: center;
   z-index: 2500;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.25rem 0.75rem;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
 }
 
@@ -3319,35 +3322,65 @@ html, body {
     font-size: 0.65rem;
   }
   .portal-card {
-    padding: 1.8rem 1.25rem;
-    width: 92%;
-    border-radius: 22px;
+    padding: 1.35rem 1.1rem;
+    width: 95%;
+    max-width: 420px;
+    border-radius: 20px;
+    gap: 0.75rem;
+    margin: auto;
   }
   .portal-name {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
+  }
+  .portal-sub {
+    font-size: 0.75rem;
   }
   .portal-avatar-frame {
-    width: 100px;
-    height: 100px;
+    width: 88px;
+    height: 88px;
+    margin-bottom: 0.1rem;
   }
   .portal-credentials-grid {
     grid-template-columns: 1fr;
-    gap: 0.35rem;
-    padding: 0.5rem 0.65rem;
+    gap: 0.3rem;
+    padding: 0.45rem 0.65rem;
+    margin-top: 0.4rem;
+  }
+  .portal-cred-item {
+    font-size: 0.68rem;
+  }
+  .portal-enter-btn {
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
   }
   .enter-main-title {
-    font-size: 0.92rem;
-    letter-spacing: 1px;
+    font-size: 0.84rem;
+    letter-spacing: 0.8px;
+  }
+  .enter-sub-title {
+    font-size: 0.6rem;
+  }
+  .enter-icon, .enter-music-icon {
+    font-size: 1.25rem;
   }
   .portal-alt-actions-row {
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
-    gap: 0.45rem;
+    gap: 0.5rem;
   }
   .portal-alt-btn, .portal-silent-btn {
-    width: 100%;
+    flex: 1;
     justify-content: center;
-    padding: 0.45rem 0.8rem;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  .portal-feature-badges {
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+  }
+  .portal-feature-pill {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.45rem;
   }
   .hud-voice-ticker {
     bottom: 5.2rem;
