@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme">
+<body class="dark-theme theme-shivaji wallpaper-active" data-theme="shivaji">
 
   <!-- Top Progress Bar -->
   <div id="progress-bar-container">
@@ -76,6 +76,12 @@
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
         <span>Resume</span>
+      </button>
+
+      <!-- Theme & Background Selector Button -->
+      <button id="theme-selector-btn" class="control-btn theme-nav-btn" title="Switch Visual Theme &amp; Background">
+        <span class="theme-nav-icon">🚩</span>
+        <span class="theme-nav-label">Theme</span>
       </button>
 
       <!-- Open AI Copilot Button -->
@@ -188,7 +194,30 @@
   </div>
 
   <!-- Viewport Canvas / Video Container (Pinned Fullscreen) -->
-  <div class="sticky-viewport">
+  <div class="sticky-viewport" id="sticky-viewport">
+    <!-- Chhatrapati Shivaji Maharaj Wallpaper Background Layer -->
+    <div id="shivaji-bg-layer" class="theme-bg-layer shivaji-bg-layer" aria-hidden="true">
+      <div class="shivaji-bg-image"></div>
+      <div class="shivaji-bg-aura"></div>
+      <div class="shivaji-rajmudra-watermark" id="shivaji-rajmudra-watermark">
+        <svg class="rajmudra-svg-seal" viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="92" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <circle cx="100" cy="100" r="84" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <!-- Traditional Octagonal Border of Rajmudra -->
+          <polygon points="100,20 156,44 180,100 156,156 100,180 44,156 20,100 44,44" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+          <text x="100" y="75" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1">प्रतिपच्चंद्रलेखेव</text>
+          <text x="100" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1">वर्धिष्णुर्विश्ववंदिता</text>
+          <text x="100" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1">शाहसूनोः शिवस्यैषा</text>
+          <text x="100" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1">मुद्रा भद्राय राजते</text>
+          <path d="M70 155 Q100 162 130 155" stroke="currentColor" stroke-width="2" fill="none" opacity="0.7"/>
+          <circle cx="100" cy="162" r="3" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Dynamic 60FPS Ambient Ember / Spark Particle Canvas -->
+    <canvas id="ambient-ember-canvas" class="ambient-ember-canvas"></canvas>
+
     <canvas id="cinema-canvas"></canvas>
     
     <!-- Video fallback / video mode element -->
@@ -224,6 +253,29 @@
             </div>
           </div>
         </div>
+
+        <!-- Quick Theme & Background Atmosphere Bar -->
+        <div class="hero-theme-quick-bar">
+          <span class="quick-bar-label">⚡ THEME:</span>
+          <button type="button" class="quick-theme-pill active" data-theme="shivaji">🚩 Chh. Shivaji Maharaj</button>
+          <button type="button" class="quick-theme-pill" data-theme="cyber">🌌 Cyber Obsidian</button>
+          <button type="button" class="quick-theme-pill" data-theme="matrix">⚡ Emerald Matrix</button>
+          <button type="button" class="quick-theme-pill" data-theme="sunset">🌅 Sunset Crimson</button>
+        </div>
+
+        <!-- Chhatrapati Shivaji Maharaj Royal Inspiration & Rajmudra Banner -->
+        <div class="shivaji-tribute-banner" id="shivaji-tribute-banner">
+          <div class="rajmudra-badge-icon">🚩</div>
+          <div class="rajmudra-text-group">
+            <div class="rajmudra-header">
+              <span class="rajmudra-title">॥ छत्रपती शिवाजी महाराज ॥</span>
+              <span class="rajmudra-tag">ROYAL SWARAJYA HERITAGE</span>
+            </div>
+            <div class="rajmudra-sanskrit">प्रतिपच्चंद्रलेखेव वर्धिष्णुर्विश्ववंदिता । शाहसूनोः शिवस्यैषा मुद्रा भद्राय राजते ॥</div>
+            <div class="rajmudra-meaning">"Ever-increasing like the crescent moon, and world-worshipped, this seal of Shiva, son of Shahaji, shines for universal welfare."</div>
+          </div>
+        </div>
+
         <h1 class="hero-title">ADITYA<br><span class="gradient-text">TAYDE</span></h1>
         <p class="hero-tagline">
           Computer Science Engineering student (<strong>CGPA: 8.0</strong>) at <strong>Sanjivani University</strong> passionate about Software Development, AI/ML, Python, Data Science, and Full-Stack Development. Quick learner with strong communication, leadership, and teamwork skills seeking internship opportunities.
@@ -1145,6 +1197,7 @@
 
       <!-- Quick Suggestion Prompt Chips -->
       <div class="ai-suggestions" id="ai-suggestions">
+        <span class="suggestion-chip" data-prompt="Tell me about the Chhatrapati Shivaji Maharaj theme, background, and inspiration.">🚩 Shivaji Theme</span>
         <span class="suggestion-chip" data-prompt="What are Aditya's core technical skills and programming languages?">⚡ Core Stack</span>
         <span class="suggestion-chip" data-prompt="Tell me about the Shetkari Raja agricultural platform and AI grain grading.">🌾 Shetkari Raja</span>
         <span class="suggestion-chip" data-prompt="How does Sanjivani AI Gateway and open-source Core SDK work?">🛡️ Sanjivani AI</span>
@@ -1347,6 +1400,95 @@
         <!-- Repositories Grid Container -->
         <div class="library-repos-grid" id="library-repos-container">
           <!-- Populated dynamically via JS with fallback -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme & Background Customizer Studio Modal -->
+  <div id="theme-modal" class="theme-modal-backdrop" aria-hidden="true">
+    <div class="theme-modal-card">
+      <div class="theme-modal-header">
+        <div class="theme-modal-title-row">
+          <span class="theme-modal-icon">🎨</span>
+          <div>
+            <h3 class="theme-modal-title">Theme &amp; Background Studio</h3>
+            <p class="theme-modal-sub">Personalize your portfolio atmosphere &amp; royal aesthetics</p>
+          </div>
+        </div>
+        <button id="theme-modal-close" class="ai-icon-btn close" title="Close Theme Studio">&times;</button>
+      </div>
+
+      <!-- Theme Cards Grid -->
+      <div class="theme-options-grid">
+        <!-- Theme 1: Chhatrapati Shivaji Maharaj -->
+        <button type="button" class="theme-card-btn active" data-theme="shivaji">
+          <div class="theme-card-preview shivaji-preview">
+            <span class="theme-preview-flag">🚩</span>
+          </div>
+          <div class="theme-card-info">
+            <span class="theme-card-name">Chh. Shivaji Maharaj</span>
+            <span class="theme-card-desc">Royal Swarajya Saffron, Fort Raigad Sunset &amp; Rajmudra</span>
+          </div>
+          <span class="theme-card-active-check">✓</span>
+        </button>
+
+        <!-- Theme 2: Cyber Obsidian -->
+        <button type="button" class="theme-card-btn" data-theme="cyber">
+          <div class="theme-card-preview cyber-preview">
+            <span class="theme-preview-flag">🌌</span>
+          </div>
+          <div class="theme-card-info">
+            <span class="theme-card-name">Cyber Obsidian</span>
+            <span class="theme-card-desc">Futuristic Neon Cyan, Deep Space &amp; 60FPS Lerp</span>
+          </div>
+          <span class="theme-card-active-check">✓</span>
+        </button>
+
+        <!-- Theme 3: Emerald Quantum -->
+        <button type="button" class="theme-card-btn" data-theme="matrix">
+          <div class="theme-card-preview matrix-preview">
+            <span class="theme-preview-flag">⚡</span>
+          </div>
+          <div class="theme-card-info">
+            <span class="theme-card-name">Emerald Matrix</span>
+            <span class="theme-card-desc">Quantum Green Terminal, Cyber Matrix &amp; High Tech</span>
+          </div>
+          <span class="theme-card-active-check">✓</span>
+        </button>
+
+        <!-- Theme 4: Sunset Crimson -->
+        <button type="button" class="theme-card-btn" data-theme="sunset">
+          <div class="theme-card-preview sunset-preview">
+            <span class="theme-preview-flag">🌅</span>
+          </div>
+          <div class="theme-card-info">
+            <span class="theme-card-name">Sunset Crimson</span>
+            <span class="theme-card-desc">Twilight Magenta, Amber Horizon &amp; Radiant Violet</span>
+          </div>
+          <span class="theme-card-active-check">✓</span>
+        </button>
+      </div>
+
+      <!-- Background FX Toggles & Controls -->
+      <div class="theme-bg-controls">
+        <h4 class="theme-bg-title">Background FX &amp; Layers</h4>
+        <div class="theme-toggles-row">
+          <label class="theme-switch-label">
+            <input type="checkbox" id="toggle-wallpaper" checked>
+            <span class="switch-custom"></span>
+            <span>Royal Shivaji Maharaj Fort Sunset Wallpaper</span>
+          </label>
+          <label class="theme-switch-label">
+            <input type="checkbox" id="toggle-embers" checked>
+            <span class="switch-custom"></span>
+            <span>60FPS Ambient Rising Embers &amp; Sparks</span>
+          </label>
+          <label class="theme-switch-label">
+            <input type="checkbox" id="toggle-rajmudra" checked>
+            <span class="switch-custom"></span>
+            <span>Sacred Sanskrit Rajmudra Watermark Seal</span>
+          </label>
         </div>
       </div>
     </div>

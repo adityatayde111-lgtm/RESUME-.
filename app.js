@@ -1038,6 +1038,25 @@
       ])}`;
     }
 
+    // Chhatrapati Shivaji Maharaj Heritage & Royal Theme
+    if (/\b(shivaji|maharaj|chhatrapati|rajmudra|swarajya|maratha|bhagwa|raigad|bhavani|themes?|backgrounds?|wallpapers?)\b/i.test(q)) {
+      return `<strong>🚩 Chhatrapati Shivaji Maharaj (Royal Swarajya Inspiration):</strong>
+      <br><br>
+      Chhatrapati Shivaji Maharaj (छत्रपती शिवाजी महाराज) is the father of the Indian Navy, visionary creator of <em>Hindavi Swarajya</em>, and an extraordinary master of military architecture, strategic governance, and meritocracy.
+      <br><br>
+      • <strong>Swarajya Engineering Spirit:</strong> Pioneered indigenous sea forts (Sindhudurg, Vijaydurg) and mountain bastions (Raigad, Rajgad) designed with rainwater catchment systems and resilient stone civil engineering.<br>
+      • <strong>Farmer-First Governance:</strong> His historic royal decrees strictly prohibited harm to peasant crops and agrarian livelihoods — the direct spiritual inspiration behind Aditya's <strong>Shetkari Raja</strong> agricultural platform.<br>
+      • <strong>The Sacred Sanskrit Rajmudra:</strong><br>
+      &nbsp;&nbsp;<em>"प्रतिपच्चंद्रलेखेव वर्धिष्णुर्विश्ववंदिता । शाहसूनोः शिवस्यैषा मुद्रा भद्राय राजते ॥"</em><br>
+      &nbsp;&nbsp;("Ever-increasing like the crescent moon, world-worshipped, this seal of Shiva, son of Shahaji, shines for universal welfare.")<br>
+      • <strong>Themes &amp; Background Studio:</strong> You can switch anytime between <strong>🚩 Chh. Shivaji Maharaj</strong>, <strong>🌌 Cyber Obsidian</strong>, <strong>⚡ Emerald Matrix</strong>, and <strong>🌅 Sunset Crimson</strong> using the <em>THEME</em> button in the navigation bar!
+      ${buildAIFollowups([
+        { label: '🌾 Shetkari Raja Project', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '🎨 Change Background / Theme', prompt: 'How do I change the background theme?' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' }
+      ])}`;
+    }
+
     // 2. Why Hire Aditya / Value Proposition / Recruiter Evaluation
     if (/\b(why hire|why should|hire aditya|strengths|value proposition|unique|why choose|what makes|culture fit|stand out|best qualities|pros)\b/i.test(q)) {
       return `<strong>💼 Why Aditya Tayde is a High-Impact Engineering Hire:</strong>
@@ -1926,8 +1945,262 @@
     renderRepos();
   }
 
+  // ==========================================================================
+  // 60FPS Ambient Embers & Royal Sparks Engine
+  // ==========================================================================
+  function initAmbientEmberEngine() {
+    const canvas = document.getElementById('ambient-ember-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width = 0, height = 0;
+    let particles = [];
+    const PARTICLE_COUNT = 52;
+    let isRunning = true;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    }
+
+    class EmberParticle {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = initial ? Math.random() * height : height + 10 + Math.random() * 20;
+        this.size = 1 + Math.random() * 2.2;
+        this.speedY = 0.4 + Math.random() * 1.3;
+        this.speedX = (Math.random() - 0.5) * 0.7;
+        this.opacity = 0.15 + Math.random() * 0.75;
+        this.fadeSpeed = 0.003 + Math.random() * 0.005;
+        this.hueShift = Math.random();
+        this.wobble = Math.random() * Math.PI * 2;
+        this.wobbleSpeed = 0.02 + Math.random() * 0.03;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.wobble += this.wobbleSpeed;
+        this.x += this.speedX + Math.sin(this.wobble) * 0.5;
+        this.opacity -= this.fadeSpeed;
+        if (this.y < -10 || this.opacity <= 0 || this.x < -10 || this.x > width + 10) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+        const activeTheme = document.body.getAttribute('data-theme') || (document.body.classList.contains('theme-shivaji') ? 'shivaji' : 'cyber');
+
+        let colorStr = `rgba(255, 120, 31, ${this.opacity})`;
+        if (activeTheme === 'shivaji') {
+          colorStr = this.hueShift > 0.45 
+            ? `rgba(255, 120, 31, ${this.opacity})` 
+            : `rgba(251, 191, 36, ${this.opacity})`;
+        } else if (activeTheme === 'matrix') {
+          colorStr = this.hueShift > 0.5 
+            ? `rgba(16, 185, 129, ${this.opacity})` 
+            : `rgba(52, 211, 153, ${this.opacity})`;
+        } else if (activeTheme === 'sunset') {
+          colorStr = this.hueShift > 0.5 
+            ? `rgba(244, 63, 94, ${this.opacity})` 
+            : `rgba(251, 146, 60, ${this.opacity})`;
+        } else {
+          colorStr = this.hueShift > 0.5 
+            ? `rgba(56, 189, 248, ${this.opacity})` 
+            : `rgba(96, 165, 250, ${this.opacity})`;
+        }
+
+        ctx.fillStyle = colorStr;
+        ctx.shadowBlur = this.size * 2.5;
+        ctx.shadowColor = colorStr;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function initParticles() {
+      resize();
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new EmberParticle());
+      }
+    }
+
+    function renderLoop() {
+      if (!isRunning) return;
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      requestAnimationFrame(renderLoop);
+    }
+
+    window.addEventListener('resize', resize);
+    initParticles();
+    renderLoop();
+  }
+
+  // ==========================================================================
+  // Theme & Background Studio Manager
+  // ==========================================================================
+  function setupThemeAndBackgroundStudio() {
+    const themeModal = document.getElementById('theme-modal');
+    const themeNavBtn = document.getElementById('theme-selector-btn');
+    const themeModalClose = document.getElementById('theme-modal-close');
+    const themeCardBtns = document.querySelectorAll('.theme-card-btn');
+    const quickThemePills = document.querySelectorAll('.quick-theme-pill');
+    const toggleWallpaper = document.getElementById('toggle-wallpaper');
+    const toggleEmbers = document.getElementById('toggle-embers');
+    const toggleRajmudra = document.getElementById('toggle-rajmudra');
+    const emberCanvas = document.getElementById('ambient-ember-canvas');
+    const rajmudraWatermark = document.getElementById('shivaji-rajmudra-watermark');
+
+    // Default to shivaji theme & active wallpaper
+    const savedTheme = localStorage.getItem('portfolio_theme') || 'shivaji';
+    const savedWallpaper = localStorage.getItem('portfolio_wallpaper') !== 'false';
+    const savedEmbers = localStorage.getItem('portfolio_embers') !== 'false';
+    const savedRajmudra = localStorage.getItem('portfolio_rajmudra') !== 'false';
+
+    function applyTheme(theme) {
+      document.body.classList.remove('theme-shivaji', 'theme-cyber', 'theme-matrix', 'theme-sunset');
+      document.body.classList.add(`theme-${theme}`);
+      document.body.setAttribute('data-theme', theme);
+
+      // Update button text in nav
+      if (themeNavBtn) {
+        const flagSpan = themeNavBtn.querySelector('.theme-nav-icon');
+        const labelSpan = themeNavBtn.querySelector('.theme-nav-label');
+        if (theme === 'shivaji') {
+          if (flagSpan) flagSpan.textContent = '🚩';
+          if (labelSpan) labelSpan.textContent = 'Theme';
+        } else if (theme === 'cyber') {
+          if (flagSpan) flagSpan.textContent = '🌌';
+          if (labelSpan) labelSpan.textContent = 'Cyber';
+        } else if (theme === 'matrix') {
+          if (flagSpan) flagSpan.textContent = '⚡';
+          if (labelSpan) labelSpan.textContent = 'Matrix';
+        } else if (theme === 'sunset') {
+          if (flagSpan) flagSpan.textContent = '🌅';
+          if (labelSpan) labelSpan.textContent = 'Sunset';
+        }
+      }
+
+      // Sync active state in modal
+      themeCardBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+      });
+
+      // Sync active state on hero quick pills
+      quickThemePills.forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('data-theme') === theme);
+      });
+
+      // Show tribute banner if theme is shivaji
+      const tributeBanner = document.getElementById('shivaji-tribute-banner');
+      if (tributeBanner) {
+        tributeBanner.style.display = theme === 'shivaji' ? 'flex' : 'none';
+      }
+
+      localStorage.setItem('portfolio_theme', theme);
+    }
+
+    function applyWallpaper(enabled) {
+      document.body.classList.toggle('wallpaper-active', enabled);
+      if (toggleWallpaper) toggleWallpaper.checked = enabled;
+      localStorage.setItem('portfolio_wallpaper', enabled);
+    }
+
+    function applyEmbers(enabled) {
+      if (emberCanvas) {
+        emberCanvas.style.display = enabled ? 'block' : 'none';
+      }
+      if (toggleEmbers) toggleEmbers.checked = enabled;
+      localStorage.setItem('portfolio_embers', enabled);
+    }
+
+    function applyRajmudra(enabled) {
+      if (rajmudraWatermark) {
+        rajmudraWatermark.style.display = enabled ? 'block' : 'none';
+      }
+      if (toggleRajmudra) toggleRajmudra.checked = enabled;
+      localStorage.setItem('portfolio_rajmudra', enabled);
+    }
+
+    // Initialize states
+    applyTheme(savedTheme);
+    applyWallpaper(savedWallpaper);
+    applyEmbers(savedEmbers);
+    applyRajmudra(savedRajmudra);
+
+    // Modal Triggers
+    function openThemeModal() {
+      if (themeModal) {
+        themeModal.classList.add('open');
+        themeModal.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function closeThemeModal() {
+      if (themeModal) {
+        themeModal.classList.remove('open');
+        themeModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    if (themeNavBtn) themeNavBtn.addEventListener('click', openThemeModal);
+    if (themeModalClose) themeModalClose.addEventListener('click', closeThemeModal);
+    if (themeModal) {
+      themeModal.addEventListener('click', (e) => {
+        if (e.target === themeModal) closeThemeModal();
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && themeModal && themeModal.classList.contains('open')) {
+        closeThemeModal();
+      }
+    });
+
+    // Theme Card clicks in modal
+    themeCardBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-theme');
+        if (theme) applyTheme(theme);
+      });
+    });
+
+    // Hero Quick Pills clicks
+    quickThemePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const theme = pill.getAttribute('data-theme');
+        if (theme) applyTheme(theme);
+      });
+    });
+
+    // Background FX Toggles
+    if (toggleWallpaper) {
+      toggleWallpaper.addEventListener('change', (e) => applyWallpaper(e.target.checked));
+    }
+    if (toggleEmbers) {
+      toggleEmbers.addEventListener('change', (e) => applyEmbers(e.target.checked));
+    }
+    if (toggleRajmudra) {
+      toggleRajmudra.addEventListener('change', (e) => applyRajmudra(e.target.checked));
+    }
+  }
+
   // Initialization
   function init() {
+    setupThemeAndBackgroundStudio();
+    initAmbientEmberEngine();
     resizeCanvas();
     preloadImages();
     updateScroll();
