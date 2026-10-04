@@ -955,6 +955,19 @@
     });
   }
 
+  // Interactive Follow-up Links inside Message Bubbles
+  if (aiMessagesList) {
+    aiMessagesList.addEventListener('click', (e) => {
+      const link = e.target.closest('.ai-quick-link');
+      if (link) {
+        const prompt = link.getAttribute('data-prompt');
+        if (prompt) {
+          sendUserMessage(prompt);
+        }
+      }
+    });
+  }
+
   // Append Chat Message
   function appendChatMessage(role, htmlContent) {
     if (!aiMessagesList) return;
@@ -989,121 +1002,428 @@
     return indicator;
   }
 
-  // Local Knowledge Base Fallback Engine
+  // Helper to build interactive prompt follow-ups inside replies
+  function buildAIFollowups(chips) {
+    if (!chips || !chips.length) return '';
+    const chipsHtml = chips.map(c => 
+      `<button type="button" class="ai-quick-link" data-prompt="${escapeHtml(c.prompt)}">${c.label}</button>`
+    ).join('');
+    return `
+      <div class="ai-followups-container">
+        <span class="ai-followup-title">⚡ Suggested Follow-ups:</span>
+        <div class="ai-quick-links-row">
+          ${chipsHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  // Local Knowledge Base Engine (Trained Portfolio Intelligence)
   function generateLocalKnowledgeReply(prompt) {
-    const q = prompt.toLowerCase();
+    const q = prompt.toLowerCase().trim();
 
-    if (q.includes('skill') || q.includes('stack') || q.includes('tech') || q.includes('language')) {
-      return `<strong>Aditya's Technical Skills &amp; Competencies:</strong>
+    // 1. Greetings & Personal Identity
+    if (/\b(hi|hello|hey|namaste|greetings|hola|who are you|what can you do|about you|introduce|intro|who is aditya|tell me about (aditya|yourself)|summary)\b/i.test(q)) {
+      return `Hello! I am <strong>Aditya Tayde's AI Copilot</strong>, trained on his engineering portfolio, verified academic records, and production systems.
       <br><br>
-      • <strong>Programming:</strong> Python, C, C++, JavaScript<br>
-      • <strong>Web &amp; UI:</strong> HTML, CSS, JavaScript, React, Tailwind CSS, 60FPS Canvas Engine<br>
-      • <strong>Databases &amp; Systems:</strong> MySQL, DBMS, Linux, VS Code, Git, GitHub<br>
-      • <strong>Core Disciplines:</strong> Data Structures &amp; Algorithms (DSA), Artificial Intelligence (AI), Machine Learning<br>
-      • <strong>Soft Skills:</strong> Leadership, Communication, Problem Solving, Teamwork, Creativity, Event Management<br>
+      • <strong>Identity:</strong> Computer Science &amp; Engineering undergraduate at <strong>Sanjivani University</strong> (CGPA: <strong>8.0 / 10</strong>).<br>
+      • <strong>Core Disciplines:</strong> Full-Stack Development, AI/ML Systems, Zero-Dependency TypeScript Libraries, and Agritech Innovations.<br>
+      • <strong>Flagship Works:</strong> <em>Shetkari Raja</em> (React/Capacitor Agritech Platform), <em>Sanjivani AI Gateway</em> (358-provider orchestrator), and 16+ public GitHub repositories.<br>
+      • <strong>Department Leadership:</strong> Official Social Media Handler &amp; Event Coordinator, CSE Department, Sanjivani University.
+      ${buildAIFollowups([
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '📬 Contact Info', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
+    }
+
+    // 2. Why Hire Aditya / Value Proposition / Recruiter Evaluation
+    if (/\b(why hire|why should|hire aditya|strengths|value proposition|unique|why choose|what makes|culture fit|stand out|best qualities|pros)\b/i.test(q)) {
+      return `<strong>💼 Why Aditya Tayde is a High-Impact Engineering Hire:</strong>
+      <br><br>
+      1. <strong>Production Versatility &amp; Systems Craftsmanship:</strong>
+      Aditya doesn't just write scripts — he ships complete architectures: from zero-dependency TypeScript libraries (<span class="ai-code-pill">@adityatayde/sanjivani-core</span>) and native Android mobile apps (Capacitor) to high-throughput 60FPS mathematical canvas engines.
+      <br><br>
+      2. <strong>Solid Computer Science Foundations:</strong>
+      Maintains an impressive <strong>8.0 / 10 CGPA</strong> in Integrated B.Tech CSE at Sanjivani University and an <strong>84% Distinction</strong> in Class X. Strong grasp of Data Structures &amp; Algorithms, Object-Oriented Design, Relational Normalization, and Operating Systems.
+      <br><br>
+      3. <strong>Demonstrated Real-World Impact:</strong>
+      Engineered <strong>Shetkari Raja</strong> to solve critical rural challenges: native camera AI grain grading, real-time procurement queues, and DBT/PFMS subsidy tracking.
+      <br><br>
+      4. <strong>Proven Leadership &amp; High Agency:</strong>
+      As the <strong>CSE Department Social Media Handler &amp; Event Coordinator</strong>, he manages digital outreach, technical hackathons, and cross-functional teams with clear, articulate communication.
+      <br><br>
+      5. <strong>Immediate Availability:</strong>
+      Ready to join immediately for SDE / Full-Stack / AI Internships or Junior Developer roles (Global Remote, Hybrid, or On-Site in Pune, Mumbai, Bangalore).
+      ${buildAIFollowups([
+        { label: '⚡ Technical Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '🌾 Shetkari Raja Architecture', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '🎓 Academic Credentials', prompt: 'What is Aditya\'s academic background, college, and CGPA?' },
+        { label: '📞 Schedule an Interview', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
+    }
+
+    // 3. Shetkari Raja Flagship Project
+    if (/\b(shetkari|raja|agricultural|agriculture|farmer|farming|grain|grading|dbt|pfms|procurement|crop quality)\b/i.test(q)) {
+      return `<strong>🌾 Flagship Project: Shetkari Raja (Digital Agritech Platform)</strong>
+      <br><br>
+      A mission-driven agricultural technology ecosystem engineered to empower farmers with automated quality assessment and transparent supply chains.
+      <br><br>
+      • <strong>Tech Stack:</strong> React, TypeScript, Tailwind CSS, Supabase (PostgreSQL), Capacitor Android Native Bridge.<br>
+      • <strong>AI-Driven Grain Grading:</strong> Utilizes device camera capture with on-device computer vision models to evaluate grain quality metrics, moisture, and impurities.<br>
+      • <strong>Live Procurement Queue Tracker:</strong> Real-time queue monitoring at government agricultural grain procurement centers, eliminating days of physical waiting.<br>
+      • <strong>DBT / PFMS Payment Status:</strong> Real-time tracking of Direct Benefit Transfer subsidies and procurement payouts.<br>
+      • <strong>Android Mobile Ready:</strong> Packaged as a native APK via Capacitor for low-latency rural field operation.
+      <div class="ai-highlight-box">
+        Repository: <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">github.com/adityatayde111-lgtm/shetkari-raja</a>
+      </div>
+      ${buildAIFollowups([
+        { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+        { label: '🌱 AgriSmart AI', prompt: 'Tell me about the AgriSmart AI project' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' }
+      ])}`;
+    }
+
+    // 4. Sanjivani AI Tool & Open-Source Core SDK
+    if (/\b(sanjivani|gateway|core sdk|358|failover|circuit breaker|firewall|prompt injection|@adityatayde\/sanjivani-core|load balanc)\b/i.test(q)) {
+      return `<strong>🛡️ Sanjivani AI Gateway &amp; Core SDK</strong>
+      <br><br>
+      A high-availability, enterprise-grade AI routing engine and zero-dependency TypeScript developer library:
+      <br><br>
+      • <strong>358-Provider Federation:</strong> Unifies OpenAI, Anthropic, Mistral, Groq, and local Ollama runtimes under a single resilient API surface.<br>
+      • <strong>Latency-Based Load Balancing:</strong> Measures real-time endpoint TTFT (Time To First Token) and routes queries to the fastest active node.<br>
+      • <strong>Automatic Failover &amp; Circuit Breaking:</strong> Zero-downtime automated fallbacks when upstream providers suffer rate limits (429) or outages.<br>
+      • <strong>Prompt Injection Firewall:</strong> Pre-execution input sanitization and heuristic threat detection to stop jailbreaks.<br>
+      • <strong>Zero-Dependency Library:</strong> Packaged and published on npm: <span class="ai-code-pill">npm i @adityatayde/sanjivani-core</span> (v1.2.0, MIT).
+      <div class="ai-highlight-box">
+        Repository: <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">github.com/adityatayde111-lgtm/sanjivani-ai-tool</a>
+      </div>
+      ${buildAIFollowups([
+        { label: '🤖 Agentic AI Systems', prompt: 'What AI, ML, and Autonomous Agent systems has Aditya built?' },
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' }
+      ])}`;
+    }
+
+    // 5. AI Assistant Agent
+    if (/\b(ai assistant agent|agentic|tool dispatch|memory synthesis|autonomous agent)\b/i.test(q)) {
+      return `<strong>🤖 AI Assistant Agent (Autonomous Tool Dispatcher)</strong>
+      <br><br>
+      An advanced agentic architecture engineered in TypeScript featuring:
+      <br><br>
+      • <strong>Dynamic Tool Calling:</strong> Analyzes user intent and dispatches deterministic tool schemas at runtime.<br>
+      • <strong>Long-Term Memory Synthesis:</strong> Retains multi-turn conversation context across user sessions with semantic embedding recall.<br>
+      • <strong>Autonomous Reasoning:</strong> Plan-and-solve execution loops capable of breaking down complex prompts into verifiable micro-steps.
+      <div class="ai-highlight-box">
+        Repository: <a href="https://github.com/adityatayde111-lgtm/ai-assistant-agent" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">github.com/adityatayde111-lgtm/ai-assistant-agent</a>
+      </div>
+      ${buildAIFollowups([
+        { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' }
+      ])}`;
+    }
+
+    // 6. AgriSmart AI
+    if (/\b(agrismart|yield forecasting|soil parameter|crop decision)\b/i.test(q)) {
+      return `<strong>🌱 AgriSmart AI (Predictive Agronomic Decision Engine)</strong>
+      <br><br>
+      A data-driven farming intelligence platform designed to maximize crop yield and optimize resource allocation:
+      <br><br>
+      • <strong>Multi-Factor ML Analysis:</strong> Evaluates soil chemical parameters (NPK, pH), local weather forecasts, and historical crop yields.<br>
+      • <strong>Actionable Recommendations:</strong> Generates tailored fertilizer schedules and irrigation advice to minimize economic loss.<br>
+      • <strong>Market Forecasting:</strong> Integrates agricultural commodity pricing trends for optimal harvest timing.
+      <div class="ai-highlight-box">
+        Repository: <a href="https://github.com/adityatayde111-lgtm/AgriSmart-Helping-Farmers-Make-Better-Decisions-with-AI" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">github.com/adityatayde111-lgtm/AgriSmart</a>
+      </div>
+      ${buildAIFollowups([
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' }
+      ])}`;
+    }
+
+    // 7. 60FPS Canvas Engine & Cinematic Music System
+    if (/\b(canvas|scrub|fps|frame|audio|soundtrack|song|music|synthesizer|oscillator|sound|track|player|mp3)\b/i.test(q)) {
+      return `<strong>🎵 60FPS Canvas Scrub Engine &amp; Cinematic Audio Dock:</strong>
+      <br><br>
+      This portfolio itself demonstrates Aditya's creative engineering capabilities:
+      <br><br>
+      • <strong>60FPS Mathematical Scrubbing:</strong> 240-frame fluid canvas video visualizer driven by scroll position interpolation (lerp) with zero frame drops.<br>
+      • <strong>Cinematic Soundtrack Player:</strong> Multi-track audio engine with dynamic Web Audio API integration:<br>
+      &nbsp;&nbsp;1. <em>Inspiring Cinematic Theme:</em> Orchestral tech teaser.<br>
+      &nbsp;&nbsp;2. <em>Impact Moderato Beat:</em> High-tempo electronic rhythm.<br>
+      &nbsp;&nbsp;3. <em>Ambient Synth Drone:</em> Generative 4-voice procedural audio synthesizer.<br>
+      • <strong>"Load My Song":</strong> Integrated file picker in the bottom-left music dock allowing visitors to load and play any personal MP3/WAV/OGG audio track directly in the browser!
+      ${buildAIFollowups([
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' }
+      ])}`;
+    }
+
+    // 8. Student Management System
+    if (/\b(student management|crud|academic management|grade tracking|student portal)\b/i.test(q)) {
+      return `<strong>🎓 Student Management System</strong>
+      <br><br>
+      A robust, database-driven academic management software:
+      <br><br>
+      • <strong>Relational Architecture:</strong> Normalized MySQL schema ensuring ACID compliance across student entities, courses, and grading registries.<br>
+      • <strong>Core Functionality:</strong> Complete CRUD operations for student profiles, course registrations, semester grade computation, and automated transcript reporting.<br>
+      • <strong>Security:</strong> Input sanitization and role-based access control protecting student academic records.
+      ${buildAIFollowups([
+        { label: '🧠 DSA & CS Fundamentals', prompt: 'What are Aditya\'s competencies in Data Structures, Algorithms, and Core CS?' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '🎓 Education & CGPA', prompt: 'What is Aditya\'s academic background, college, and CGPA?' }
+      ])}`;
+    }
+
+    // 9. GitHub Repositories & Open Source
+    if (/\b(github|repo|repositories|codebase|open source|library|npm|all projects)\b/i.test(q)) {
+      return `<strong>📚 GitHub Profile &amp; 16+ Repositories (@adityatayde111-lgtm):</strong>
+      <br><br>
+      Aditya's GitHub showcases active engineering across web apps, libraries, and AI systems:
+      <br><br>
+      • <strong>shetkari-raja:</strong> Agricultural management with AI grain grading.<br>
+      • <strong>sanjivani-ai-tool:</strong> High-availability AI gateway unifying 358 providers.<br>
+      • <strong>@adityatayde/sanjivani-core:</strong> Zero-dependency TypeScript AI routing SDK on npm.<br>
+      • <strong>ai-assistant-agent:</strong> Autonomous agentic framework with dynamic tool calling.<br>
+      • <strong>AgriSmart:</strong> Predictive crop analytics and agronomic decision engine.<br>
+      • <strong>Interactive Dice Roller &amp; Web Engines:</strong> Experimental UI &amp; graphics tools.<br>
+      <div class="ai-highlight-box">
+        Visit GitHub: <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">github.com/adityatayde111-lgtm</a><br>
+        <em>Tip: You can also click the "Browse All 16+ Repositories" button right on this page!</em>
+      </div>
+      ${buildAIFollowups([
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' }
+      ])}`;
+    }
+
+    // 10. DSA & Core Computer Science Fundamentals
+    if (/\b(dsa|data structure|algorithm|problem solving|leetcode|complexity|big o|oop|object oriented|os|operating system|dbms|database system|network)\b/i.test(q)) {
+      return `<strong>🧠 Data Structures, Algorithms &amp; Computer Science Core:</strong>
+      <br><br>
+      Aditya has built strong foundational engineering intuition through rigorous academic study and coding:
+      <br><br>
+      • <strong>Data Structures:</strong> Arrays, Strings, Singly/Doubly Linked Lists, Stacks, Queues, Binary Trees, Binary Search Trees, Graphs (BFS/DFS), and Hash Maps.<br>
+      • <strong>Algorithms &amp; Techniques:</strong> Sorting, Searching (Binary Search), Two Pointers, Sliding Window, Recursion, Dynamic Programming, and Greedy Algorithms.<br>
+      • <strong>Time &amp; Space Complexity:</strong> Systematic Big-O runtime and auxiliary space analysis for production scalability.<br>
+      • <strong>Object-Oriented Programming (OOP):</strong> Encapsulation, Polymorphism, Inheritance, Abstraction, and SOLID design principles.<br>
+      • <strong>Database Management (DBMS):</strong> Relational Normalization (1NF through BCNF), indexing, transactions, and ACID constraints.<br>
+      • <strong>Operating Systems &amp; Networks:</strong> Process scheduling, virtual memory, concurrency, TCP/IP stack, and HTTP/REST protocols.
+      ${buildAIFollowups([
+        { label: '⚡ Technical Skills', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '🎓 Education & CGPA', prompt: 'What is Aditya\'s academic background, college, and CGPA?' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' }
+      ])}`;
+    }
+
+    // 11. AI / ML / LLM Capabilities
+    if (/\b(machine learning|deep learning|prompt engineering|gpt|rag|artificial intelligence)\b/i.test(q)) {
+      return `<strong>🤖 Artificial Intelligence &amp; Machine Learning Expertise:</strong>
+      <br><br>
+      Aditya's AI development spans production LLM orchestration and practical applied ML:
+      <br><br>
+      • <strong>AI Routing &amp; Gateways:</strong> Author of <span class="ai-code-pill">sanjivani-ai-tool</span> orchestrating 358 model providers with latency-based load balancing and circuit breaking.<br>
+      • <strong>Agentic Systems:</strong> Dynamic tool invocation, long-term memory synthesis, and multi-step reasoning state machines.<br>
+      • <strong>Computer Vision / Edge AI:</strong> Native camera grain defect classification for the Shetkari Raja Android platform.<br>
+      • <strong>Predictive Agronomic ML:</strong> Multi-factor regression and classification models in AgriSmart AI.
+      ${buildAIFollowups([
+        { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' }
+      ])}`;
+    }
+
+    // 12. Technical Skills & Languages Stack
+    if (/\b(skill|stack|tech|technolog|language|programming|frontend|backend|framework|tool|python|c\+\+|javascript|typescript|react|tailwind|mysql)\b/i.test(q)) {
+      return `<strong>⚡ Aditya's Complete Technical Stack &amp; Tooling:</strong>
+      <br><br>
+      • <strong>Programming Languages:</strong> Python, C, C++, JavaScript (ES6+), TypeScript<br>
+      • <strong>Frontend &amp; UI Engineering:</strong> React, HTML5, CSS3, Tailwind CSS, HTML5 Canvas API, Web Audio API<br>
+      • <strong>Databases &amp; Systems:</strong> MySQL, PostgreSQL / Supabase, Relational DBMS Design, Node.js REST APIs<br>
+      • <strong>Mobile &amp; Frameworks:</strong> Capacitor Android Native Bridge, Express.js<br>
+      • <strong>DevOps &amp; Developer Tools:</strong> Git, GitHub, Linux / Unix CLI, VS Code, npm ecosystem<br>
+      • <strong>Core Competencies:</strong> DSA, OOP, AI Gateway Architectures, Agentic Workflows, 60FPS UI Rendering<br>
+      • <strong>Soft Skills:</strong> Technical Leadership, Cross-Functional Teamwork, Event Coordination, Creative Problem Solving
+      ${buildAIFollowups([
+        { label: '🌾 Shetkari Raja Architecture', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+        { label: '🧠 DSA Competencies', prompt: 'What are Aditya\'s competencies in Data Structures, Algorithms, and Core CS?' },
+        { label: '💼 Hire Aditya', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' }
+      ])}`;
+    }
+
+    // 13. Education & Academic Standing
+    if (/\b(education|college|university|cgpa|btech|degree|school|marks|grade|sanjivani|class 10|10th|study|academic|coursework)\b/i.test(q)) {
+      return `<strong>🎓 Academic Background &amp; Credentials:</strong>
+      <br><br>
+      • <strong>Integrated B.Tech in Computer Science &amp; Engineering:</strong><br>
+      &nbsp;&nbsp;Institution: <strong>Sanjivani University</strong>, Maharashtra, India<br>
+      &nbsp;&nbsp;Current CGPA: <strong>8.0 / 10</strong><br>
+      &nbsp;&nbsp;Key Coursework: Data Structures &amp; Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, Computer Networks, Artificial Intelligence.<br>
       <br>
-      Explore his repositories on <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">GitHub (@adityatayde111-lgtm)</a>!`;
-    }
-
-    if (q.includes('song') || q.includes('music') || q.includes('audio') || q.includes('sound') || q.includes('track')) {
-      return `<strong>🎵 Cinematic Soundtrack &amp; Music Player:</strong>
-      <br><br>
-      Aditya's portfolio features an integrated multi-track <strong>Cinematic Soundtrack Player</strong>:
-      <br><br>
-      • <strong>Track 1:</strong> <em>Inspiring Cinematic Theme</em> (Orchestral tech teaser)<br>
-      • <strong>Track 2:</strong> <em>Impact Moderato Beat</em> (Epic electronic percussion)<br>
-      • <strong>Track 3:</strong> <em>Ambient Synth Drone</em> (Generative 4-voice Web Audio oscillator)<br>
-      • <strong>Load Your Own Song:</strong> Click <em>"Load My Song"</em> in the bottom-left music dock to play any personal MP3/WAV/OGG song from your device!<br>
+      • <strong>Secondary School Certificate (Class X):</strong><br>
+      &nbsp;&nbsp;Board Score: <strong>84% (Distinction)</strong><br>
       <br>
-      You can toggle playback anytime using <strong>AUDIO: ON/OFF</strong> in the top navigation bar or the floating player dock at the bottom-left corner!`;
+      • <strong>Department Leadership:</strong><br>
+      &nbsp;&nbsp;Serving as the <strong>Department Social Media Handler &amp; Event Coordinator</strong> for the Department of Computer Science &amp; Engineering at Sanjivani University.
+      ${buildAIFollowups([
+        { label: '🏆 Leadership & Activities', prompt: 'What licenses, certifications, and leadership roles does Aditya hold?' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '📬 Contact Info', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
     }
 
-    if (q.includes('cert') || q.includes('license') || q.includes('credential')) {
-      return `<strong>🎓 Academic &amp; Leadership Profile:</strong>
+    // 14. Leadership & Event Coordination
+    if (/\b(leadership|social media|coordinator|event|cse department|extracurricular|activities|management|teamwork|organizing)\b/i.test(q)) {
+      return `<strong>🏆 Leadership &amp; Departmental Coordination:</strong>
       <br><br>
-      • <strong>Degree:</strong> Integrated B.Tech in Computer Science &amp; Engineering<br>
-      • <strong>Institution:</strong> Sanjivani University (Current) &bull; CGPA: <strong>8.0 / 10</strong><br>
-      • <strong>High School:</strong> Class X Board Score: <strong>84%</strong> (Distinction)<br>
-      • <strong>Leadership Role:</strong> Department Social Media Handler &amp; Event Coordinator, CSE Department, Sanjivani University<br>
-      • <strong>Key Projects:</strong> Shetkari Raja, AI Chat Assistant, Student Management System, Portfolio Website<br>
-      <br>
-      Connect with Aditya on <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline;">LinkedIn</a>!`;
+      <strong>Department Social Media Handler &amp; Event Coordinator</strong><br>
+      <em>Department of Computer Science &amp; Engineering, Sanjivani University</em>
+      <br><br>
+      • <strong>Media Strategy &amp; Outreach:</strong> Orchestrates promotional campaigns, reels, posters, and technical communications reaching thousands of students and faculty.<br>
+      • <strong>Technical &amp; Cultural Event Management:</strong> Spearheads organization of department hackathons, coding competitions, technical symposiums, and cultural fests.<br>
+      • <strong>Cross-Functional Collaboration:</strong> Acts as the primary bridge between department faculty, student bodies, guest speakers, and industry partners.<br>
+      • <strong>Key Competencies:</strong> High EQ leadership, crisp public communication, brand building, and agile crisis management.
+      ${buildAIFollowups([
+        { label: '🎓 Academic Details', prompt: 'What is Aditya\'s academic background, college, and CGPA?' },
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '📬 Contact Aditya', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
     }
 
-    if (q.includes('shetkari') || q.includes('raja') || q.includes('farm') || q.includes('grain')) {
-      return `<strong>🌾 Shetkari Raja (Agricultural Platform)</strong>
+    // 15. Job Search, Internship Availability, Notice Period
+    if (/\b(intern|internship|available|availability|job|career|role|join|notice period|start date|opportunity|fresher|full time|hiring)\b/i.test(q)) {
+      return `<strong>💼 Internship &amp; Career Opportunities:</strong>
       <br><br>
-      Shetkari Raja is a comprehensive digital agricultural platform engineered by Aditya with <strong>React</strong>, <strong>TypeScript</strong>, <strong>Capacitor Android</strong>, and <strong>Supabase</strong>.
+      Aditya is actively seeking <strong>Software Development Engineer (SDE)</strong>, <strong>Full-Stack Developer</strong>, <strong>AI/ML Engineer</strong>, or <strong>Python Developer</strong> internship and junior opportunities.
       <br><br>
-      <strong>Key Capabilities:</strong><br>
-      • <strong>AI Grain Grading:</strong> Native camera capture integration for agricultural grain specimen analysis.<br>
-      • <strong>Procurement Queue Tracker:</strong> Real-time queue monitoring for farmer grain procurement centers.<br>
-      • <strong>DBT/PFMS Status:</strong> Direct benefit payment status tracking.<br>
-      <br>
-      Repository: <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/shetkari-raja</a>`;
+      • <strong>Availability:</strong> <strong>Immediate</strong> — Ready to contribute from Day 1.<br>
+      • <strong>Work Modality:</strong> Fully open to <strong>Global Remote</strong>, <strong>Hybrid</strong>, or <strong>On-Site</strong> positions.<br>
+      • <strong>Location Flexibility:</strong> Based in Maharashtra, India. Enthusiastic to relocate to tech hubs like <strong>Pune</strong>, <strong>Mumbai</strong>, <strong>Bangalore</strong>, or internationally.<br>
+      • <strong>Direct Contact:</strong> Call <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a> or email <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>.
+      ${buildAIFollowups([
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '📄 Resume & CV', prompt: 'How can I contact Aditya Tayde or download his resume?' },
+        { label: '🌍 Remote Timezone Overlap', prompt: 'What are Aditya\'s remote collaboration capabilities and timezone overlaps?' }
+      ])}`;
     }
 
-    if (q.includes('sanjivani') || q.includes('gateway') || q.includes('358') || q.includes('firewall')) {
-      return `<strong>🛡️ Sanjivani AI Tool (Unified AI Gateway)</strong>
+    // 16. Global Remote Collaboration & Timezones
+    if (/\b(remote|timezone|overlap|global|usa|canada|uk|europe|germany|australia|singapore|hours|ist)\b/i.test(q)) {
+      return `<strong>🌍 Global Remote Collaboration &amp; Timezone Overlap:</strong>
       <br><br>
-      A high-availability AI Gateway built in TypeScript unifying <strong>358 AI model providers</strong> with automated failover and latency-based routing.
+      Aditya operates with high discipline in distributed remote environments:
       <br><br>
-      Repository: <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" style="color: #38bdf8; text-decoration: underline;">github.com/adityatayde111-lgtm/sanjivani-ai-tool</a>`;
+      • <strong>Base Timezone:</strong> Indian Standard Time (IST &bull; UTC +5:30)<br>
+      • <strong>United States &amp; Canada (EST / PST):</strong> 3 to 5 hours daily synchronous overlap (morning/evening sync windows).<br>
+      • <strong>United Kingdom &amp; Europe (GMT / CET):</strong> 4 to 6 hours prime midday overlap.<br>
+      • <strong>APAC &amp; Australia (SGT / JST / AEST):</strong> 6 to 8 hours of extensive concurrent working overlap.<br>
+      • <strong>Communication Workflow:</strong> Clear asynchronous written documentation, Git-driven code reviews, Slack/Discord agility, and proactive standups.
+      <div class="ai-highlight-box">
+        <em>Try the interactive "Global Remote Collaboration &amp; Timezone Explorer" widget situated below on this page!</em>
+      </div>
+      ${buildAIFollowups([
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '📬 Contact Info', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
     }
 
-    if (q.includes('hire') || q.includes('available') || q.includes('job') || q.includes('opportunity') || q.includes('work') || q.includes('intern')) {
-      return `<strong>💼 Internship Availability &amp; Roles</strong>
+    // 17. Certifications & Verified Credentials
+    if (/\b(cert|certificate|certification|credential|license|badge)\b/i.test(q)) {
+      return `<strong>📜 Verified Credentials &amp; Certifications:</strong>
       <br><br>
-      Aditya is actively seeking <strong>Software Development, AI/ML, Python, and Full-Stack Engineering Internship Opportunities</strong>.
-      <br><br>
-      • <strong>University:</strong> Sanjivani University (Integrated B.Tech CSE, CGPA: 8.0)<br>
-      • <strong>Location:</strong> Maharashtra, India &bull; Open for On-Site and Global Remote Roles<br>
-      • <strong>Phone:</strong> <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a><br>
-      • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>`;
+      • <strong>Academic Degree:</strong> Integrated B.Tech in CSE, Sanjivani University (CGPA: <strong>8.0 / 10</strong>).<br>
+      • <strong>Secondary Education:</strong> Class X Board Score: <strong>84% (Distinction)</strong>.<br>
+      • <strong>Official Leadership Role:</strong> Department Social Media Handler &amp; Event Coordinator, CSE Dept, Sanjivani University.<br>
+      • <strong>Verified Coursework:</strong> Python Programming, C/C++, Web Technologies, Database Systems, and AI/ML.<br>
+      • <strong>Open Source Publishing:</strong> Published npm library <span class="ai-code-pill">@adityatayde/sanjivani-core</span>.<br>
+      • <strong>LinkedIn Profile:</strong> <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline;">linkedin.com/in/aditya-tayde-02a030383</a>
+      ${buildAIFollowups([
+        { label: '🎓 Education Details', prompt: 'What is Aditya\'s academic background, college, and CGPA?' },
+        { label: '🌾 Shetkari Raja Project', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '📬 Contact Aditya', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
     }
 
-    if (q.includes('linkedin') || q.includes('profile') || q.includes('connect')) {
-      return `<strong>💼 Connect with Aditya on LinkedIn:</strong>
+    // 18. Resume & CV Access
+    if (/\b(resume|cv|pdf|download resume|view resume)\b/i.test(q)) {
+      return `<strong>📄 Aditya Tayde's Resume / CV:</strong>
       <br><br>
-      Official LinkedIn Profile:<br>
-      👉 <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: bold;">linkedin.com/in/aditya-tayde-02a030383</a>
+      You can inspect or download Aditya's verified resume right here:
       <br><br>
-      Integrated B.Tech CSE student at Sanjivani University passionate about Software Engineering, AI, and Full-Stack Systems!`;
+      • <strong>Interactive Viewer:</strong> Click the <strong>"Resume"</strong> button in the navigation bar to open the full interactive resume modal.<br>
+      • <strong>Key Resume Highlights:</strong> Integrated B.Tech CSE (CGPA: 8.0/10), Class X Distinction (84%), Flagship Projects (Shetkari Raja, Sanjivani AI Tool, 60FPS Canvas Scrub Engine), and official CSE Department Leadership.<br>
+      • <strong>Direct Contact:</strong> Phone: <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a> &bull; Email: <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>
+      ${buildAIFollowups([
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' }
+      ])}`;
     }
 
-    if (q.includes('instagram') || q.includes('insta')) {
-      return `<strong>📸 Connect with Aditya on Instagram:</strong>
+    // 19. Location & Relocation
+    if (/\b(location|located|where (do you|does he|are you) live|where is he (based|located)|city|state|pune|mumbai|relocate|relocation|hometown|native place|address)\b/i.test(q)) {
+      return `<strong>📍 Location &amp; Relocation Readiness:</strong>
       <br><br>
-      Official Instagram Account:<br>
-      👉 <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #f472b6; text-decoration: underline; font-weight: bold;">@aditya_tayde_96 on Instagram</a>`;
+      • <strong>Current Location:</strong> Maharashtra, India (Enrolled at Sanjivani University).<br>
+      • <strong>Relocation Flexibility:</strong> 100% open and eager to relocate for software engineering and AI internships/roles in major tech hubs including <strong>Pune</strong>, <strong>Mumbai</strong>, <strong>Bangalore</strong>, <strong>Hyderabad</strong>, <strong>Delhi NCR</strong>, or international locations.<br>
+      • <strong>Remote Readiness:</strong> Fully equipped home workstation with high-speed fiber internet and proven global timezone overlap capabilities.
+      ${buildAIFollowups([
+        { label: '💼 Internship Availability', prompt: 'Is Aditya available for engineering roles?' },
+        { label: '🌍 Remote Overlap', prompt: 'What are Aditya\'s remote collaboration capabilities and timezone overlaps?' },
+        { label: '📬 Contact Info', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
     }
 
-    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('call') || q.includes('github') || q.includes('reach') || q.includes('social')) {
-      return `<strong>📬 How to Contact Aditya Tayde:</strong>
+    // 20. Contact, Socials & Communication Channels
+    if (/\b(contact|email|phone|call|reach|whatsapp|message|social|linkedin|instagram|handle|talk)\b/i.test(q)) {
+      return `<strong>📬 Direct Contact &amp; Professional Profiles:</strong>
       <br><br>
-      • <strong>Phone / Call:</strong> <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a><br>
-      • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a><br>
-      • <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline;">linkedin.com/in/aditya-tayde-02a030383</a><br>
-      • <strong>Instagram:</strong> <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #38bdf8; text-decoration: underline;">@aditya_tayde_96</a><br>
-      • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline;">@adityatayde111-lgtm</a><br>
-      • <strong>Live Portfolio:</strong> <a href="https://resume-atm-f33c.vercel.app" target="_blank" style="color: #38bdf8; text-decoration: underline;">resume-atm-f33c.vercel.app</a>`;
+      • <strong>Phone / Direct Call:</strong> <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">+91 9403206007</a><br>
+      • <strong>Email:</strong> <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">adityatayde111@gmail.com</a><br>
+      • <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">linkedin.com/in/aditya-tayde-02a030383</a><br>
+      • <strong>GitHub:</strong> <a href="https://github.com/adityatayde111-lgtm" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 600;">@adityatayde111-lgtm (16+ Repos)</a><br>
+      • <strong>Instagram:</strong> <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" style="color: #f472b6; text-decoration: underline; font-weight: 600;">@aditya_tayde_96</a><br>
+      • <strong>Live Portfolio:</strong> <a href="https://adityatayde111-lgtm.github.io/RESUME-./" target="_blank" style="color: #38bdf8; text-decoration: underline;">adityatayde111-lgtm.github.io/RESUME-./</a>
+      ${buildAIFollowups([
+        { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '📄 Resume & CV', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+      ])}`;
     }
 
-    if (q.includes('education') || q.includes('college') || q.includes('degree') || q.includes('study') || q.includes('university') || q.includes('cgpa')) {
-      return `<strong>🎓 Academic Background:</strong>
+    // 21. Praise / Courtesy / Farewell
+    if (/\b(thank|thanks|awesome|great|cool|nice|good job|impressive|bye|goodbye|see ya|cheers)\b/i.test(q)) {
+      return `<strong>✨ You're Very Welcome!</strong>
       <br><br>
-      • <strong>Integrated B.Tech in Computer Science &amp; Engineering:</strong> Sanjivani University (Current) &bull; CGPA: <strong>8.0 / 10</strong><br>
-      • <strong>Class X (Secondary School Certificate):</strong> <strong>84%</strong> (Distinction)<br>
-      • <strong>Leadership &amp; Coordination:</strong> Department Social Media Handler &amp; Event Coordinator for Computer Science &amp; Engineering<br>
-      • <strong>Core Coursework:</strong> Python, C, C++, Data Structures &amp; Algorithms (DSA), DBMS, MySQL, Artificial Intelligence, Web Technologies`;
+      Thank you for taking the time to explore Aditya Tayde's portfolio and engineering projects.
+      <br><br>
+      If you're considering him for an engineering opportunity, feel free to give him a direct call at <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a> or connect on <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" style="color: #38bdf8; text-decoration: underline;">LinkedIn</a>!
+      ${buildAIFollowups([
+        { label: '🌾 Shetkari Raja', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+        { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+        { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' }
+      ])}`;
     }
 
-    // Default intelligent overview
-    return `Aditya Tayde is a <strong>Computer Science &amp; Engineering student at Sanjivani University (CGPA: 8.0)</strong> and software developer.
+    // 22. Default Intelligent Portfolio Overview & Smart Fallback
+    return `Aditya Tayde is a <strong>Computer Science &amp; Engineering student at Sanjivani University (CGPA: 8.0 / 10)</strong> and full-stack software engineer.
     <br><br>
-    Notable projects include <strong>Shetkari Raja</strong> (agricultural platform with AI grain grading), <strong>AI Chat Assistant</strong>, <strong>Student Management System</strong>, and this interactive 60FPS portfolio.
+    He specializes in production web systems, AI model gateways, and agritech platforms. His notable achievements include <strong>Shetkari Raja</strong> (AI grain grading and procurement tracking), <strong>Sanjivani AI Gateway</strong> (358-provider resilient routing SDK), and official leadership as CSE Department Social Media Handler &amp; Event Coordinator.
     <br><br>
-    Feel free to call him at <a href="tel:9403206007" style="color: #38bdf8; text-decoration: underline;">+91 9403206007</a> or email <a href="mailto:adityatayde111@gmail.com" style="color: #38bdf8; text-decoration: underline;">adityatayde111@gmail.com</a>!`;
+    How can I assist you further? Choose a topic below:
+    ${buildAIFollowups([
+      { label: '💼 Why Hire Aditya?', prompt: 'Why should recruiters hire Aditya Tayde and what makes him stand out?' },
+      { label: '🌾 Shetkari Raja Architecture', prompt: 'Tell me about the Shetkari Raja agricultural platform and AI grain grading.' },
+      { label: '🛡️ Sanjivani AI Gateway', prompt: 'How does Sanjivani AI Gateway and open-source Core SDK work?' },
+      { label: '⚡ Core Tech Stack', prompt: 'What are Aditya\'s core technical skills and programming languages?' },
+      { label: '🎓 Education & CGPA', prompt: 'What is Aditya\'s academic background, college, and CGPA?' },
+      { label: '📬 Contact Info', prompt: 'How can I contact Aditya Tayde or download his resume?' }
+    ])}`;
   }
 
   // Handle User Message Submission

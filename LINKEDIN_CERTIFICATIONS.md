@@ -13,7 +13,7 @@ This guide contains the verified and authentic profile data taken directly from 
 - **LinkedIn Profile:** [https://www.linkedin.com/in/aditya-tayde-02a030383](https://www.linkedin.com/in/aditya-tayde-02a030383)
 - **GitHub Profile:** [https://github.com/adityatayde111-lgtm](https://github.com/adityatayde111-lgtm)
 - **Instagram Profile:** [https://www.instagram.com/aditya_tayde_96](https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq)
-- **Live Portfolio:** [https://resume-atm-f33c.vercel.app](https://resume-atm-f33c.vercel.app)
+- **Live Portfolio:** [https://adityatayde111-lgtm.github.io/RESUME-./](https://adityatayde111-lgtm.github.io/RESUME-./)
 - **Location:** Maharashtra, India
 
 ---
@@ -76,7 +76,7 @@ Computer Science Engineering student (CGPA: 8.0) passionate about Software Devel
 - **Description:** Engineered a relational database management software solution using Python/C++ and MySQL to store and track student academic data, enrollment profiles, course records, and grade reporting.
 
 ### 4. Portfolio Website & 60FPS Interactive Engine
-- **Project URL:** https://resume-atm-f33c.vercel.app
+- **Project URL:** https://adityatayde111-lgtm.github.io/RESUME-./
 - **Description:** Engineered high-performance interactive web portfolio with a 60FPS fluid canvas scrubber (240 frames), Web Audio API ambient synthesizer, mobile-responsive layout, and integrated AI copilot.
 
 ---

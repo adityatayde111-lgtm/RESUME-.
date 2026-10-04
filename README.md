@@ -5,7 +5,7 @@
 [![GitHub Profile](https://img.shields.io/badge/GitHub-adityatayde111--lgtm-blue?style=for-the-badge&logo=github)](https://github.com/adityatayde111-lgtm)
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-Aditya_Tayde-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/aditya-tayde-02a030383)
 [![Instagram Profile](https://img.shields.io/badge/Instagram-@aditya__tayde__96-E4405F?style=for-the-badge&logo=instagram)](https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq)
-[![Live Preview](https://img.shields.io/badge/Live_Portfolio-Vercel-success?style=for-the-badge&logo=vercel)](https://resume-atm-f33c.vercel.app)
+[![Live Preview](https://img.shields.io/badge/Live_Portfolio-GitHub_Pages-success?style=for-the-badge&logo=github)](https://adityatayde111-lgtm.github.io/RESUME-./)
 [![Tech Stack](https://img.shields.io/badge/Stack-Python_%7C_C%2B%2B_%7C_React_%7C_Canvas_60FPS-informational?style=for-the-badge)](#technical-architecture)
 
 ---
@@ -63,4 +63,4 @@ Visit `http://localhost:3000` in your browser.
 - **LinkedIn**: [linkedin.com/in/aditya-tayde-02a030383](https://www.linkedin.com/in/aditya-tayde-02a030383)
 - **GitHub**: [@adityatayde111-lgtm](https://github.com/adityatayde111-lgtm)
 - **Instagram**: [@aditya_tayde_96](https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq)
-- **Live Portfolio**: [https://resume-atm-f33c.vercel.app](https://resume-atm-f33c.vercel.app)
+- **Live Portfolio**: [https://adityatayde111-lgtm.github.io/RESUME-./](https://adityatayde111-lgtm.github.io/RESUME-./)
