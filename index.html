@@ -78,6 +78,13 @@
         <span>Resume</span>
       </button>
 
+      <!-- Open on Phone / QR Code Button -->
+      <button id="phone-qr-btn" class="control-btn phone-nav-btn" title="Open on Mobile Phone &amp; Mobile Dashboard (QR Code)">
+        <span class="phone-nav-icon">📱</span>
+        <span class="phone-nav-label">Phone</span>
+        <span class="phone-live-dot"></span>
+      </button>
+
       <!-- Theme & Background Selector Button -->
       <button id="theme-selector-btn" class="control-btn theme-nav-btn" title="Switch Visual Theme &amp; Background">
         <span class="theme-nav-icon">🚩</span>
@@ -1490,6 +1497,374 @@
             <span>Sacred Sanskrit Rajmudra Watermark Seal</span>
           </label>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       📱 Open on Phone & QR Code Modal
+       ========================================================================== -->
+  <div id="phone-qr-modal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="phone-modal-title">
+    <div class="phone-modal-sheet">
+      <button id="phone-modal-close" class="modal-close-btn" aria-label="Close Phone QR Dialog">&times;</button>
+      
+      <div class="phone-modal-header">
+        <div class="phone-modal-badge">
+          <span class="phone-radar-ping"></span>
+          <span>MOBILE DASHBOARD CONNECT</span>
+        </div>
+        <h2 id="phone-modal-title" class="phone-modal-title">Open on Your Phone 📱</h2>
+        <p class="phone-modal-sub">Scan the QR code with your iPhone or Android camera to experience the native mobile dashboard &amp; 60FPS portfolio on your handheld device.</p>
+      </div>
+
+      <!-- Network Target Tabs -->
+      <div class="phone-tab-row">
+        <button type="button" class="phone-tab-btn active" id="tab-qr-local" data-target="local">
+          <span>📶 Local Wi-Fi (Dev)</span>
+        </button>
+        <button type="button" class="phone-tab-btn" id="tab-qr-cloud" data-target="cloud">
+          <span>🌐 Cloud (GitHub Pages)</span>
+        </button>
+      </div>
+
+      <!-- QR Display Card -->
+      <div class="phone-qr-display-box">
+        <div class="qr-preview-wrapper">
+          <div class="qr-laser-scanner"></div>
+          <img id="phone-qr-image" src="assets/phone-qr.svg" alt="Scan QR Code to open on phone" class="phone-qr-img">
+        </div>
+        
+        <div class="phone-url-chip-container">
+          <span class="phone-url-label">Network URL:</span>
+          <div class="phone-url-box">
+            <code id="phone-current-url" class="phone-url-text">http://10.254.18.179:3000</code>
+            <button type="button" id="copy-phone-url-btn" class="copy-url-btn" title="Copy URL">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Steps -->
+      <div class="phone-steps-grid">
+        <div class="phone-step-card">
+          <span class="step-num">1</span>
+          <div class="step-content">
+            <strong>Same Wi-Fi Network</strong>
+            <p>Ensure phone is connected to the same Wi-Fi router.</p>
+          </div>
+        </div>
+        <div class="phone-step-card">
+          <span class="step-num">2</span>
+          <div class="step-content">
+            <strong>Scan with Camera</strong>
+            <p>Point iPhone Camera or Google Lens / Android at the QR code.</p>
+          </div>
+        </div>
+        <div class="phone-step-card">
+          <span class="step-num">3</span>
+          <div class="step-content">
+            <strong>Tap to Launch</strong>
+            <p>Instant access to Mobile App Dashboard &amp; 60FPS scrubber.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Desktop Preview Button -->
+      <div class="phone-modal-footer">
+        <button type="button" id="open-phone-dash-preview-btn" class="phone-preview-action-btn">
+          <span>🚀 Launch Mobile Phone Dashboard Preview</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       📱 Mobile App Bottom Navigation Dock (Visible on Mobile / Tablets)
+       ========================================================================== -->
+  <nav id="mobile-bottom-dock" class="mobile-bottom-dock" aria-label="Mobile Navigation Dock">
+    <button type="button" class="dock-tab active" data-dock="home" id="dock-tab-home">
+      <div class="dock-icon-wrapper">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </div>
+      <span class="dock-label">Home</span>
+    </button>
+
+    <button type="button" class="dock-tab" data-dock="projects" id="dock-tab-projects">
+      <div class="dock-icon-wrapper">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+      </div>
+      <span class="dock-label">Projects</span>
+    </button>
+
+    <!-- Center Highlighted Dashboard Tab -->
+    <button type="button" class="dock-tab dock-tab-highlight" data-dock="dashboard" id="dock-tab-dashboard" title="Open Mobile Dashboard">
+      <div class="dock-highlight-orb">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="3" y="3" width="7" height="9"></rect>
+          <rect x="14" y="3" width="7" height="5"></rect>
+          <rect x="14" y="12" width="7" height="9"></rect>
+          <rect x="3" y="16" width="7" height="5"></rect>
+        </svg>
+      </div>
+      <span class="dock-label dock-label-highlight">Dashboard</span>
+    </button>
+
+    <button type="button" class="dock-tab" data-dock="resume" id="dock-tab-resume">
+      <div class="dock-icon-wrapper">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+      </div>
+      <span class="dock-label">Resume</span>
+    </button>
+
+    <button type="button" class="dock-tab" data-dock="ai" id="dock-tab-ai">
+      <div class="dock-icon-wrapper dock-ai-icon">
+        <span class="dock-sparkle">✨</span>
+      </div>
+      <span class="dock-label">Ask AI</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================================================
+       📱 Interactive Phone Dashboard Sheet / App View
+       ========================================================================== -->
+  <div id="phone-dashboard-drawer" class="phone-dashboard-drawer" aria-hidden="true">
+    <div class="phone-dash-backdrop" id="phone-dash-backdrop"></div>
+    
+    <div class="phone-dash-sheet">
+      <!-- Top Drag Bar / Close Handle -->
+      <div class="dash-handle-zone">
+        <div class="dash-pull-bar"></div>
+      </div>
+
+      <!-- Dashboard Top Header -->
+      <div class="phone-dash-header">
+        <div class="dash-user-row">
+          <div class="dash-avatar-wrapper">
+            <img src="assets/aditya-tayde.jpg" alt="Aditya Tayde" class="dash-avatar-img">
+            <span class="dash-avatar-status-dot" title="Available for Hiring / Collab"></span>
+          </div>
+          <div class="dash-user-meta">
+            <div class="dash-user-name-line">
+              <h3 class="dash-user-title">Aditya Tayde</h3>
+              <span class="dash-role-badge">CSE B.Tech</span>
+            </div>
+            <p class="dash-uni-text">Sanjivani University &bull; Maharashtra, IN</p>
+            <div class="dash-sys-tag">
+              <span class="dash-pulse-dot"></span>
+              <span id="dash-sys-status-text">60FPS ENGINE &bull; SWARAJYA ACTIVE</span>
+            </div>
+          </div>
+          <button type="button" id="close-phone-dash-btn" class="dash-close-btn" aria-label="Close Dashboard">&times;</button>
+        </div>
+
+        <!-- Experience Mode Switcher (Dashboard vs 60FPS Scrubbing) -->
+        <div class="dash-mode-segmented">
+          <button type="button" class="dash-mode-segment active" id="seg-mode-dash">
+            <span>📱 Dashboard Mode</span>
+          </button>
+          <button type="button" class="dash-mode-segment" id="seg-mode-cinema">
+            <span>🎬 60FPS Cinema</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Dashboard Content -->
+      <div class="phone-dash-body">
+        
+        <!-- Key Metrics HUD (4 Stat Cards) -->
+        <div class="dash-section-title-row">
+          <span class="dash-section-label">⚡ SYSTEM METRICS &amp; ACADEMICS</span>
+        </div>
+        <div class="dash-kpi-grid">
+          <div class="dash-kpi-card">
+            <span class="kpi-icon">🎓</span>
+            <div class="kpi-val">8.0</div>
+            <div class="kpi-name">CGPA (Sanjivani)</div>
+            <div class="kpi-sub">Class X: 84%</div>
+          </div>
+          <div class="dash-kpi-card">
+            <span class="kpi-icon">📦</span>
+            <div class="kpi-val" id="dash-repo-count">16+</div>
+            <div class="kpi-name">GitHub Repos</div>
+            <div class="kpi-sub">Active Open Source</div>
+          </div>
+          <div class="dash-kpi-card">
+            <span class="kpi-icon">🤖</span>
+            <div class="kpi-val">358+</div>
+            <div class="kpi-name">AI Providers</div>
+            <div class="kpi-sub">Unified AI Gateway</div>
+          </div>
+          <div class="dash-kpi-card">
+            <span class="kpi-icon">⚡</span>
+            <div class="kpi-val">60 FPS</div>
+            <div class="kpi-name">Render Engine</div>
+            <div class="kpi-sub">240-Frame Lerp</div>
+          </div>
+        </div>
+
+        <!-- Mobile Quick Command Launcher -->
+        <div class="dash-section-title-row">
+          <span class="dash-section-label">🚀 QUICK ACTIONS &amp; CONNECT</span>
+        </div>
+        <div class="dash-actions-grid">
+          <a href="tel:+919403206007" class="dash-action-tile call-tile">
+            <span class="dash-tile-icon">📞</span>
+            <span class="dash-tile-text">Call Aditya</span>
+            <span class="dash-tile-arrow">&rarr;</span>
+          </a>
+          <a href="https://wa.me/919403206007?text=Hi%20Aditya,%20I%20reviewed%20your%20portfolio%20and%20would%20love%20to%20connect!" target="_blank" rel="noopener noreferrer" class="dash-action-tile whatsapp-tile">
+            <span class="dash-tile-icon">💬</span>
+            <span class="dash-tile-text">WhatsApp</span>
+            <span class="dash-tile-arrow">&rarr;</span>
+          </a>
+          <button type="button" class="dash-action-tile resume-tile" id="dash-action-resume">
+            <span class="dash-tile-icon">📄</span>
+            <span class="dash-tile-text">ATS Resume PDF</span>
+            <span class="dash-tile-arrow">&rarr;</span>
+          </button>
+          <button type="button" class="dash-action-tile ai-tile" id="dash-action-ai">
+            <span class="dash-tile-icon">✨</span>
+            <span class="dash-tile-text">Ask AI Copilot</span>
+            <span class="dash-tile-arrow">&rarr;</span>
+          </button>
+          <button type="button" class="dash-action-tile theme-tile" id="dash-action-theme">
+            <span class="dash-tile-icon">🚩</span>
+            <span class="dash-tile-text">Theme Studio</span>
+            <span class="dash-tile-arrow">&rarr;</span>
+          </button>
+          <button type="button" class="dash-action-tile sound-tile" id="dash-action-sound">
+            <span class="dash-tile-icon">🎵</span>
+            <span class="dash-tile-text" id="dash-sound-label">Audio: OFF</span>
+            <span class="dash-tile-arrow">&rarr;</span>
+          </button>
+        </div>
+
+        <!-- Featured Flagship Projects Cards -->
+        <div class="dash-section-title-row">
+          <span class="dash-section-label">🌟 FLAGSHIP PROJECTS</span>
+          <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="dash-view-all-link">GitHub (16+) &rarr;</a>
+        </div>
+        <div class="dash-projects-stack">
+          <!-- Shetkari Raja -->
+          <div class="dash-proj-card">
+            <div class="dash-proj-top">
+              <span class="dash-proj-badge badge-agri">🌾 SMART AGRITECH</span>
+              <a href="https://github.com/adityatayde111-lgtm/shetkari-raja" target="_blank" rel="noopener noreferrer" class="dash-proj-link">View Repo &nearr;</a>
+            </div>
+            <h4 class="dash-proj-title">Shetkari Raja (शेborder शेतकरी राजा)</h4>
+            <p class="dash-proj-desc">Smart agricultural ecosystem &amp; Android app with on-device AI grain grading, procurement tracking, and DBT/PFMS subsidy verification.</p>
+            <div class="dash-proj-tags">
+              <span>Android</span>
+              <span>Python AI</span>
+              <span>Computer Vision</span>
+              <span>DBT/PFMS</span>
+            </div>
+          </div>
+
+          <!-- Sanjivani AI Gateway -->
+          <div class="dash-proj-card">
+            <div class="dash-proj-top">
+              <span class="dash-proj-badge badge-ai">🛡️ HIGH-AVAILABILITY AI</span>
+              <a href="https://github.com/adityatayde111-lgtm/sanjivani-ai-tool" target="_blank" rel="noopener noreferrer" class="dash-proj-link">View Repo &nearr;</a>
+            </div>
+            <h4 class="dash-proj-title">Sanjivani AI Tool</h4>
+            <p class="dash-proj-desc">Unified enterprise AI gateway federating 358 LLM endpoints with auto-failover, load balancing, and security filtering.</p>
+            <div class="dash-proj-tags">
+              <span>API Gateway</span>
+              <span>358 Models</span>
+              <span>Node / Python</span>
+              <span>Failover</span>
+            </div>
+          </div>
+
+          <!-- Student Management System -->
+          <div class="dash-proj-card">
+            <div class="dash-proj-top">
+              <span class="dash-proj-badge badge-sys">🎓 DATABASE &amp; ANALYTICS</span>
+              <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="dash-proj-link">View Repo &nearr;</a>
+            </div>
+            <h4 class="dash-proj-title">Student Management System</h4>
+            <p class="dash-proj-desc">Relational database and academic tracking suite engineered for student performance, course enrollment, and grade distribution.</p>
+            <div class="dash-proj-tags">
+              <span>SQL / Python</span>
+              <span>Analytics</span>
+              <span>CRUD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tech Stack Proficiency Bars -->
+        <div class="dash-section-title-row">
+          <span class="dash-section-label">🛠️ CORE COMPETENCIES</span>
+        </div>
+        <div class="dash-skills-list">
+          <div class="dash-skill-item">
+            <div class="dash-skill-info">
+              <span>Python, Machine Learning &amp; AI</span>
+              <span class="dash-skill-pct">92%</span>
+            </div>
+            <div class="dash-skill-bar"><div class="dash-skill-fill" style="width: 92%;"></div></div>
+          </div>
+          <div class="dash-skill-item">
+            <div class="dash-skill-info">
+              <span>C++ &amp; Data Structures / Algorithms</span>
+              <span class="dash-skill-pct">88%</span>
+            </div>
+            <div class="dash-skill-bar"><div class="dash-skill-fill" style="width: 88%;"></div></div>
+          </div>
+          <div class="dash-skill-item">
+            <div class="dash-skill-info">
+              <span>Full-Stack Web (HTML5/CSS3/JS/Node)</span>
+              <span class="dash-skill-pct">90%</span>
+            </div>
+            <div class="dash-skill-bar"><div class="dash-skill-fill" style="width: 90%;"></div></div>
+          </div>
+          <div class="dash-skill-item">
+            <div class="dash-skill-info">
+              <span>AI Integration &amp; Prompt Engineering</span>
+              <span class="dash-skill-pct">95%</span>
+            </div>
+            <div class="dash-skill-bar"><div class="dash-skill-fill" style="width: 95%;"></div></div>
+          </div>
+        </div>
+
+        <!-- Contact & Direct Links -->
+        <div class="dash-contact-card">
+          <h4 class="dash-contact-head">Connect with Aditya</h4>
+          <p class="dash-contact-sub">Available for Full-Stack &amp; AI Engineering Internships, research collaborations, and production opportunities.</p>
+          
+          <div class="dash-email-box">
+            <span class="dash-email-val">adityatayde111@gmail.com</span>
+            <button type="button" id="dash-copy-email-btn" class="dash-email-btn">Copy</button>
+          </div>
+
+          <div class="dash-social-buttons">
+            <a href="https://github.com/adityatayde111-lgtm" target="_blank" rel="noopener noreferrer" class="dash-social-btn">GitHub</a>
+            <a href="https://www.linkedin.com/in/aditya-tayde-02a030383" target="_blank" rel="noopener noreferrer" class="dash-social-btn">LinkedIn</a>
+            <a href="https://www.instagram.com/aditya_tayde_96?stkn=eTZla3JjN29rdWVq" target="_blank" rel="noopener noreferrer" class="dash-social-btn">Instagram</a>
+          </div>
+        </div>
+
+        <!-- Safe Bottom Spacing for Floating Dock -->
+        <div class="dash-bottom-spacer"></div>
+
       </div>
     </div>
   </div>

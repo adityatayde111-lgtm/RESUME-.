@@ -514,6 +514,9 @@
       audioWidget.classList.toggle('playing', playing);
     }
 
+    const dashSoundLabel = document.getElementById('dash-sound-label');
+    if (dashSoundLabel) dashSoundLabel.textContent = playing ? 'Audio: ON' : 'Audio: OFF';
+
     if (audioPlayIcon && audioPauseIcon) {
       if (playing) {
         audioPlayIcon.classList.add('hidden');
@@ -809,6 +812,8 @@
         const repoCount = userData.public_repos || 16;
         if (navRepoCount) navRepoCount.textContent = `${repoCount}+`;
         if (heroRepoVal) heroRepoVal.textContent = `${repoCount}+`;
+        const dashRepoCount = document.getElementById('dash-repo-count');
+        if (dashRepoCount) dashRepoCount.textContent = `${repoCount}+`;
         if (syncText) syncText.textContent = `LIVE GITHUB CONNECTED (${repoCount} REPOS)`;
       }
     } catch (err) {
@@ -2197,6 +2202,240 @@
     }
   }
 
+  // ==========================================================================
+  // 📱 Mobile Phone App Dashboard & QR Connect Controller
+  // ==========================================================================
+  function setupPhoneDashboard() {
+    const phoneQrBtn = document.getElementById('phone-qr-btn');
+    const phoneQrModal = document.getElementById('phone-qr-modal');
+    const phoneModalClose = document.getElementById('phone-modal-close');
+    const tabQrLocal = document.getElementById('tab-qr-local');
+    const tabQrCloud = document.getElementById('tab-qr-cloud');
+    const phoneQrImg = document.getElementById('phone-qr-image');
+    const phoneCurrentUrl = document.getElementById('phone-current-url');
+    const copyPhoneUrlBtn = document.getElementById('copy-phone-url-btn');
+    const openPhoneDashPreviewBtn = document.getElementById('open-phone-dash-preview-btn');
+
+    const phoneDashDrawer = document.getElementById('phone-dashboard-drawer');
+    const phoneDashBackdrop = document.getElementById('phone-dash-backdrop');
+    const closePhoneDashBtn = document.getElementById('close-phone-dash-btn');
+    const segModeDash = document.getElementById('seg-mode-dash');
+    const segModeCinema = document.getElementById('seg-mode-cinema');
+
+    const dockTabHome = document.getElementById('dock-tab-home');
+    const dockTabProjects = document.getElementById('dock-tab-projects');
+    const dockTabDashboard = document.getElementById('dock-tab-dashboard');
+    const dockTabResume = document.getElementById('dock-tab-resume');
+    const dockTabAi = document.getElementById('dock-tab-ai');
+
+    const dashActionResume = document.getElementById('dash-action-resume');
+    const dashActionAi = document.getElementById('dash-action-ai');
+    const dashActionTheme = document.getElementById('dash-action-theme');
+    const dashActionSound = document.getElementById('dash-action-sound');
+    const dashCopyEmailBtn = document.getElementById('dash-copy-email-btn');
+
+    const localUrl = 'http://10.254.18.179:3000';
+    const cloudUrl = 'https://adityatayde111-lgtm.github.io/RESUME-./';
+    let activeQrTarget = 'local';
+
+    // QR Modal controls
+    function openPhoneQrModal() {
+      if (phoneQrModal) {
+        phoneQrModal.classList.add('open');
+        phoneQrModal.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function closePhoneQrModal() {
+      if (phoneQrModal) {
+        phoneQrModal.classList.remove('open');
+        phoneQrModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    if (phoneQrBtn) phoneQrBtn.addEventListener('click', openPhoneQrModal);
+    if (phoneModalClose) phoneModalClose.addEventListener('click', closePhoneQrModal);
+    if (phoneQrModal) {
+      phoneQrModal.addEventListener('click', (e) => {
+        if (e.target === phoneQrModal) closePhoneQrModal();
+      });
+    }
+
+    // QR Tab switching
+    if (tabQrLocal && tabQrCloud) {
+      tabQrLocal.addEventListener('click', () => {
+        activeQrTarget = 'local';
+        tabQrLocal.classList.add('active');
+        tabQrCloud.classList.remove('active');
+        if (phoneQrImg) phoneQrImg.src = 'assets/phone-qr.svg';
+        if (phoneCurrentUrl) phoneCurrentUrl.textContent = localUrl;
+      });
+
+      tabQrCloud.addEventListener('click', () => {
+        activeQrTarget = 'cloud';
+        tabQrCloud.classList.add('active');
+        tabQrLocal.classList.remove('active');
+        if (phoneQrImg) phoneQrImg.src = 'assets/cloud-qr.svg';
+        if (phoneCurrentUrl) phoneCurrentUrl.textContent = cloudUrl;
+      });
+    }
+
+    // Copy Phone Link
+    if (copyPhoneUrlBtn) {
+      copyPhoneUrlBtn.addEventListener('click', () => {
+        const urlToCopy = activeQrTarget === 'local' ? localUrl : cloudUrl;
+        copyTextToClipboard(urlToCopy, `Phone Link Copied: ${urlToCopy}`);
+      });
+    }
+
+    // Launch preview from QR modal
+    if (openPhoneDashPreviewBtn) {
+      openPhoneDashPreviewBtn.addEventListener('click', () => {
+        closePhoneQrModal();
+        openPhoneDashboard();
+      });
+    }
+
+    // Phone Dashboard Drawer controls
+    function openPhoneDashboard() {
+      if (phoneDashDrawer) {
+        phoneDashDrawer.classList.add('open');
+        phoneDashDrawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      setDockActiveTab('dashboard');
+    }
+
+    function closePhoneDashboard() {
+      if (phoneDashDrawer) {
+        phoneDashDrawer.classList.remove('open');
+        phoneDashDrawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      setDockActiveTab('home');
+    }
+
+    if (closePhoneDashBtn) closePhoneDashBtn.addEventListener('click', closePhoneDashboard);
+    if (phoneDashBackdrop) phoneDashBackdrop.addEventListener('click', closePhoneDashboard);
+
+    function setDockActiveTab(tabName) {
+      const tabs = [dockTabHome, dockTabProjects, dockTabDashboard, dockTabResume, dockTabAi];
+      tabs.forEach(t => {
+        if (t) {
+          const tabData = t.getAttribute('data-dock');
+          t.classList.toggle('active', tabData === tabName);
+        }
+      });
+    }
+
+    // Bottom Dock Tab Handlers
+    if (dockTabHome) {
+      dockTabHome.addEventListener('click', () => {
+        closePhoneDashboard();
+        setDockActiveTab('home');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    if (dockTabProjects) {
+      dockTabProjects.addEventListener('click', () => {
+        closePhoneDashboard();
+        setDockActiveTab('projects');
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: 0.50 * maxScroll, behavior: 'smooth' });
+      });
+    }
+
+    if (dockTabDashboard) {
+      dockTabDashboard.addEventListener('click', () => {
+        if (phoneDashDrawer && phoneDashDrawer.classList.contains('open')) {
+          closePhoneDashboard();
+        } else {
+          openPhoneDashboard();
+        }
+      });
+    }
+
+    if (dockTabResume) {
+      dockTabResume.addEventListener('click', () => {
+        closePhoneDashboard();
+        setDockActiveTab('resume');
+        openResume();
+      });
+    }
+
+    if (dockTabAi) {
+      dockTabAi.addEventListener('click', () => {
+        closePhoneDashboard();
+        setDockActiveTab('ai');
+        openAiChat();
+      });
+    }
+
+    // Drawer action tiles
+    if (dashActionResume) {
+      dashActionResume.addEventListener('click', () => {
+        closePhoneDashboard();
+        openResume();
+      });
+    }
+
+    if (dashActionAi) {
+      dashActionAi.addEventListener('click', () => {
+        closePhoneDashboard();
+        openAiChat();
+      });
+    }
+
+    if (dashActionTheme) {
+      dashActionTheme.addEventListener('click', () => {
+        closePhoneDashboard();
+        const themeModal = document.getElementById('theme-modal');
+        if (themeModal) {
+          themeModal.classList.add('open');
+          themeModal.setAttribute('aria-hidden', 'false');
+        }
+      });
+    }
+
+    if (dashActionSound) {
+      dashActionSound.addEventListener('click', toggleAudioPlayback);
+    }
+
+    if (dashCopyEmailBtn) {
+      dashCopyEmailBtn.addEventListener('click', () => {
+        copyTextToClipboard('adityatayde111@gmail.com', 'Email copied: adityatayde111@gmail.com');
+      });
+    }
+
+    // Mode Switcher inside Dashboard
+    if (segModeDash && segModeCinema) {
+      segModeDash.addEventListener('click', () => {
+        segModeDash.classList.add('active');
+        segModeCinema.classList.remove('active');
+      });
+
+      segModeCinema.addEventListener('click', () => {
+        segModeCinema.classList.add('active');
+        segModeDash.classList.remove('active');
+        closePhoneDashboard();
+        showToast('Switched to 60FPS Cinematic Scroll Mode');
+      });
+    }
+
+    // Handle Escape Key for Phone Modals
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (phoneQrModal && phoneQrModal.classList.contains('open')) {
+          closePhoneQrModal();
+        }
+        if (phoneDashDrawer && phoneDashDrawer.classList.contains('open')) {
+          closePhoneDashboard();
+        }
+      }
+    });
+  }
+
   // Initialization
   function init() {
     setupThemeAndBackgroundStudio();
@@ -2208,6 +2447,7 @@
     setupProjectFilters();
     setupGlobalCollabExplorer();
     setupGitHubLibraryModal();
+    setupPhoneDashboard();
     fetchGitHubData();
     animate();
   }
